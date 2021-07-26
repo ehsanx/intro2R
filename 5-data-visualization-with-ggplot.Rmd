@@ -1,0 +1,599 @@
+# Data Visualization with ggplot2
+
+## INSTRUCTIONS
+This tutorial will introduce us to data visualization on R, specially using the ggplot R package. For this purpose, we will focus on the basic and most commonly used functions of the ggplot package. We will be able to read through the step-by-step instructions on how to use each function as well as its different arguments.
+
+Accompanying this tutorial is **a short [Google quiz](https://forms.gle/yUvW9Sg8mqEozyYu8)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
+
+## LEARNING OBJECTIVES
+* Be familiar with the basics of ggplot including how to graph basic scatterplot (with smoothed conditional means), line graph, bar graph, and bar chart using geometric functions.
+* Get a brief understanding of coordinate functions with special emphasis on `coord_flip()` and `coord_polar()`.
+* Be able to create gridded subplots using facet functions.
+* Know how to customize a graph to our own liking - including changing the texts, font, size, and color.
+* Know how to export the final graph into a png file using `ggsave()`.
+
+## 1. SET UP
+
+### Loading required packages
+For this tutorial, we will only be focusing on the ggplot2 package. But we will also be using a few functions from the readr and dplyr packages from the previous tutorials.
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+
+#install.packages("readr")
+library(readr)
+
+#install.packages("ggplot2")
+library(ggplot2)
+```
+
+### Importing Data
+
+Like we have learned in the previous tutorial, the first step after loading the required packages is to import the data that we will be working with! In this tutorial, we will be working with the same Demographics and Blood Pressure datasets from NHANES. However, to make things easier for us, a dataset consisting of both Demographics and Blood Pressure information have already been created, translated, and combined. As a challenge (this is completely optional), you can try to recreate this data frame on your own! Here is more information about the data frame we will be using for this tutorial:
+* Its name is "demo_bpx.csv" - it is a csv file
+* It contains the Respondent Sequence Number of each participant, along with their reported Gender, Race, Systolic and Diastolic Blood Pressures, and Blood Pressure Time in seconds. The first three are from the DEMO_H dataset, the rest are from the BPX_H dataset.
+* It only contains information of the first 200 participants.
+* The first column (X1) is automatically added by R.
+
+```{r}
+demo_bpx <- read_csv("data/demo_bpx.csv")
+```
+
+```{r}
+head(demo_bpx)
+```
+
+#### DO QUESTION 1 OF THE QUIZ NOW
+
+> **REVIEW** What is the name of the core that the packages readr, dplyr, and ggplot2 belong to?
+
+## 2. GGPLOT AND POINT GEOMETRICS
+
+Now that our dataset is all set up, it's time to plot our first graph! First, we need to start with an empty canvas and to do this, we need `ggplot()` as our base. Try running `ggplot()` alone. What do you see?
+
+```{r}
+ggplot()
+```
+
+If you answered "nothing" then you are completely right! Again, `ggplot()` alone only acts as a blank canvas. Usually, we would only have the dataset that we want to plot in the `()` of `ggplot()`. For example:
+
+```{r}
+ggplot(demo_bpx)
+```
+
+As for the actual graph, in order to plot it, we need geometric functions.
+
+### Point Geometrics
+
+Point geometrics, `geom_point()`, lets you graph scatterplots. The most basic argument that you can nest in `geom_point()` is `aes(x, y)` which basically tells `geom_point()` the x and y variables that you want to graph! `aes` stands for "aesthetics", we will cover more of this later in this tutorial.
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_point(aes(x = Systolic, 
+                   y = Diastolic), 
+               na.rm = TRUE,
+               show.legend = TRUE) 
+```
+
+As you can see, point geometrics (and all other geometric functions) always have to go after our `ggplot()` function. In addition, note that `ggplot()` and `geom_point()` are separated by a `+`.
+
+#### Functions debunked
+[**ggplot**](https://ggplot2.tidyverse.org/reference/ggplot.html) is our blank canvas - this function is housed in the ggplot2 package! The arguments are as follows: 
+
+ggplot(
+> **NAME OF DATAFRAME**,
+
+> aes(x = **VARIABLE ON THE X AXIS**, y = **VARIABLE ON THE Y AXIS**)
+
+)
+
+[**geom_point**](https://ggplot2.tidyverse.org/reference/geom_point.html) is the function we use to draw scatterplots - it is also housed in the ggplot2 package. The arguments that will be covered in this tutorial are as follows - you are welcomed to explore this function in more detail on your own:
+
+geom_point(
+> aes(**AESTHETICS** - to be covered later in the tutorial),
+
+> na.rm = **TRUE OR FALSE**,
+
+> show.legend = **TRUE OR FALSE**
+
+)
+
+**For example:** `ggplot(demo_bpx) + geom_point(aes(x = Systolic, y = Diastolic, color = Gender), na.rm = TRUE)`
+
+#### DO QUESTIONS 2 & 3 OF THE QUIZ NOW
+
+**HINT**: We've covered how to look for help within and outside of R in our very first tutorial: Basics of R and RStudio.
+
+> What do you think the argument `na.rm = TRUE` does?
+
+> What do you think the argument `show.legend = TRUE` does?
+
+### 1.1 Try it yourself
+Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).
+
+#### DO QUESTION 4 OF THE QUIZ NOW
+> What does the "Try it yourself" graph above look like?
+
+### Aesthetics
+
+Besides the x and y axes, there are other aesthetics that you can use to customize your graph as well! For example, you can change the color, size, opacity, and shape of your data points based on a particular variable of the dataset!
+
+#### Colors
+
+We can tell ggplot to use different colors for different genders using the argument `color =` like so:
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic,
+                 y = Diastolic,
+                 color = Gender), 
+             na.rm = TRUE)
+```
+
+##### Missing Values
+Looking at the graph above, we can see that there are a few NA data points for the variable gender. Let's rename all of these NA values to "Unstated", instead, to more accurately represent our data. To do this, we need to use the `replace_na()` function from the tidyr package like so:
+
+```{r}
+#install.packages("tidry")
+library(tidyr)
+```
+
+```{r}
+demo_bpx %>% 
+    replace_na(list(Gender = "Unstated")) %>%
+    ggplot() + 
+        geom_point(aes(x = Systolic, 
+                       y = Diastolic, 
+                       color = Gender), 
+                   na.rm = TRUE)
+```
+
+#### Shapes
+
+We can also use different shapes to represent the different genders in our dataset. To do this, we use the argument `shapes =`. This argument is more appropriate to use this argument when we are trying to distinguish between discrete variables since there are no in-between shapes to accurately reflect continuous variables!
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic,
+                 y = Diastolic,
+                 shape = Gender), 
+             na.rm = TRUE)
+```
+
+#### Size
+
+You can also change the size of your data points using the argument `size =` and then any number. You can also use this argument to distinguish data points of different genders with different point sizes, but this is not recommended. If you want to plot points of different sizes, it is most appropriate if you use it to distinguish a particular continuous variable.
+
+In the example below, not how the argument `size = 2` is outside of the aesthetics bracket. This tells R that we want ALL of our data points to be of the same size 2.
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic, y = Diastolic),
+             size = 2,
+             na.rm = TRUE,)
+```
+
+#### Opacity
+
+Similar to size, if using opacity as an indication of different categories of a variable is most appropriate if the variable is continuous. So in the example below, the graph shows all data points with the same opacity because the argument `alpha = 11` is outside of the aesthetics brackets.
+
+Also note that alpha values range from 0 to 1. The other neat thing about changing the data points opacity is that we can identify where data points overlap. For example, in the graph below, you can see some data points are darker than others. This means that those data points have multiple replicates!
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic, y = Diastolic),
+             alpha = 0.5,
+             na.rm = TRUE)
+```
+
+Why do you think some point aesthetics better demonstrate discrete variables while others better demonstrate continuous variables?
+
+#### Jitter Position
+
+After the graph above, you, hopefully, should have noticed that there are a lot of overlapping points in our dataset. To address this issue of overplotting, we can add random noise to each point to spread points out because no two points are likely to have same random noise. We can do this by nesting the position/argument jitter to our scatterplot like so:
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic, 
+                 y = Diastolic, 
+                 color = Gender), 
+             na.rm = TRUE,
+             position = "jitter")
+```
+
+### 1.2 Try it yourself
+Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.
+
+#### DO QUESTION 5 OF THE QUIZ NOW
+> Which is the correct code for the question above?
+
+## 3. MULTIPLE GEOMETRIC FUNCTIONS UNDER ONE GGPLOT
+
+Now that you're more familiar with `ggplot()` and `geom_point()`, we can try layering multiple graph types in one single ggplot canvas! For example, we can layer a line graph on top of a scatterplot.
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Systolic, y = Diastolic, color = Gender), 
+             na.rm = TRUE) + 
+  geom_smooth(aes(x = Systolic, y = Diastolic), 
+              method = "loess", 
+              formula = y ~ x, 
+              na.rm = TRUE)
+```
+
+To clean up our codes even more, we can nest the aesthetics into the `ggplot()` function instead of the geometric functions. But note that everything you nest in your `ggplot()` will be applied to all following geometrics.
+
+```{r}
+ggplot(demo_bpx, aes(x = Systolic, y = Diastolic)) + 
+    geom_point(aes(color = Gender), 
+               na.rm = TRUE) + 
+    geom_smooth(method = "loess",
+                formula = y ~ x,
+                na.rm = TRUE)
+```
+
+#### Functions debunked
+[**geom_smooth**](https://ggplot2.tidyverse.org/reference/ggplot.html) is how we show the smoothed conditional means line on our scatterplot. The arguments are as follows: 
+
+geom_smooth(
+> mapping = aes(**AESTHETICS**),
+
+> method = **"SMOOTHING METHOD (FUNCTION)"**, e.g. loess, gam, lm, glm
+
+> formula = **FORMULA TO USE IN SMOOTHING FUNCTION**, usually y ~ x when there are less than 1,000 observations
+
+> na.rm = **TRUE OR FALSE**,
+
+> show.legend = **TRUE OR FALSE**,
+
+> se = **TRUE OR FALSE**
+
+)
+
+#### DO QUESTION 6 OF THE QUIZ NOW
+> What do you think the argument `se = FALSE` does?
+
+## 5. OTHER GEOMETRIC FUNCTIONS
+
+Aside from `geom_point()`, there are other geometric functions that we can use to plot different types of graphs. Note that this list of geometrics functions is not extensive, and you are encouraged to explore more about them on R using the `?` or `??` command or on this [website](https://ggplot2.tidyverse.org/reference/) about ggplot!
+
+### Bar graph
+
+We use `geom_bar()` to create bar graphs. Different than `geom_point()`, `geom_bar()` only needs us to define either the x or y aesthetic, not both. This is because one of the axes needs to be the count of whatever variable we chose! For example, if we want to count how many individuals there are of each reported gender:
+
+```{r}
+ggplot(demo_bpx) +
+    geom_bar(aes(x = Gender))
+```
+
+We can also tell R to calculate the proportion of each gender instead of counting: 
+
+```{r}
+ggplot(demo_bpx) +
+    geom_bar(aes(x = Gender, y = ..prop.., group = 1))
+```
+
+#### Fill Position
+
+A neat argument/position that we can nest in `geom_bar()` is fill. Fill lets us add another variable to our graph and further divides up our columns into separate categories. For example, if we want to know the different combination of genders and races in our dataset:
+
+```{r}
+ggplot(demo_bpx) +
+    geom_bar(aes(x = Gender, fill = Race))
+```
+
+#### Dodge Position
+
+Another option is the dogdge argument/position. This argument separates our columns into smaller, side-by-side columns so we can easily compare the different variables.
+
+```{r}
+ggplot(demo_bpx) +
+  geom_bar(aes(x = Gender, fill = Race), 
+           position = "dodge")
+```
+
+Another way that we can choose to present our bar graph is in the form of a circular graph. To do this, we can add another function `coord_polar()` to our ggplot canvas.
+
+```{r}
+ggplot(demo_bpx, aes(x = Gender)) +
+  geom_bar() +
+  coord_polar()
+```
+
+```{r}
+ggplot(demo_bpx, aes(x = Race)) +
+  geom_bar() +
+  coord_polar()
+```
+
+### Line Graph
+
+Another graph type that the ggplot R package offers is line graph. To plot a line graph, we use the function `geom_line()`.
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_line(aes(x = Systolic, y = Diastolic), na.rm = TRUE)
+```
+
+Line graphs may also be an interesting way for us to demonstrate ranges of a particular continuous variable of a categorical variable. For example, we can see the range of Systolic Blood Pressures of different races with the following graph:
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_line(aes(x = Systolic, y = Race), na.rm = TRUE)
+```
+
+### Boxplot
+
+If you are not a fan of the line graph above, boxplots is another option that we can explore together. To plot a boxplot, we use `geom_boxplot()` like so:
+
+```{r}
+ggplot(demo_bpx, aes(x = Systolic, y = Race)) +
+  geom_boxplot(na.rm = TRUE)
+```
+
+```{r}
+ggplot(demo_bpx, aes(x = Gender, y = Diastolic)) +
+  geom_boxplot(na.rm = TRUE)
+```
+
+### Frequency Polygon
+
+Frequency polygon is another option that we can explore. They are similar to bar graphs, except frequency polygon visualize the counts with lines. We can plot frequency polygons using `geom_freqpoly()` like so:
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_freqpoly(aes(x = Systolic), binwidth = 5, na.rm = TRUE)
+```
+
+Since `geom_freqpoly()` divides the variable in the x axis into bins before counting the number of observations in each bin, we can further customize how we want our frequency polygon to look by changing the binwidth.
+
+### 1.3 Try it yourself
+
+Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_freqpoly(aes(x = Systolic), binwidth = 1, na.rm = TRUE)
+```
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_freqpoly(aes(x = Systolic), binwidth = 20, na.rm = TRUE)
+```
+
+We can also layer multiple `geom_freqpoly()` on each other and give them different colors:
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_freqpoly(aes(x = Systolic, color = "Systolic"), binwidth = 10, na.rm = TRUE) +
+    geom_freqpoly(aes(x = Diastolic, color = "Diastolic"), binwidth = 10, na.rm = TRUE)
+```
+
+You may notice that the x axis label for the graph above is incorrect! And the legend title is also wrong. Don't worry! We will go over how to manually add and edit graph elements later in this tutorial.
+
+#### DO QUESTIONS 7 & 8 OF THE QUIZ NOW
+> Increasing the binwidth of a bar graph makes the graph more detailed. (True or False)
+
+> Match the geometrics with the correct graph type.
+
+## 6. FACET FUNCTIONS
+
+Aside from using aesthetics, `facet_wrap()` is another good option to create subplots based on categorical variables. You can create divide the data up into subplots by 1 or 2 variables. Run the codes below to see what these two situations would look like.
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Diastolic, y = Systolic), na.rm = TRUE) +
+  facet_wrap(~ Gender, nrow = 3)
+```
+
+```{r}
+ggplot(demo_bpx) +
+  geom_point(aes(x = Diastolic, y = Systolic), na.rm = TRUE) +
+  facet_grid(Race ~ Gender)
+```
+
+#### DO QUESTION 9 ON CANVAS NOW
+> It is most useful to use facet functions when plotting continuous variables.
+
+### 1.4 Try it yourself
+
+Try recreating the graph above but without any missing (NA) values.
+
+**HINT**: Filter out any information we do not need using logical operators!
+
+## 7. CUSTOMIZING GRAPH ELEMENTS
+
+We can customize how our graph looks like with different graph elements including graph title, axes labels, legendes, etc. In this section, we will cover as many graph elements as possible.
+
+But for your own information and exploration, more information on editing graph elements can be found [here](http://environmentalcomputing.net/plotting-with-ggplot-adding-titles-and-axis-names/). Here is also a [list of colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) that R recognizes that may come in handy.
+
+Going back to the frequency polygon above where the x axis label is incorrect, this is what the code for the correct graph would look like:
+
+```{r}
+ggplot(demo_bpx) + 
+    geom_freqpoly(aes(x = Systolic, color = "Systolic"), binwidth = 10, na.rm = TRUE) +
+    geom_freqpoly(aes(x = Diastolic, color = "Diastolic"), binwidth = 10, na.rm = TRUE) +
+    labs(x = "Blood Pressure (Hg mm)", color = "Type of Blood Pressure")
+```
+
+The first three lines of codes are similar to what we have previously, and the last one is new. Let's go over the last line of codes together in the following functions debunked.
+
+#### Functions Debunked
+
+`labs` lets us change the axes labels, graph title, and legend title! The basic arguments are as follows:
+
+**[labs](https://ggplot2.tidyverse.org/reference/labs.html)**(
+
+> title = "**TITLE OF GRAPH**", 
+
+> x = "**X AXIS LABEL**",
+
+> y = "**Y AXIS LABEL**",
+
+> color = "**LEGEND TITLE**"
+
+)
+
+**For example:** `labs(x = "Blood Pressure (Hg mm)", color = "Legend")`
+
+We can customize our graphs even more by changing the texts' fonts, emphasis, or even size! To do this, we can nest multiple arguments in a function called `theme()`. Going back to the main objective of our tutorial: create a graph that shows the relationship between Diastolic and Systolic Blood Pressure of the first 200 Males and Females in the 2013-2014 NHANES datasets, let us recall what that graph originally looks like: 
+
+```{r}
+ggplot(demo_bpx) +
+    geom_point(aes(x = Systolic, y = Diastolic, color = Gender), 
+             na.rm = TRUE,
+             position = "jitter") +
+    geom_smooth(aes(x = Systolic, y = Diastolic),
+                method = "loess",
+                formula = y ~ x,
+                na.rm = TRUE)
+```
+
+Now, we can change the axes labels, legend title, and add a graph title using `labs()`:
+
+```{r}
+ggplot(demo_bpx) +
+    geom_point(aes(x = Systolic, y = Diastolic, color = Gender), 
+             na.rm = TRUE,
+             position = "jitter") +
+    geom_smooth(aes(x = Systolic, y = Diastolic), 
+                method = "loess",
+                formula = y ~ x,
+                na.rm = TRUE) + 
+    labs(title = "Systolic vs. Diastolic Blood Pressures of Different Genders",
+         x = "Systolic Blood Pressure (mm Hg)", 
+         y = "Diastolic Blood Pressure (mm Hg)",
+         color = "Genders of Respondents")
+```
+
+After that, we can use `theme()` to change the font, emphasis, size, and color of our texts.
+
+```{r}
+ggplot(demo_bpx) +
+
+    geom_point(aes(x = Systolic, y = Diastolic, color = Gender), 
+             na.rm = TRUE,
+             position = "jitter") +
+    
+    geom_smooth(aes(x = Systolic, y = Diastolic),
+                method = "loess",
+                formula = y ~ x,
+                na.rm = TRUE) + 
+    
+    labs(title = "Systolic vs. Diastolic Blood Pressures of Different Genders",
+         x = "Systolic Blood Pressure (mm Hg)", 
+         y = "Diastolic Blood Pressure (mm Hg)",
+         color = "Genders of Respondents") +
+
+    theme(plot.title = element_text(family = "Helvetica", face = "bold", size = 20, color = "cyan4"),
+          axis.title = element_text(family = "Helvetica", size = 15),
+          axis.text = element_text(family = "Helvetica", size = 12),
+          legend.title = element_text(family = "Helvetica", face = "italic", size = 15), 
+          legend.text = element_text(family = "Helvetica", size = 12))
+```
+
+#### Functions Debunked
+
+Some basic arguments of `theme()` are as follows:
+
+**[theme](https://ggplot2.tidyverse.org/reference/theme.html)**(
+
+> plot.title = element_text(family = "**FONT NAME**", face = "**EMPHASIS TYPE**, size = **SIZE NUMBER**, color = "**A COLOR THAT R RECOGNIZES**"), 
+
+> axis.title = [*same arguments as before*],
+
+> axis.text = [*same arguments as before*],
+
+> legend.title = [*same arguments as before*],
+
+> legend.text = [*same arguments as before*]
+
+)
+
+**For example:** `theme(plot.title = element_text(family = "Helvetica", face = "bold", size = 20, color = "cyan4"))`
+
+#### DO QUESTION 10 OF THE QUIZ NOW
+
+> What is the difference between `legend.title` and `legend.text`?
+
+### 1.5 Try it yourself
+
+Customize your own graph using the functions we just learned above!
+
+## 8. SAVING OUR GRAPH
+
+To explort our graph into a file like png, pdf, or jpeg, we can use the function `ggsave()` followed by the name that we want the file to have. To simplify this process, we can give our graph a name such as "Final_plot" using `<-`.
+
+```{r}
+Final_plot <- 
+
+    ggplot(demo_bpx) +
+
+    geom_point(aes(x = Systolic, y = Diastolic, color = Gender), 
+             na.rm = TRUE,
+             position = "jitter") +
+    
+    geom_smooth(aes(x = Systolic, y = Diastolic), 
+                method = "loess",
+                formula = y ~ x,
+                na.rm = TRUE) + 
+    
+    labs(title = "Systolic vs. Diastolic Blood Pressures of Different Genders",
+         x = "Systolic Blood Pressure (mm Hg)", 
+         y = "Diastolic Blood Pressure (mm Hg)",
+         color = "Genders of Respondents") +
+
+    theme(plot.title = element_text(family = "Helvetica", face = "bold", size = 20, color = "cyan4"),
+          axis.title = element_text(family = "Helvetica", size = 15),
+          axis.text = element_text(family = "Helvetica", size = 12),
+          legend.title = element_text(family = "Helvetica", face = "italic", size = 15), 
+          legend.text = element_text(family = "Helvetica", size = 12))
+```
+
+```{r}
+ggsave("images/Final plot.png")
+```
+
+By default, `ggsave()` will save the last plot that we ran before it. But we can also tell it exactly which plot we are referring to using another argument after the file name.
+
+```{r}
+ggsave("images/Final plot-1.png", Final_plot)
+```
+
+We can also change the width and height of our saved file. Remember to specify the units as well!
+
+```{r}
+ggsave("images/Final plot-2.png", Final_plot, width = 40, height = 30, units = 'cm')
+```
+
+More information on `ggsave()` can be found [here](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggsave).
+
+Now we can check our working directory to see if all of our graphs are there.
+
+```{r}
+dir()
+```
+
+If there is a present file that you think should not be there, we can use the function `file.remove()` followed by the name of the file to remove it.
+
+```{r}
+file.remove("Rplot001.png")
+```
+
+Then, we can check our directory again and all of the relevant files should be there!
+
+```{r}
+dir()
+```
+
+We've reached the end of our tutorial! Note that this tutorial only covers the basics of ggplot. ggplot is a large package and you are encouraged to explore the many functions that it offers on your own. And remember that it takes practice to be fluent in this language!
+
+## 9. SUMMARY AND TAKEAWAYS
+
+By the end of this tutorial, you should be somewhat familiar with the ggplot package including how to create a basic graph on R as well as how to customize it to your liking.
+
+If you are interested in learning more about ggplot, this [website](https://ggplot2.tidyverse.org/) is also a good resource for you to tap into.
+
+Here is also a [cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf) of more ggplot functions.
+

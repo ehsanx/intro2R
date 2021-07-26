@@ -1,0 +1,849 @@
+# Data Analysis with dplyr
+
+## INSTRUCTIONS
+
+This tutorial is aiming to introduce you to how to manipulate data and transfer the raw data into ready-to-analysis form in R. It will guide you to learn and practice the basic and useful functions in the dplyr package. In this tutorial, follow the step-by-step instruction as well as the  examples which demonstrating how the functions work. 
+
+Accompanying this tutorial is **a short [Google quiz](https://forms.gle/17WnX6paHx5U14jx6)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
+
+
+## LEARNING OBJECTIVES
+* Be able to import nhanesA and dplyr package. Be able to understand dataframe.
+* Be able to use rename() and select() to rename and select variables (columns) in a dataframe.
+* Be able to use filter() to subset a dataframe based on conditions.
+* Be able to use arrange() to re-order the rows in a dataframe.
+* Be able to use mutate() and transmute() to add new variables that are computed from existing variables in a dataframe.
+* Be able to use summarize() to get summary statistics from a dataframe; Be able to perform grouping with summarize(), filter(), and mutate().
+* Be able to use pipe to re-write mutilpe operations in a more readable way.
+* Be able to check missing values existence and deal with missing values while using the above functions
+
+## 1. Set up
+### Install and load packages
+
+First, we need to install and load the dplyr package as well as bring in our National Health and Nutrition Examination Survey (NHANES) dataset. This particular tutorial uses data from 2013-2014.
+
+For more information about NHANES, you can visit this website. It is recommended that you explore this website to familiar yourself with the data that we will be using throughout this tutorial.
+
+```{r}
+# install.packages("dplyr")
+library(dplyr)
+```
+
+```{r}
+# install.packages("nhanesA")
+library(nhanesA)
+```
+
+### Set working directory
+
+We want to set the working directory 
+
+```{r}
+# setwd('/kaggle/working')
+```
+
+### Import dataset
+
+This particular tutorial uses the Demographics dataset and Blood pressure dataset from NHANES dataset (2013-2014).
+
+The Demographics dataset contains a huge records of demographics information such as gender, race, annual income for each participant. The Blood pressure dataset is in the Examination data and contains a hugh records of measurements that related to blood pressure measurement.
+
+More information on the imported dataset can be found here:
+
+* [Demographics data](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=2013)
+* [Examination data](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&CycleBeginYear=2013)
+* [Complete variable dictionary](https://wwwn.cdc.gov/Nchs/Nhanes/Search/variablelist.aspx?Component=Demographics&CycleBeginYear=2013)
+* [DEMO_H Code book](https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/DEMO_H.htm#Codebook) (Demographic Variables)
+* [BPX_H Code book](https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/BPX_H.htm#Codebook) (Blood Pressure)
+
+```{r}
+demo <- nhanes('DEMO_H')
+bpx <- nhanes('BPX_H')
+```
+
+#### Functions debunked
+`nhanes()` is the function we use to import our NHANES data and save it in a dataframe. What is a dataframe? We'll introduce it below. The arguments are as follows: 
+
+nhanes(
+> 'NAME OF DATASET'
+
+)
+
+**For example:** `nhanes('DEMO_H')`
+
+### Explore our dataset
+
+Recall the basic functions that we learned in tutorial 1, it is good practice for us to explore our datasets before doing any analysis.
+
+We can check the dimension of the datasets:
+
+```{r}
+dim(demo)
+dim(bpx)
+```
+
+We can also check their first few rows:
+
+```{r}
+head(demo, 3)
+head(bpx, 3)
+```
+
+It does not hurt to also check the last few rows of the datasets:
+
+```{r}
+tail(demo, 3)
+tail(bpx, 3)
+```
+
+#### is.na()
+
+In real world, missing values are unavoidable. There are many reasons for missing values - may be a result from nonresponse or incorrect data collection and it happens all the time. It is always a good idea to check if there is any missing value before proceeding.
+
+In a dataframe, you will see NAs if there're missing values and *NA* indicates missing values in R.
+
+Note: Be careful when doing manipulation on real dataset!!!Missing values may be recorded in other ways, for example, *infinity* or other numbers. To deal with missing values in this case, one way is to convert these values into NAs and then treat them as regular NAs. Details will not be discussed in this tutorial but will likely be included in later tutorials.
+
+To check if there is any missing values (NAs) in a dataframe, use `is.na()`:
+
+```{r}
+head(is.na(demo),5)
+```
+
+To find the total number of missing values in a dataframe:
+
+```{r}
+sum(is.na(demo))
+```
+
+To check if there is any missing values (NAs) in a column,for example, gender:
+
+```{r}
+head(is.na(demo['RIAGENDR']),5)
+```
+
+To find the total number of missing values in a column:
+
+```{r}
+sum(is.na(demo['RIAGENDR']))
+```
+
+To find the number of missing values for each column, use the summary() function:
+
+```{r, results="hide"}
+summary(demo)
+```
+
+If there is a missing value in one cell, is.na() will return **TRUE**; if there is no missing value in one cell, it will return **FALSE**
+
+For example, (1,1) (1st row 1st column) is FALSE - it means that (1,1) is not a missing value; (1,6) (1st row 6th column) is TRUE - it means that (1,6) is NA.
+
+[**is.na()**](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/NA) is the function we use to inspect any missing values in a dataframe - it is housed in the base package.
+
+The arguments are as follows: 
+
+is.na(
+> NAME OF DATAFRAME
+
+)
+
+**For example:** `is.na(demo)`
+
+**DO QUESTION 1 OF THE QUIZ NOW**
+> What package does the function `nhanes()` belong to?
+
+**DO QUESTION 2 OF THE QUIZ NOW**
+
+> Which code below is the correct one to print the last 10 rows of a dataframe called temp?
+
+**DO QUESTION 3 OF THE QUIZ NOW**
+> Suppose a cell contains NA. What is the output after perform is.na() on it?
+
+## 2.Dataset preparation
+
+Now that we've successfully imported the two datasets and we're ready to do further data manipulations. But before we proceed, there are three issues in the datasets:
+
+* The two datasets are **Huge**. Recall the dimensions of the two datasets in section 1, there are 10175 rows and 47 columns in the demo dataset and 9813 rows and 23 columns in the bpx dataset.
+
+    + For demostration purpose, this tutorial will only focus on parts of the two datasets. 
+
+        + For the demo dataset, we want to keep the following variables as our primary interests only: 
+        
+            + *SEQN*  (Respondent sequence number)
+            + *RIAGENDR*  (Gender)
+            + *RIDAGEYR*  (Age in years at screening)
+            + *RIDRETH3*  (Race)
+            + *DMDEDUC2*  (Education level - Adults 20+)
+    
+        + For the bpx dataset, we want to keep the following variables as our primary interests only: 
+        
+            + *SEQN*  (Respondent sequence number)
+            + *PEASCST1*  (Blood Pressure Status)
+            + *PEASCTM1*  (Blood Pressure Time in Seconds)
+            + *BPXSY1*  (Systolic: Blood pres (1st rdg) mm Hg)
+            + *BPXDI1*  (Diastolic: Blood pres (1st rdg) mm Hg)
+    
+        + For both datasets, we want to keep the top 5 rows only.
+
+* There is something odd about the demo dataset. For example,if you run demo alone, you will see that *RIAGENDR* (gender) is coded as 1 and 2. For ease of future use, we want to translate this 1 and 2 into male and female. 
+
+* The variable names are long are ambiguous. For ease of further use, we want to rename the variables so that they can be easily understand.
+
+    + For the demo dataframe, we want to rename the variables in this way:
+    
+        + SEQN -> id
+        + RIAGENDR -> gender
+        + RIDAGEYR -> age
+        + RIDRETH3 -> race
+        + DMDEDUC2 -> race
+    
+    + For the bpx dataframe, we want to rename the variables in this way:
+    
+        + SEQN -> id
+        + PEASCST1 -> bp_status
+        + PEASCTM1 -> bpt_sec
+        + BPXSY1 -> systolic
+        + BPXDI1 -> diastolic
+        
+    + **Note**, there are many different ways of renaming as long as the new names are straight-forward. We will use the above rename strategy in this tutorial for the sake of consistency.
+
+With the three issues listed above, here's an example of how to resolve them in the demo dataset:
+
+First, we need to translate the way of variable encoding using the `nhanesTranslate()` function:
+
+```{r}
+demo_translate <- nhanesTranslate('DEMO_H',
+                                  c('SEQN', # Respondent sequence number
+                                    'RIAGENDR', # Gender
+                                    'RIDAGEYR', # Age in years at screening
+                                    'RIDRETH3', # Race
+                                    'DMDEDUC2'), # Education level - Adults 20+
+                                 data = demo)
+head(demo_translate,5)
+```
+
+Second, we want to keep the variabls which we're interested in only:
+
+```{r}
+new_demo <- select(demo_translate,
+                   c(SEQN,
+                    RIAGENDR,
+                    RIDAGEYR,
+                    RIDRETH3,
+                    DMDEDUC2))
+head(new_demo,5)
+```
+
+Third, we want to rename the variables using the `rename()` function:
+
+```{r}
+new_demo <- rename(new_demo,
+       id = SEQN, # Respondent sequence number
+       gender = RIAGENDR, # Gender
+       age = RIDAGEYR, # Age in years at screening
+       race = RIDRETH3, # Race/Hispanic origin
+       edu = DMDEDUC2, # Education level - Adults 20+
+       )
+head(new_demo,5)
+```
+
+Last, we want to keep the top 10 rows using the `head()` function and save the dataframe as `final_demo`:
+
+```{r}
+final_demo <- head(new_demo,10)
+final_demo
+```
+
+#### Functions debunked
+[**nhanesTranslate**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTranslate) is the function we use to translate variables in a dataset - it is housed in the nhanesA package. The arguments are as follows: 
+
+nhanesTranslate(
+> 'NAME OF DATASET',
+
+> COLUMNS YOU WANT TO BE TRANSLATED, (can be written as a vector)
+
+> data = SOURCE DATAFRAME
+
+)
+
+**For example:** `nhanesTranslate('DEMO_H', RIAGENDR, data = demo)`
+
+[**rename()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) is the function we use to rename the variables and return all variables - it is housed in the dplyr package. The arguments are as follows: 
+
+rename(
+> NAME OF DATAFRAME,
+
+> NEW_VARIABLE_NAME = OLD_VARIABLE_NAME
+
+)
+
+**For example:** `rename(demo, id = SEQN)`
+
+[**select()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) is the function we use to only return the varibles we want  - it is housed in the dplyr package. The arguments are as follows: 
+
+select(
+> NAME OF DATAFRAME,
+
+> VARIABLES, (can be written as a vector)
+
+)
+
+**For example:** `select(demo, c(id,gender,age))`
+
+**For example:** `select(demo, id:age))`
+
+### 4.1 Try it yourself
+
+In the bpx dataframe, keep the following variables and top 5 rows only:
+
++ SEQN
++ PEASCST1
++ PEASCTM1
++ BPXSY1
++ BPXDI1
+
+### 4.2 Try it yourself
+
+rename the variables in the following way:
+
++ SEQN -> id
++ PEASCST1 -> bp_status
++ PEASCTM1 -> bpt_sec
++ BPXSY1 -> systolic
++ BPXDI1 -> diastolic
+
+**DO QUESTION 4 OF THE QUIZ NOW**
+> Given the following code:
+> select(dataset,A,B)
+> What is the purpose of the code?
+
+**DO QUESTION 5 OF THE QUIZ NOW**
+> Which code below is the correct one to rename column A to B in a dataframe called dataset?
+
+## 3. Filter
+
+Sometimes, we want to focus on a subset of the dataset that satisifying some conditions for further analysis. In this case, we need to filter the dataset based on variables' values and conditions. 
+
+For example, we use the following code to filter the observations that patients are 40 years old at screening. 
+
+```{r}
+filter(final_demo, age == 40)
+```
+
+We may also interested in the observations that patients are 40 **or** 41 years old at screening:
+
+```{r}
+filter(final_demo, age == 40 | age == 41)
+```
+
+Another way of writing the code above is to use the `%in%` operator:
+
+`x %in% y` is equivalent to the condition that **the value of x is in one of the values of y**
+
+```{r}
+filter(final_demo, age %in% c(40, 41))
+```
+
+#### Functions debunked
+[**filter()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/filter) is the function we use to subset the dataset based on  their values and conditions - it is housed in the dplyr package. The arguments are as follows: 
+
+filter(
+> NAME OF DATASET,
+
+> CONDITION 1
+
+> CONDITION 2 
+
+> ...
+
+> CONDITION n
+
+)
+
+**For example:** `filter(new_demo, gender == 1)`
+
+**Note:**
+
+1, pay attention to the difference between `=` and `==`
+> `=` is assignment operator
+
+> `==` is comparison operator
+
+More comparison operators are `<`, `<=`,`>`, `>=`,`!=`.
+
+2, logical operators
+
+Mutiple conditions can be combined using logical operators. Common logical operators are:
+
+> `and` is `&`
+
+> `or` is `|`
+
+> `not` is `!`
+
+**For example:** `filter(new_demo, age == 40 | age == 41)`
+
+#### Missing values
+
+Note, we don't have any missing values in the age column (can be checked using `is.na(new_demo['age'])`).
+
+What if we have missing values and how does filter() treat missing values?
+
+filter() only keeps the rows where the condition is **TRUE** and remove the rows where the condition is failed due to **FALSE OR NA**.
+
+If you want to keep the NAs, you need to add the condition explicitly: `is.na(VARIABLE_NAME)` and use `|` to combine with other conditions.
+
+**For example:** `filter(new_demo, is.na(income) | income <= 50)`
+
+### 4.3 Try it yourself
+In the demo dataframe, find all the records that:
+
+4.3.1 the participant who is a male
+
+4.3.2 the participant who is a male and is older tha 50 years old
+
+4.3.3 the education level is missing
+
+**DO QUESTION 6 OF THE QUIZ NOW**
+> Fill in the blank to answer '4.3.1 Try it yourself':
+
+> filter(final_demo, gender `___`)
+
+**DO QUESTION 7 OF THE QUIZ NOW**
+> Fill in the blank to answer the second question in '4.3.2 Try it yourself':
+
+> filter(final_demo, gender == 'Male' `___` age > 50)
+
+**DO QUESTION 8 OF THE QUIZ NOW**
+> Fill in the blank to answer the third question in '4.3.3 Try it yourself':
+
+> filter(final_demo, `___`)
+
+## 4.Re-order the rows
+
+Suppose we want to re-order the observations by certain variables, we can use the arrange() function in R. 
+
+First, let's look at the top 5 rows in the demo dataframe:
+
+```{r}
+final_demo
+```
+
+We notice that the column "age" doesn't follow any order. We use the following code to re-order the dataframe by age:
+
+```{r}
+arrange(final_demo, age)
+```
+
+If we want to change it to descending order, use desc():
+
+```{r}
+arrange(final_demo, desc(age))
+```
+
+What if we want to change the order by multiple columns? 
+
+We can simply add multiple columns in the arguments! It's also useful when there are ties in the values of one column and the subsquent columns are used to break the ties.
+
+For example, re-order the observations by age,id:
+
+```{r}
+arrange(final_demo,age,id)
+```
+
+#### Functions debunked
+[**arrange()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/arrange) is the function we use to change the order of the observations by columns - it is housed in the dplyr package. The arguments are as follows: 
+
+arrange(
+> NAME OF DATAFRAME,
+
+> COLUMN 1
+
+> COLUMN 2 
+
+> ...
+
+> COLUMN n
+
+)
+
+**For example:** `arrange(new_demo, gender)`
+
+Use  `desc(COLUMN_NAME)` to reorder the dataframe by *COLUMN_NAME* in descending order.
+
+#### Missing values
+
+In the last example, we notice that there are missing values in column 'income' and 'income_ratio'.
+
+How does arrange() deal with missing value? **All NAs will be retained at the end.** Check the output above!
+
+### 4.4 Try it yourself
+
+Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:
+
+**DO QUESTION 9 OF THE QUIZ NOW**
+> Fill in the blank to answer the question in '4.4 Try it yourself':
+
+> `___`(final_bpx,`___`)
+
+## 5. Add new variables
+Suppose we want to gain more information about our observations and we want to constrcut a new variable based on the variables we have. The mutate() and transmute() in R helps us to add new variables into a dataframe. 
+
+For example, we want to add a new variable called born_year in the demo dataframe and born_year is calculated in this way: born_year = 2021- age:
+
+```{r}
+mutate(final_demo,
+       born_year = 2021 - age 
+      )
+```
+
+If we want to keep the added variables only, use transmute() instead:
+
+```{r}
+transmute(final_demo,
+    born_year = 2021 - age
+     )
+```
+
+#### Functions debunked
+[**mutate()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate) is the function we use to create new variables based on variables we have and add them to the original dataframe - it is housed in the dplyr package. The arguments are as follows: 
+
+mutate(
+> NAME OF DATAFRAME,
+
+> NEW_VARIABLE = FUNCTION OF EXISTING VARIBALES
+
+> ...
+)
+
+**For example:** `mutate(new_demo, rescale_income = income/2)`
+
+[**transmute()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate) is the function we use to create new variables based on variables we have and only keep the added variables - it is housed in the dplyr package. The arguments are as follows: 
+
+transmute(
+> NAME OF DATAFRAME,
+
+> NEW_VARIABLE = FUNCTION OF EXISTING VARIBALES
+
+> ...
+
+)
+
+**For example:** `transmute(new_demo, rescale_income = income/2)`
+
+You can find more details in how to use creation functions to create new variables in [Chapter I. Explore Chapter 3](https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform).
+
+
+### 4.5 Try it yourself
+
+4.5.1. Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
+
+4.5.2. Create **rescale_bpt_sec** in the same way above and **only keep new variables**.
+
+Note: Try to avoid using select().
+
+**DO QUESTION 10 OF THE QUIZ NOW**
+> What are the `?`s to answer '4.5.1 & 4.5.2 Try it yourself'?
+
+> `_?_`(final_bpx,
+    
+>   rescale_bpt_sec = bpt_sec/60
+     
+>    )
+
+## 6.Summary statistics and group_by
+
+Information about the whole dataframe such as mean is very useful for data analysis. However, things could be very complex when aggregating multiple functions. We'll start with the simple one: find a summary statistic from the whole dataset.
+
+For example, find the average age in the whole demo dataframe:
+
+```{r}
+summarize(final_demo,average_age = mean(age,na.rm = TRUE))
+```
+
+It gets more complex when we change the unit of analysis into groups, i.e, find summary statistics grouping by variables. To do so, we first convert the dataframe into a grouped dataframe using group_by() and then apply the summarize() to the grouped dataframe.
+
+
+For example, find the average age in the demo dataframe per gender:
+
+```{r}
+by_gender <- group_by(final_demo,gender)
+summarize(by_gender, average_age = mean(age, na.rm = TRUE))
+```
+
+#### Functions debunked
+[**summarize()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/summarise) is the function we use to compute the summary statistics for the whole dataframe  - it is housed in the dplyr package. The arguments are as follows: 
+
+summarize(
+> NAME OF DATAFRAME,
+
+> NAME OF SUMMARY STATISTIC = FUNCTION()
+
+)
+
+**For example:** `summarize(new_demo, mean(age,na.rm = TRUE))`
+
+[**group_by()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by) is the function we use to create a grouped dataframe grouping by one or more variables  - it is housed in the dplyr package. The arguments are as follows: 
+
+group_by(
+> NAME OF DATAFRAME,
+
+> NAME OF VARIABLE
+
+)
+
+**For example:** `group_by(new_demo,age)`
+**Note:** if there is missing value in the variable, group_by() treats it as a new group
+
+###  4.6 Try it yourself
+
+Find the average age in the demo dataframe per education level
+
+**DO QUESTION 11 OF THE QUIZ NOW**
+> Fill in the blanks to answer the question in '4.6 Try it yourself':
+
+> by_edu <- group_by(`___`)
+
+> summarize(`___`, average_age = `___`(age, na.rm = TRUE))
+
+### Group_by() extension
+
+group_by() is also useful when conjuncting with filter() and mutate(). 
+
+For example, return the observations which has more than 2 records in each education group.
+
+```{r}
+by_edu <-group_by(final_demo,edu)
+filter(by_edu,n() > 2)
+```
+
+Here's another example: using group_by() with mutate() to compute the difference in each age and the average mean in each gender group
+
+```{r}
+by_gender <-group_by(final_demo,gender)
+mutate(by_gender,
+      diff_age = age - mean(age, na.rm = T))
+```
+
+#### Functions debunked
+[**n()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n) is the function we use to count the number of observations in each group  - it is housed in the dplyr package. It can only be used with the existence of summarize(), filter(), and mutate() and there is **no** argument in it.
+
+### 4.7 Try it yourself
+Return the observations which has more than 3 records in each gender group.
+
+### 4.8 Try it yourself
+Compute the difference in each age and the average mean in each education level group
+
+**DO QUESTION 12 OF THE QUIZ NOW**
+> Fill in the blanks to answer '4.7 Try it yourself':
+
+> by_gender <-group_by(final_demo,gender)
+
+> filter(by_edu,`___`)
+
+**DO QUESTION 13 OF THE QUIZ NOW**
+> Fill in the blanks to answer '4.8 Try it yourself':
+
+> by_edu <-group_by(final_demo,edu)
+
+> mutate(by_edu, `___`)
+
+## 7. Pipe
+
+You may have noticed that when doing multiple-step operations, we need to assign the output to a new variable every time when a step is done. It becomes more annoying when there are more steps to do. The pipe operator [**%>%**](https://www.rdocumentation.org/packages/magrittr/versions/2.0.1/topics/magrittr-package) - which is housed in the magrittr package - saves us from create many unnecessary variables: it takes the output from one function as an input to the following function. 
+
+Here's example without using pipe: we want to first keep the observations in the demo dataframe with an age greater than 40 and then create a new variable called born_year calculated by 2021 - age. 
+
+We need to do this in two steps.The first step is to filter the dataframe and save the output as a new variable *temp*:
+
+```{r}
+temp <- filter(final_demo, age > 40)
+temp
+```
+
+The second step is to create the new variable:
+
+```{r}
+temp <- mutate(temp, born_year = 2021 - age)
+temp
+```
+
+The intermediate variable *temp* can be avoided by using the pipe operatore:
+
+```{r}
+final_demo %>%
+  filter(age > 40) %>%
+  mutate(born_year = 2021 - age)
+```
+
+### 4.9 Try it yourself
+Re-write the following code using pipe operator
+
+```{r}
+# temp <- filter(final_bpx, systolic > 120)
+# temp <- mutate(temp, bpt_min = bpt_sec/60)
+# temp
+```
+
+**DO QUESTION 14 OF THE QUIZ NOW**
+> Fill in the blanks to answer the question in '4.9 Try it yourself':
+
+> `___` %>%
+>   filter(`___`,systolic > 120) %>%
+>   mutate(`___`,bpt_min = bpt_sec/60)
+
+## 8. Summary of dealing with missing values
+Dealing with missing values can be complex. You need to be careful when using functions since different functions have different ways in dealing with missing values.
+
+filter(): excludes missing values. If you do want to retain missing values, use **is.na()** explicitly.
+
+arrange(): retains missing values and sorts them at the end
+
+select(): retains missing values
+
+mutate(): retains missing values
+
+summarize(): retains missing values. If you want to remove missing values, set **na.rm = TRUE** in aggregation functions.
+
+group_by(): treats missing values as a group
+
+## ALTERNATIVES TO `NHANESTRANSLATE()`
+### `case_when()`
+
+`case_when()` is another useful function that we can use that will aid our data analysis. This function acts like `mutate()`, except it changes the actual values of the variable. Here is an example of how we can use `case_when()` and `mutate()` together to change values within a variable:
+
+```{r}
+x <- c(97, 36, 55, 50, 49, 65, 46, 87, 100)
+```
+
+```{r}
+case_when(x < 50 ~ "Fail", 
+          x > 65 ~ "Pass", 
+          TRUE  ~ "Retake recommended")
+```
+
+In the example above, we have a vector of student grades. Using `case_when()`, we have translated the grades to "Fail", "Pass", and "Retake recommended" depending on the student grades.
+* **Fail** if students receive a grade of less than 50,
+* **Pass** if students receive a grade of greater than 65,
+* **Retake recommended** if students receive a grade between 50 and 65.
+
+## Translating NHANES using `case_when()`
+
+Another general method for us to translate our NHANES data into conventional language is to use `mutate()` and `case_when()`! However, this method requires us to know what each numerical value of each variable means. For example, if we want to translate the RIDRETH3 values, then we need to check the [Codebook and Frequencies](https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/DEMO_H.htm) for the following translations:
+
+* 1: "Mexican American"
+* 2: "Other Hispanic"
+* 3: "Non-Hispanic White"
+* 4: "Non-Hispanic Black"
+* 6: "Non-Hispanic Asian"
+* 7: "Other Race - Including Multi-Racial"
+* .: "Missing"
+
+Knowing this, we can use `mutate()` and `case_when()` like so:
+
+```{r}
+translated_demo <- demo %>% 
+    mutate(Race = case_when(
+          RIDRETH3 == 1 ~ "Mexican American",
+          RIDRETH3 == 2 ~ "Other Hispanic",
+          RIDRETH3 == 3 ~ "Non-Hispanic White",
+          RIDRETH3 == 4 ~ "Non-Hispanic Black",
+          RIDRETH3 == 6 ~ "Non-Hispanic Asian",
+          RIDRETH3 == 7 ~ "Other Race - Including Multi-Racial",
+          RIDRETH3 == "." ~ "Missing"
+      )) %>%
+    select(ID = SEQN, Race)
+```
+
+```{r}
+head(translated_demo, 10)
+```
+
+But what if we want to have less categories or want to combine some of the categories? What do we do then?
+
+`case_when()` is still the way to go! In this case, our codes should look like this:
+
+```{r}
+less_categories <- demo %>% 
+    mutate(Race = case_when(
+          RIDRETH3 == 1 ~ "Hispanic",
+          RIDRETH3 == 2 ~ "Hispanic",
+          RIDRETH3 == 3 ~ "White",
+          RIDRETH3 == 4 ~ "Black",
+          RIDRETH3 == 6 ~ "Asian",
+          RIDRETH3 == 7 ~ "Other",
+          RIDRETH3 == "." ~ "Missing"
+      )) %>%
+    select(ID = SEQN, Race)
+```
+
+```{r}
+head(less_categories, 10)
+```
+
+### Functions debunked
+
+**[case_when()](https://dplyr.tidyverse.org/reference/case_when.html)** is a function that we use to change or translate the values of our variables into something else that is still meaningful. The arguments are as follows:
+
+case_when(
+> **A VARIABLE** == **value as it is written in the original dataset** ~ **"NEW/TRANSLATED VALUE"**
+)
+
+Note that if none of the cases match, then R will automatically regard it as a missing (NA) value.
+
+**For example:** `case_when(x < 50 ~ "Fail", x > 65 ~ "Pass", TRUE  ~ "Retake recommended")`
+
+## `recode()` from dplyr
+
+Another alternative is `recode()`. This function works the same way as `case_when()`, except you only need to identify the variable once like so:
+
+```{r}
+# demo_translate2 <- demo %>%
+#     mutate(Race = dplyr::recode(RIDRETH3,
+#            `1` = "Hispanic",
+#            `2` = "Hispanic",
+#            `3` = "White",
+#            `4` = "Black",
+#            `6` = "Asian",
+#            `7` = "Other",
+#           .default = "Missing"
+#     )) %>%
+#     select(ID = SEQN, Race)
+```
+
+```{r}
+# head(demo_translate2, 10)
+```
+
+## `recode()` from car
+
+Another option is to use `recode()` from the car package. This function is mostly used for translating numerical data into more meaningful character data or strings.
+
+```{r}
+library(car)
+```
+
+While looking at the codes below, take note of the different types of quotation marks: single ('') or double ("") and the semi-colon (;) as the argument separator. Note also how we can use `1:2` instead of separating them into 1 and 2 like what we did with earlier functions.
+
+```{r}
+demo_translate3 <- demo %>%
+    mutate(Race = car::recode(RIDRETH3,
+        "1:2 = 'Hispanic';
+         3 = 'White';
+         4 = 'Black';
+         6 = 'Asian';
+         7 = 'Other';
+         else = 'Missing'"
+    )) %>%
+    select(ID = SEQN, Race)
+```
+
+```{r}
+head(demo_translate3, 10)
+```
+
+## TAKEAWAYS 
+By the end of this tutorial, you should be familiar with the dplyr package and be able to do basic data wrangling by yourself. 
+
+For more study materials on the dplyr package, check out this [textbook](https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform).
+

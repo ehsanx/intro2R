@@ -1,0 +1,395 @@
+# Data Summary with tableone
+
+## INSTRUCTIONS
+
+In this tutorial, we will be exploring how to summarize all variables of our datasets in one single table. We will familiarize ourselves with the R package tableone and its associated functions. This tutorial will show you how to be more efficient in analyzing data on R.
+
+Accompanying this tutorial is **a short [Google quiz](https://forms.gle/vDvUJhHDAuKHVNt98)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
+
+## LEARNING OBJECTIVES
+
+* Understand the basics the tableone package and its applications.
+* Efficiently summarize whole datasets into one single table.
+* Be familiar with the function `CreateTableOne()` and a few of its basic arguments.
+* Know how to tell tableone which variables are continuous and which variables are categorical.
+* Be familiar with different `print()` arguments to customize a tableone.
+
+## 1. SET UP
+
+For this tutorial, the main package that we will be working with is the **tableone** package. We will also need the dplyr package for a few basic functions and data from the nhanesA package. Let's go ahead and load them in our session!
+
+```{r}
+#install.packages("tableone")
+library(tableone)
+
+#install.packages("dplyr")
+library(dplyr)
+
+#install.packages("nhanesA")
+library(nhanesA)
+```
+
+Alright, so we are going back to the NHANES dataset for this tutorial. Let's, once again, download the "DEMO_H" dataset and save it in an object called "demo_original".
+
+```{r, cache=TRUE}
+demo_original <- nhanes("DEMO_H")
+```
+
+Just a reminder to everyone that this is what our raw dataset look like.
+
+```{r}
+head(demo_original)
+```
+
+As we can see, the data is quite overwhelming! Let's only select a few familiar variables to make the summary a bit more manageable and comprehensible.
+
+```{r}
+demo <- select(demo_original, 
+               c("RIAGENDR", # Gender
+                 "RIDAGEYR", # Age
+                 "RIDRETH3", # Race
+                 "DMDEDUC2") # Education
+               )
+```
+
+```{r}
+head(demo)
+```
+
+Awesome, our data is looking much better now!
+
+We have learned how to analyze it with dplyr and visualize it with ggplot. But in this tutorial, we are going to learn how to summarize the data in this large dataset into one simple table.
+
+## 2. WHAT IS TABLEONE?
+
+[tableone](http://rstudio-pubs-static.s3.amazonaws.com/13321_da314633db924dc78986a850813a50d5.html) is an R package that helps us construct "Table 1", or the baseline table that we see in biomedical research papers. This package gives us access to a lot of useful data summary function that we can use to summarize both categorical and continuous data. In addition, we can also identify normal and nonnormal variables so that R can analyze it more accurately.
+
+tableone is unique in that it is very simple and easy to use. One single function can do tremendous data summary as we will see in the later sections in this tutorial.
+
+#### DO QUESTIONS 1-2 OF THE QUIZ NOW
+
+> tableone is part of the tidyverse core. (True or False)
+
+> What sort of data can tableone summarize? (Select all that apply)
+
+## 3. CREATING A TABLEONE
+
+### CreateTableOne
+
+The simples way that we can use tableone is to use the function `CreateTableOne()` with the nested dataset between then `()` like so:
+
+```{r}
+CreateTableOne(data = demo)
+```
+
+As we can see in the output above, this function has cleanly summarize all of our data into one table. It gives us how many records there are in the dataset (n), as well as the mean and standard deviation of all of our variables!
+
+It looks pretty neat right now, but recall that the variables **RIAGENDR (Gender), RIDAGEYR (Age), and RIDRETH3 (Race)** are all categorical! So it does not make any sense to have a mean for these variables at all. 
+
+But do not worry at all! There are actually several ways that we can solve this problem:
+1. First solution is, we can use nhanesTranslate and these variables will instantly be converted to categorical, and
+2. Second solution is, we can use the `factorVars` argument in `CreateTableOne()` to identify categorical variables.
+
+### Solution 1: nhanesTranslate &  CreateTableOne
+
+First, let's translate all of our variables using the `nhanesTranslate()` function that we have learned in previous tutorials like so.
+
+```{r}
+demo_translate <- nhanesTranslate("DEMO_H",
+                 c("RIAGENDR",
+                   "RIDAGEYR",
+                   "RIDRETH3", 
+                   "DMDEDUC2"),
+                   data = demo)
+```
+
+After that, for ease of communication, let's also change the column names to something that we can all understand.
+
+```{r}
+names(demo_translate) <- c("Gender", "Age", "Race", "Education")
+```
+
+### 7.1 Try it yourself
+**Challenge**: Why do you think we need to change the names of our variables AFTER we translate them?
+
+**Hint**: Think about the `data = demo` argument in `nhanesTranslate()`
+
+Now, this is what our dataset should look like. Look familiar?
+
+```{r}
+head(demo_translate)
+```
+
+This table should look exactly like the one that you have seen in previous tutorials! The only difference here is that, **in this tutorial, we are using and summarizing the ENTIRE dataset!** We will not be scaling down to only analyzing or visualizing the first or last few rows!
+
+Now if we use the `CreateTableOne()` function again but on our new `demo_translate` object, we should be able to see a quite different table.
+
+```{r}
+(tab_nhanes <- CreateTableOne(data = demo_translate))
+```
+
+The count of records (n) is still there and we are still provided with the mean and standard deviation of participants' age. However, instead of a single mean and standard deviation for gender, race, and education, we now have all of the categories of these variables fleshed out. In addition, we are also given the count and percentage of each category!
+
+You may have also noticed that "Female" is the only gender that is shown in this table. This is because this variable only has two levels: Female and Male. For this reason, we can infer the count and percentage of the other category just based on the one that tableone gives us. There is a way that we can force tableone to show all categories of a variable. We will cover this in a later section of this tutorial.
+
+#### DO QUESTIONS 3-4 OF THE QUIZ NOW
+
+> What kind of information is summarized when the data is continuous?
+
+> What kind of information is summarized when the data is categorical?
+
+### Solution 2: Identify Numerical Categorical Data
+
+Before we hop to this second solution, again, let's rename all of our variables to something more comprehensible so that everything is easier to understand. In this subsection, however, we will be renaming our `demo` dataset, instead of the `demo_translate` dataset that we renamed earlier. 
+
+```{r}
+names(demo) <- c("Gender", "Age", "Race", "Education")
+```
+
+Okay, now we are ready to go! Note that this second solution is more transferrable and will work for datasets that do not come from NHANES. 
+
+The second way that we can help tableone know which variable is categorical is by telling it directly using the argument `factorVars`. `factorVars` is especially useful for identifying numerical categorical data like the ones that we have. 
+
+Coupled with `factorVars` is also `vars`. `vars` is used to select which variables we want to keep in our tableone. Combined what we have learned about `CreateTableOne()` so far with `factorVars` and `vars`, this is what our function with clearly identified numerical categorical data should look like:
+
+```{r}
+CreateTableOne(data = demo,
+               vars = c("Gender", "Age", "Race", "Education"),
+               factorVars = c("Gender", "Race", "Education")
+              )
+```
+
+As we can see, this tableone that we just created should look somewhat familiar to the table that we created above. The only difference is that because we did not use nhanesTranslate, all of the categories in our categorical variables are numerical. This will not be an issue if we know which number corresponds to which gender, race, or education level of the participants. Other than that, the counts and percentages of these categorical variables should be identical.
+
+If the amount of vectors `c()` and strings in the code above is a bit confusing and hard on our eyes, we can also define `factorVars` and `vars` before inputting them into `CreateTableOne()` like so:
+
+```{r}
+vars <- c("Gender", "Age", "Race", "Education")
+```
+
+```{r}
+factorVars <- c("Gender", "Race", "Education")
+```
+
+```{r}
+CreateTableOne(data = demo,
+               vars = vars,
+               factorVars = factorVars
+              )
+```
+
+We should be able to see that both tables in this subsection are identical!
+
+### 7.2 Try it yourself
+Create a tableone without the `vars` argument. What do you see? 
+Do you think the `vars` argument is necessary in our case? If not, in what situation(s) do you think it would be necessary?
+
+## 4. OTHER ARGUMENTS TO CUSTOMIZE TABLEONE
+
+There are other arguments of `CreateTableOne()` that we can use to customize and adjust our tableone!
+
+### Show All Levels
+
+Recall how our Gender variable only shows the "Female" category. If we want both categories "Female" and "Male" to be shown, we can add `showAllLevels = TRUE` to our `print()` function like so:
+
+```{r}
+print(tab_nhanes, 
+      showAllLevels = TRUE)
+```
+
+Another way that we can show both Male and Femal is to use `cramVars`. But this argument only works on 2-level variables (i.e. variables with only 2 categories) because all categories will be placed in the same row.
+
+```{r}
+print(tab_nhanes, 
+     cramVars = "Gender")
+```
+
+#### DO QUESTION 5 OF THE QUIZ NOW
+
+> What is the difference between `showAllLevels` and `cramVars`?
+
+### Nonnormal
+
+Right now, our tableones assume that the data of all of our continuous variables are normal, but what if our data is not normal?
+
+If we know that some or all of our continous variables are not normal, we can tell R this by using the `nonnormal` argument of `print()`. For example, if our Age variable is nonnormal, then:
+
+```{r}
+print(tab_nhanes, 
+      showAllLevels = TRUE,
+      nonnormal = "Age"
+     )
+```
+
+In the table above, we can see that instead of the usual mean and standard deviation, we are provided with the median and interquartile range (IQR) for our nonnormal Age variable!
+
+### 7.3 Try it yourself
+How do you know if a variable is nonnormal? Try using the function `summary()` and look at the number under skew. How do you decide if something is normal or nonnormal? Is the decision to make “Age” nonnormal accurate?
+
+#### DO QUESTION 6 OF THE QUIZ NOW
+
+> The decision to make “Age” nonnormal is accurate. (True or False)
+
+### Show Categorical or Continuous Variables Only
+
+We also have the option to only create tableones with only categorical or continuous variables.
+
+```{r}
+## Categorical variables only
+
+tab_nhanes$CatTable
+```
+
+```{r}
+## Continuous variables only
+
+print(tab_nhanes$ContTable, nonnormal = "Age")
+```
+
+### Strata
+
+In a way, strata is like the function `group_by()` in dplyr or facets in ggplot. It groups data together into groups or "strata" and then summarizes each group individually. 
+
+Note that while `showAllLevels` and `nonnormal` are arguments of the function `print()`, `strata` is an argument of the function `CreateTableOne()`. 
+
+For example, if we want to separate our data summary by Gender, we would need to write a code like so:
+
+```{r}
+strata <- CreateTableOne(data = demo_translate,
+                         vars = c("Age", "Race", "Education"), ## Note that Gender is not included because we already have strata = Gender
+                         factorVars = c("Race","Education"), ## Again, Gender is not included because it is in the strata argument
+                         strata = "Gender"
+                         )
+```
+
+```{r}
+print(strata, 
+      nonnormal = "Age", 
+      cramVars = "Gender")
+```
+
+Let's unpack this table together. Firstly, we have the usual mean and standard deviation OR median and IQR for each category of each variable. Except now, we can see that all of the variables and their categories are summarized by or stratified by Gender.
+
+Second of all, we can also see a second table below our usual table with p-values and test. This only appears when we have stratified our data into two groups for comparison. The default test for categorical variables is `chisq.test()` and the default for continuous variables is `oneway.test()` (regular ANOVA). tableone also considers nonnorm as present by the word "nonnorm" under "test" in the table above. Otherwise, we also have the option to use `krushal.test()` for nonnormal continuous variables.
+
+### 7.4 Try it yourself
+Create a tableone using the demo_translate dataset. Keep all variables and stratified the data using “Age”. What do you see? Do you think this is a helpful tableone?
+
+#### DO QUESTION 7 OF THE QUIZ NOW 
+
+> Which of the following is the least appropriate to stratify our dataset by?
+
+## 5. EXPORT TABLEONE
+
+Finally, let's export our tableone!
+
+Recall that we can use the function `write.csv()` to export data from R to a csv file. But before we can use this function, we need to save the table into an object using `print()` like so first:
+
+```{r}
+tab_csv <- print(strata,
+                 nonnormal = "Age",
+                 printToggle = FALSE)
+```
+
+#### DO QUESTION 8 OF THE QUIZ NOW
+
+> What does the argument `printToggle = FALSE` do?
+
+Now we can use our `write.csv()` function like normal.
+
+```{r}
+write.csv(tab_csv, file = "data/NHANES_Summary.csv")
+```
+
+Tada! Now our table is saved as a csv file in our working directory!
+
+```{r}
+dir()
+```
+
+#### DO QUESTIONS 9-10 OF THE QUIZ NOW
+
+> Which of the following arguments can be nested in `CreateTableOne()`?
+
+> Which of the following arguments can be nested in `print()`?
+
+## 6. ALTERNATIVES TO TABLEONE
+
+Data summary is one of the many applications that R specializes at. With this said, there are multiple other R packages that also do data summary aside from tableone. We will not go over any of these packages, but know that each package has its own strengths and so are most optimally used in different situations.
+
+Here are the other data summary packages and its main data summary function:
+
+### base R
+
+In base R, we have `summary()` and `by()`:
+
+```{r}
+summary(demo_translate)
+```
+
+```{r}
+by(demo_translate, demo_translate$Gender, summary)
+```
+
+### Hmisc
+
+In Hmisc, we have `describe()`:
+
+```{r}
+#install.packages("Hmisc")
+library(Hmisc)
+```
+
+```{r}
+describe(demo_translate)
+```
+
+### psych
+
+In psych, we have `describe()` and `describeBy()`. Note how the categorical variables are marked with an asterisk (*).
+
+```{r}
+#install.packages("psych")
+library(psych)
+```
+
+```{r}
+describe(demo_translate)
+```
+
+```{r}
+describeBy(demo_translate, demo_translate$Gender)
+```
+
+### desctable
+
+In desctable, we have `desctable()`:
+
+```{r}
+# install.packages("desctable")
+library(desctable)
+```
+
+```{r}
+desctable(demo_translate)
+```
+
+### skimr
+
+In skimr, we have `skim()`:
+
+```{r}
+#install.packages("skimr")
+library(skimr)
+```
+
+```{r}
+#skim(demo_translate)
+```
+
+## 7. SUMMARY AND TAKEAWAYS
+
+Congratulations on finishing tutorial 7 on Data Summary with tableone! After this tutorial, you should be familiar with the R package tableone as well as the function `CreateTableOne()`. In addition, you should also be familiar with the different arguments of `print()` to customize your own tableone.
+
+There are a lot more powerful functions in the tableone package. You are free to explore them on your own using [this document](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.htmlhttps://cran.r-project.org/web/packages/tableone/vignettes/introduction.html).
+

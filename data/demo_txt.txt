@@ -1,0 +1,16 @@
+id	gender	age
+83717	Female	80
+83718	Female	60
+83719	Male	3
+83720	Male	36
+83721	Male	52
+83722	Male	0
+83723	Male	61
+83724	Male	80
+83725	Male	7
+83726	Male	40
+83727	Male	26
+83728	Female	2
+83729	Female	42
+83730	Male	7
+83731	Male	11

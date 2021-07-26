@@ -1,1 +1,1 @@
-# intro2R
+Introduction to R for health data analysis

@@ -1,0 +1,129 @@
+# R and RStudio set up
+
+## INSTRUCTIONS
+This tutorial is aiming to introduce you to R and RStudio. It will guide you to download and install R and RStudio and walk you through the main components in RStudio. Follow this tutorial step-by-step and finish setting up R and RStudio before the next tutorial.
+
+Accompanying this tutorial is **a short [Google quiz](https://forms.gle/Xf1AfoGaxhwrWRQ38)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
+
+## LEARNING OBJECTIVES
+
+* Understand the difference between R and RStudio
+
+* Download and install R
+
+* Download and install RStudio
+
+* Be familiar with the main components in RStudio
+
+## 1. What is R
+
+R is a language and enviroment for statistical computing and graphics. It is commonly used in borh academia and industry. 
+
+It is:
+
+* Free and open source
+
+* Easy to learn and use
+
+* Good compatibility - can be used in Windows, macOS, and Linux
+
+For more information about R, check out this [website](https://www.r-project.org/about.html).
+
+**DO QUESTION 1 OF THE QUIZ NOW**
+> True of False: R is a programming language
+
+## 2. What is RStudio
+
+RStudio is not a language - is an IDE (Integrated Development Environment) for R. It hae two versions available: RStudio desktop and RStudio Server. We will use RStudio desktop in this tutorial.
+
+There are lots of available IDEs for R. The reason why we chooes RStudio is that it has a fancy GUI and required features that makes working with R much easier and more efficient. 
+
+**DO QUESTION 2 OF THE QUIZ NOW**
+> True of False: RStudio is a programming language which is similar to R
+
+## 3. Download and install R
+
+* Go to https://www.r-project.org/ and click on **download R**
+
+* Choose CRAN location based on your geological location
+
+* Download R based on your operating system and choose the latest release version (it is Python 3.9.5 for now)
+
+* Open the downloaded package and follow the instruction there to finish the installation
+
+## 4. Download and install RStudio
+
+**Make sure you downloaded and installed R before doing the following steps**
+
+* Go to https://www.rstudio.com/products/rstudio/download/ and download the RStudio Desktop
+
+* Open the downloaded file and follow the instruction there to finish the installation
+
+## 5. RStudio basics
+
+![image](https://i.imgur.com/TKTocvu.png)
+
+RStudio have 4 main components:
+
+* Script (top left)
+
+    * the Script is where you write the R code
+    
+    * you can save the script as a `.R` file
+    
+* Console (bottom left)
+
+    * the console is where the R code being executed
+    
+    * Output (except graphs and plots) will be shown after code executed
+
+* Workspace (top right)
+
+    * all objects in the current working environments including variables, data, and functions are listed here with a brief display of their corresponding values.
+    
+    * you can import other workspaces, save the current workspace, and clean up the current workspace
+    
+    * R workspace file ends with `.RData`
+
+* Files, Plots, Packages, Help (bottom right)
+ 
+     * Files is the place to view the Files and to set Working Directory
+     
+     * Plots gives a preview of plot - it is the place where graphical output will be displayed
+     
+     * Packages is the place to install/view/update packages
+     
+     * Help is the place to get help about R
+
+**DO QUESTION 3 OF THE QUIZ NOW**
+> In RStudio, where do you write your R code if you don't want it be saved? 
+
+**DO QUESTION 4 OF THE QUIZ NOW**
+> In RStudio, where do you write your R code if you do want it be saved? 
+
+**DO QUESTION 5 OF THE QUIZ NOW**
+> What type is the saved R code file? 
+
+**DO QUESTION 6 OF THE QUIZ NOW**
+> In RStudio, where is your R code executed?
+
+**DO QUESTION 7 OF THE QUIZ NOW**
+> In RStudio, where is numerical output displayed?
+
+**DO QUESTION 8 OF THE QUIZ NOW**
+> In RStudio, where is graphical output displayed?
+
+**DO QUESTION 9 OF THE QUIZ NOW**
+> In RStudio, where are variables, data, functions stored?
+
+**DO QUESTION 10 OF THE QUIZ NOW**
+> What type is the workspace file? 
+
+**DO QUESTION 11 OF THE QUIZ NOW**
+> Is there a way to find the details about functions and packages in RStudio?
+
+## TAKEAWAYS
+By the end of this tutorial, you should be able to set up R and RStudio successfully. Please feel free to reach out if you have any issues with the set ups.
+
+Before we proceed to the next tutorial, make sure that you're familiar with the RStudio GUI and features. 
+

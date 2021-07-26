@@ -1,0 +1,211 @@
+"","ID","Gender","Race","Systolic","Diastolic","BPT"
+"1",73557,"Male","Non-Hispanic Black",114,76,620
+"2",73558,"Male","Non-Hispanic White",160,80,766
+"3",73559,"Male","Non-Hispanic White",140,76,665
+"4",73560,"Male","Non-Hispanic White",102,34,803
+"5",73561,"Female","Non-Hispanic White",134,88,949
+"6",73562,"Male","Mexican American",158,82,1064
+"7",73563,"Male","Non-Hispanic White",NA,NA,90
+"8",73564,"Female","Non-Hispanic White",124,80,954
+"9",73565,"Male","Other Hispanic",NA,NA,NA
+"10",73566,"Female","Non-Hispanic White",124,72,625
+"11",73567,"Male","Non-Hispanic White",142,78,932
+"12",73568,"Female","Non-Hispanic White",100,62,585
+"13",73569,"Female","Other Race - Including Multi-Rac",NA,NA,NA
+"14",73570,"Female","Other Race - Including Multi-Rac",104,42,710
+"15",73571,"Male","Non-Hispanic White",NA,NA,1193
+"16",73572,"Female","Non-Hispanic Black",88,54,557
+"17",73573,"Male","Non-Hispanic Black",94,60,599
+"18",73574,"Female","Non-Hispanic Asian",124,66,710
+"19",73575,"Male","Non-Hispanic Black",NA,NA,291
+"20",73576,"Male","Non-Hispanic Black",110,62,584
+"21",73577,"Male","Mexican American",118,74,750
+"22",73578,"Male","Mexican American",124,64,607
+"23",73579,"Female","Non-Hispanic White",116,70,648
+"24",73580,"Female","Non-Hispanic Black",118,66,805
+"25",73581,"Male","Non-Hispanic Asian",132,80,699
+"26",73582,"Female","Non-Hispanic Black",96,48,527
+"27",73583,"Female","Non-Hispanic White",NA,NA,283
+"28",73584,"Male","Non-Hispanic White",110,52,753
+"29",73585,"Male","Non-Hispanic Asian",106,74,623
+"30",73586,"Female","Non-Hispanic Asian",NA,NA,318
+"31",73587,"Male","Non-Hispanic Asian",110,68,930
+"32",73588,"Male","Non-Hispanic Black",98,0,581
+"33",73589,"Male","Non-Hispanic White",118,66,1018
+"34",73590,"Male","Mexican American",NA,NA,304
+"35",73591,"Male","Non-Hispanic White",NA,NA,281
+"36",73592,"Male","Mexican American",120,78,619
+"37",73593,"Male","Non-Hispanic White",NA,NA,284
+"38",73594,"Male","Other Hispanic",124,66,904
+"39",73595,"Male","Other Hispanic",140,84,900
+"40",73596,"Female","Non-Hispanic Asian",130,76,647
+"41",73597,"Female","Non-Hispanic Black",NA,NA,437
+"42",73598,"Male","Mexican American",112,44,687
+"43",73599,"Female","Non-Hispanic White",118,70,1029
+"44",73600,"Male","Non-Hispanic Black",150,86,1067
+"45",73601,"Male","Mexican American",102,28,604
+"46",73602,"Male","Other Hispanic",NA,NA,7
+"47",73603,"Male","Non-Hispanic Asian",118,84,584
+"48",73604,"Female","Non-Hispanic White",118,58,635
+"49",73605,"Male","Non-Hispanic White",94,58,644
+"50",73606,"Male","Non-Hispanic White",116,54,932
+"51",73607,"Male","Non-Hispanic White",120,84,927
+"52",73608,"Male","Non-Hispanic Asian",NA,NA,324
+"53",73609,"Female","Mexican American",92,48,820
+"54",73610,"Male","Non-Hispanic White",128,84,994
+"55",73611,"Female","Other Hispanic",NA,NA,13
+"56",73612,"Female","Non-Hispanic Asian",NA,NA,97
+"57",73613,"Female","Non-Hispanic Black",128,76,682
+"58",73614,"Female","Non-Hispanic White",104,66,596
+"59",73615,"Female","Other Hispanic",146,58,896
+"60",73616,"Female","Non-Hispanic White",122,48,838
+"61",73617,"Male","Mexican American",NA,NA,278
+"62",73618,"Female","Non-Hispanic White",100,60,739
+"63",73619,"Female","Mexican American",106,56,590
+"64",73620,"Female","Non-Hispanic White",NA,NA,282
+"65",73621,"Male","Non-Hispanic White",136,66,703
+"66",73622,"Male","Non-Hispanic White",144,70,1018
+"67",73623,"Male","Non-Hispanic White",124,78,918
+"68",73624,"Female","Non-Hispanic White",102,72,689
+"69",73625,"Male","Mexican American",NA,NA,NA
+"70",73626,"Female","Non-Hispanic Black",158,68,726
+"71",73627,"Male","Non-Hispanic Asian",NA,NA,288
+"72",73628,"Male","Non-Hispanic White",104,54,745
+"73",73629,"Female","Non-Hispanic Black",108,60,952
+"74",73630,"Male","Non-Hispanic Asian",106,46,620
+"75",73631,"Female","Non-Hispanic Black",160,98,1030
+"76",73632,"Male","Mexican American",114,74,699
+"77",73633,"Female","Non-Hispanic White",136,82,1032
+"78",73634,"Male","Non-Hispanic Black",NA,NA,NA
+"79",73635,"Female","Mexican American",NA,NA,284
+"80",73636,"Female","Mexican American",NA,NA,278
+"81",73637,"Female","Non-Hispanic White",NA,NA,215
+"82",73638,"Female","Other Race - Including Multi-Rac",142,44,667
+"83",73639,"Male","Non-Hispanic White",126,62,848
+"84",73640,"Female","Non-Hispanic Black",130,74,909
+"85",73641,"Female","Non-Hispanic White",NA,NA,NA
+"86",73642,"Female","Non-Hispanic White",126,82,854
+"87",73643,"Male","Non-Hispanic Asian",128,66,913
+"88",73644,"Male","Other Race - Including Multi-Rac",90,50,543
+"89",73645,"Female","Non-Hispanic White",126,72,701
+"90",73646,"Male","Mexican American",NA,NA,368
+"91",73647,"Female","Other Hispanic",118,0,708
+"92",73648,"Female","Non-Hispanic Black",106,72,612
+"93",73649,"Male","Non-Hispanic White",NA,NA,NA
+"94",73650,"Male","Other Race - Including Multi-Rac",NA,NA,258
+"95",73651,"Female","Non-Hispanic Black",NA,NA,141
+"96",73652,"Female","Non-Hispanic Black",178,88,830
+"97",73653,"Female","Non-Hispanic Black",98,70,607
+"98",73654,"Male","Non-Hispanic White",120,84,655
+"99",73655,"Male","Non-Hispanic Black",134,96,772
+"100",73656,"Male","Non-Hispanic White",122,74,832
+"101",73657,"Female","Mexican American",NA,NA,NA
+"102",73658,"Male","Non-Hispanic Asian",108,64,813
+"103",73659,"Female","Non-Hispanic White",148,78,1280
+"104",73660,"Male","Non-Hispanic Asian",116,76,739
+"105",73661,"Male","Non-Hispanic Black",108,58,673
+"106",73662,"Male","Non-Hispanic White",196,108,878
+"107",73663,"Male","Non-Hispanic White",118,62,976
+"108",73664,"Female","Mexican American",NA,NA,279
+"109",73665,"Male","Mexican American",136,88,733
+"110",73666,"Male","Non-Hispanic Asian",120,48,762
+"111",73667,"Male","Non-Hispanic White",106,74,619
+"112",73668,"Female","Non-Hispanic White",114,72,772
+"113",73669,"Male","Non-Hispanic Black",NA,NA,281
+"114",73670,"Female","Mexican American",134,68,719
+"115",73671,"Male","Non-Hispanic Black",138,54,670
+"116",73672,"Male","Non-Hispanic White",140,80,606
+"117",73673,"Male","Non-Hispanic White",116,52,617
+"118",73674,"Female","Non-Hispanic White",100,74,757
+"119",73675,"Male","Non-Hispanic Asian",126,74,712
+"120",73676,"Male","Non-Hispanic White",NA,NA,769
+"121",73677,"Female","Non-Hispanic Black",110,62,759
+"122",73678,"Male","Non-Hispanic White",132,82,765
+"123",73679,"Female","Mexican American",NA,NA,288
+"124",73680,"Male","Non-Hispanic White",110,36,770
+"125",73681,"Female","Non-Hispanic Black",98,48,906
+"126",73682,"Female","Non-Hispanic Black",NA,NA,74
+"127",73683,"Female","Other Race - Including Multi-Rac",NA,NA,242
+"128",73684,"Male","Non-Hispanic Asian",120,56,547
+"129",73685,"Female","Other Race - Including Multi-Rac",NA,NA,134
+"130",73686,"Female","Mexican American",NA,NA,260
+"131",73687,"Male","Non-Hispanic White",88,56,689
+"132",73688,"Male","Non-Hispanic White",126,88,961
+"133",73689,"Male","Non-Hispanic White",NA,NA,NA
+"134",73690,"Female","Non-Hispanic White",166,66,1015
+"135",73691,"Male","Non-Hispanic White",128,32,744
+"136",73692,"Male","Other Hispanic",132,52,864
+"137",73693,"Female","Non-Hispanic White",184,74,981
+"138",73694,"Female","Non-Hispanic White",106,56,657
+"139",73695,"Female","Non-Hispanic White",NA,NA,NA
+"140",73696,"Female","Non-Hispanic White",NA,NA,1031
+"141",73697,"Female","Non-Hispanic White",92,62,722
+"142",73698,"Male","Non-Hispanic White",126,64,769
+"143",73699,"Male","Non-Hispanic White",96,52,719
+"144",73700,"Male","Mexican American",NA,NA,320
+"145",73701,"Male","Non-Hispanic Asian",110,64,680
+"146",73702,"Female","Non-Hispanic White",158,74,732
+"147",73703,"Female","Other Hispanic",100,54,739
+"148",73704,"Female","Non-Hispanic White",92,66,903
+"149",73705,"Male","Non-Hispanic White",96,60,620
+"150",73706,"Male","Non-Hispanic White",140,80,771
+"151",73707,"Male","Non-Hispanic Black",122,82,892
+"152",73708,"Male","Mexican American",114,62,890
+"153",73709,"Male","Non-Hispanic Black",156,52,736
+"154",73710,"Male","Non-Hispanic White",NA,NA,287
+"155",73711,"Male","Mexican American",NA,NA,285
+"156",73712,"Male","Non-Hispanic Asian",118,0,790
+"157",73713,"Male","Mexican American",NA,NA,368
+"158",73714,"Female","Non-Hispanic White",98,70,538
+"159",73715,"Female","Non-Hispanic White",104,74,772
+"160",73716,"Male","Non-Hispanic White",114,64,747
+"161",73717,"Male","Non-Hispanic Black",166,68,980
+"162",73718,"Male","Non-Hispanic Black",136,72,971
+"163",73719,"Female","Mexican American",98,72,1145
+"164",73720,"Male","Non-Hispanic Black",128,92,902
+"165",73721,"Female","Non-Hispanic White",NA,NA,NA
+"166",73722,"Female","Non-Hispanic Black",150,60,690
+"167",73723,"Male","Non-Hispanic White",128,68,1128
+"168",73724,"Male","Non-Hispanic Black",120,68,610
+"169",73725,"Female","Non-Hispanic White",154,70,691
+"170",73726,"Female","Mexican American",138,84,645
+"171",73727,"Female","Non-Hispanic Black",NA,NA,77
+"172",73728,"Male","Non-Hispanic White",96,74,849
+"173",73729,"Male","Non-Hispanic White",118,56,660
+"174",73730,"Male","Mexican American",116,70,675
+"175",73731,"Male","Other Race - Including Multi-Rac",100,0,587
+"176",73732,"Male","Non-Hispanic White",162,82,682
+"177",73733,"Female","Mexican American",NA,NA,827
+"178",73734,"Female","Non-Hispanic Black",NA,NA,345
+"179",73735,"Female","Other Hispanic",118,74,756
+"180",73736,"Male","Non-Hispanic Black",102,68,760
+"181",73737,"Female","Other Race - Including Multi-Rac",NA,NA,NA
+"182",73738,"Male","Non-Hispanic Black",126,74,691
+"183",73739,"Female","Non-Hispanic White",112,70,604
+"184",73740,"Female","Non-Hispanic Asian",114,74,637
+"185",73741,"Female","Mexican American",142,98,1036
+"186",73742,"Female","Other Race - Including Multi-Rac",108,48,1005
+"187",73743,"Male","Mexican American",NA,NA,NA
+"188",73744,"Female","Non-Hispanic White",NA,NA,104
+"189",73745,"Male","Other Race - Including Multi-Rac",NA,NA,388
+"190",73746,"Female","Non-Hispanic White",118,78,1018
+"191",73747,"Female","Other Hispanic",192,84,795
+"192",73748,"Male","Non-Hispanic Black",NA,NA,278
+"193",73749,"Male","Non-Hispanic White",110,66,650
+"194",73750,"Male","Other Race - Including Multi-Rac",104,62,756
+"195",73751,"Female","Non-Hispanic White",116,70,1014
+"196",73752,"Female","Non-Hispanic White",90,34,764
+"197",73753,"Female","Non-Hispanic White",86,44,660
+"198",73754,"Male","Mexican American",112,70,664
+"199",73755,"Male","Mexican American",138,70,782
+"200",73756,"Male","Non-Hispanic White",118,54,655
+"201",73757,NA,NA,96,64,919
+"202",73758,NA,NA,100,60,843
+"203",73759,NA,NA,106,44,594
+"204",73760,NA,NA,124,78,833
+"205",73761,NA,NA,102,54,615
+"206",73762,NA,NA,NA,NA,298
+"207",73763,NA,NA,114,72,558
+"208",73764,NA,NA,104,0,738
+"209",73765,NA,NA,106,56,682
+"210",73766,NA,NA,134,60,595

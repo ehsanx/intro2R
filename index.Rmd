@@ -1,0 +1,51 @@
+--- 
+title: "Introduction to R for health data analysis"
+author: "Ehsan Karim, An Hoang and Yang Qu"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::html_document2:
+    includes:
+      in_header: header.html
+  bookdown::gitbook:
+    includes:
+      in_header: header.html
+  bookdown::pdf_book:
+    includes:
+      in_header: header.html
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: ehsanx/intro2R
+description: "Intro to R."
+---
+
+# Preface {-}
+
+This is a R online textbook for those who are not familiar with data wrangling. For providing some practical introduction to data wrangling, NHANES datasets will be used as examples in this tutorial. Target audience is those interested in health data analysis, but these data wrangling skills are easily transferable to other fields. General understanding of a syntax based program is required as pre-requisite. For any comments regarding this document, reach out to [Ehsan Karim](http://ehsank.com/).
+
+## Main references {-}
+
+- Overall reference @wickham2016r
+
+## Version history {-}
+
+Currently under development. The conception of this online textbook is loosely based on lab materials from the PhD level course SPPH 504/007 (developed in 2018 Fall, and updated in 2019 fall and 2020 fall). A more comprehensive version of this textbook was put together by a team of underhgraduate students, working under the supervision of Dr. Ehsan Karim. Initial team members included An Hoang and Yang Qu. The work was partially supported by Work Learn program at UBC in 2021 May-August (during Covid-19 pandemic). 
+
+## Contributor list {-}
+
+- An Hoang (forestry, UBC)
+- Yang Qu (statistics, UBC)
+
+## License {-}
+
+```{r, echo=FALSE, out.width="25%"}
+knitr::include_graphics("images/by-nc-sa.png")
+```
+
+The online version of this book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) International License. You may share, adapt the content and may distribute your contributions under the same license (CC BY-NC-SA 4.0), but you have to give appropriate credit, and cannot use material for the commercial purposes.
+
+
+
+
