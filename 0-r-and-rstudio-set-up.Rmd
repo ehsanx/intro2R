@@ -1,5 +1,9 @@
 # R and RStudio set up
 
+
+I will include kaggle links here.
+
+
 ## INSTRUCTIONS
 This tutorial is aiming to introduce you to R and RStudio. It will guide you to download and install R and RStudio and walk you through the main components in RStudio. Follow this tutorial step-by-step and finish setting up R and RStudio before the next tutorial.
 
