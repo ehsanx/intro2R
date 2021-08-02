@@ -1,12 +1,12 @@
 # Date & Time Data with lubridate
 
-## INSTRUCTIONS
+## Instructions
 
 In this tutorial, we will be exploring how to deal with date/time data in R using the lubridate package. This incudes creating new, retrieving information from existing, modifying, and conduct different arithmetic calculations on date/time data. We will also be plotting date/time data to visualize our dataset.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/zt9vGevq3zuqGBTG8)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 
 * Understand the basics of the lubridate package and its simple datetime functions.
 * Know how to create date, time, and datetime data on R.
@@ -15,7 +15,7 @@ Accompanying this tutorial is **a short [Google quiz](https://forms.gle/zt9vGevq
 * Know how to add, subtract, multiply, divide date/time data
 * Be familiar with graphs with date/time data.
 
-## 1. SET UP
+## Set Up
 
 For this tutorial, we will need the **lubridate** package with functions that will allow us to deal with date/time data. This package is also part of the tidyverse core that also houses readr, dplyr, and ggplot2.
 
@@ -52,7 +52,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-## 2. EXPLORING FRIENDS VISITS DATASET
+## Exploring Friends Visits Dataset
 
 Before we jump into lubridate and date/time data, let's first explore the Friends visits dataset that we will be using today.
 
@@ -76,7 +76,7 @@ Now, let's check our dataset again.
 head(visits)
 ```
 
-## 3. CREATING DATE/TIME DATA
+## Creating Date/Time Data
 
 Date/time data are data tht conveys information about, you guessed it, date and/or time! There are three relevant data types when we talk about date/time data:
 1. **Date** - only has the date (e.g. 2020-05-15)
@@ -155,7 +155,7 @@ today()
 now()
 ```
 
-### 6.1 Try it yourself
+### Try it yourself
 
 After running the `today()` and `now()` codes above, what do you see?
 
@@ -163,11 +163,11 @@ Try to also change the time zone to where you are or to something else. Now what
 
 #### DO QUESTIONS 1-3 OF THE QUIZ NOW
 
-> Which of the following is a date data?
+* Which of the following is a date data?
 
-> What data type is this: 2017-09-19 19:00:00?
+* What data type is this: 2017-09-19 19:00:00?
 
-> What is different about the outputs' data types of `today()` and `now()`? (Select all that apply)
+* What is different about the outputs' data types of `today()` and `now()`? (Select all that apply)
 
 ### Existing Date/Time Data 
 
@@ -224,7 +224,7 @@ make_datetime_new <- function(year, month, day, time) {
 
 #### DO QUESTION 4 OF THE QUIZ NOW
 
-> **REVIEW:** What is the difference between %/% and %%?
+* **REVIEW:** What is the difference between %/% and %%?
 
 Here, we are telling R to write a new `make_datetime()` function named `make_datetime_new()`. Our new function then has 5 arguments, the year, the month, the day, the time %/% 100, and the time %% 100. The last two arguments will give us the hour and minutes of the day. In other words, 830 %/% 100 = 8 and 830 %% 100 is 30, so combined, 830 becomes 8:30!
 
@@ -247,7 +247,7 @@ make_datetime(2014, 8, 22, 9)
 
 #### DO QUESTION 5 OF THE QUIZ NOW
 
-> Using the Friends_visits data frame, which of the following code will give us a new column named "Year_Month" that only has information of the year and month of each friend visit?
+* Using the Friends_visits data frame, which of the following code will give us a new column named "Year_Month" that only has information of the year and month of each friend visit?
 
 ### Functions Debunked
 **[make_datetime()](https://lubridate.tidyverse.org/reference/make_datetime.html)** can be used to create new datetime data. The arguments are as follows:
@@ -272,11 +272,11 @@ make_datetime(
 * Combine columns of a dataset: `flights_datetime %>% make_datetime(year, month, day, hour, minute)`
 * Insert values directly: `make_datetime(2014, 8, 22, 9)`
 
-### 6.2 Try it yourself
+### Try it yourself
 
 Try creating a new column named "Day_visit" that only contains information of the Year, Month, and Day columns using the Friends_visits dataframe that we just created.
 
-## 4. RETRIEVING INFORMATION FROM DATE/TIME DATA
+## Retrieving Information from Date/Time Data
 
 We have learned how to create date/time data, but how do we retrieve information from the date/time data that we created? Hopefully, by the end of this section, we would be able to answer this question!
 
@@ -362,7 +362,7 @@ head(
     )
 ```
 
-### 6.3 Try it yourself
+### Try it yourself
 
 Using the functions introduced above, solve the following questions:
 1. What day of the week is April 2, 2014?
@@ -404,13 +404,13 @@ Friends_visits %>%
 
 #### DO QUESTION 6 OF THE QUIZ NOW
 
-> What is the difference between `%>%` and `+`? (Select all that apply)
+* What is the difference between `%>%` and `+`? (Select all that apply)
 
-### 6.4 Try it yourself
+### Try it yourself
 
 Using the same Friends_visit dataset, create a similar graph as above but the x-axis is days of the week. In other words, create a bar graph that shows how many visits there are in each day of the week.
 
-## 5. UPDATING & PLOTTING DATE/TIME DATA
+## Updating & Plotting Date/Time Data
 
 ### Update
 
@@ -433,7 +433,7 @@ DT %>%
 
 `update()` automatically adjusts it to May 1st instead because April 31st does not exist!
 
-### 6.5 Try it yourself
+### Try it yourself
 
 Try to update our month to 13. What happened to our date/time? What is the output?
 
@@ -497,13 +497,13 @@ What information can you conclude from the graph above? Around what timeframe do
 
 Note that each binwidth (i.e. binwidth = 1) is equal to one second. So `binwidth = 3600` means we are clumping all flights within each 60 minutes (1 hour) together into one single data point in our frequency polygon.
 
-### 6.6 Try it yourself
+### Try it yourself
 
 Recreate the frequency polygon above but change the binwidth so that all flights within each 30 minutes are clumped into one single data point. How do the graphs differ? Can you think of a few scenarios where one would be preferred?
 
 #### DO QUESTION 7 OF THE QUIZ NOW
 
-> What should the binwidth be if we want to have each data point to represent a separate 2 hour interval?
+* What should the binwidth be if we want to have each data point to represent a separate 2 hour interval?
 
 #### hms package
 
@@ -534,7 +534,7 @@ We can see that our "Visit_hour_hms" column actually only retain time (hour, min
 
 If we compare this graph with the one above, we should see that they are identical! Except the x-axis in this graph is much clearer and accurate because it only contains the time of day.
 
-## 6. ARITHMETIC OPERATORS WITH DATE/TIME
+## Arithmetic Operators with Date/Time
 
 ### Basic Arithmetic
 
@@ -567,7 +567,7 @@ as.duration(age)
 
 #### DO QUESTION 8 OF THE QUIZ NOW
 
-> We can use `now()` to calculate our age as well. (True or False)
+* We can use `now()` to calculate our age as well. (True or False)
 
 ### Account for Leap Years and Daylight Savings
 
@@ -615,11 +615,11 @@ ymd_hms("2021-03-14 1:00:00",
 
 #### DO QUESTIONS 9-10 OF THE QUIZ NOW
 
-> Which of these functions account for date and time changes throughout the years?
+* Which of these functions account for date and time changes throughout the years?
 
-> What happens when we use `ddays()` or `dyears()` in days or years that do not experience any special time/date changes?
+* What happens when we use `ddays()` or `dyears()` in days or years that do not experience any special time/date changes?
 
-## 7. SUMMARY AND TAKEAWAYS
+## Summary and Takeaways
 
 After completing this tutorial, you should be more familiar the lubridate package and know the basic ways to deal with date/time data in R. This tutorial covered how to create new date/time data, retrieve information from existing date/time data, modify and plot date/time data, as well as conduct simple arithmetic operators using date/time data.
 

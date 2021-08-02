@@ -1,12 +1,12 @@
 # Introduction to NHANES
 
-## INSTRUCTIONS
+## Instructions
 
 This tutorial is aiming to provide an introduction to NHANES dataset and a guide on how to access the NHANES. It will guide you to retrieve the dataset in two days: CDC website and nhanesA package. At the end of this tutorial, it will cover some basic functions in the nhanesA package.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/zhMbsduL8xYjnmXg6)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 
 * Be familiar with the survey data in NHANES dataset
 
@@ -18,7 +18,7 @@ Accompanying this tutorial is **a short [Google quiz](https://forms.gle/zhMbsduL
 
 * Be able to understand the difference between NHANES dataset and nhanesA package
 
-## 1. Introduction to NHANES
+## Introduction to NHANES
 
 The National Health and Nutrition Examination Survey (NHANES) is a program with a series of studies aimed at determining the health and nutritional status of Americans, including adults and children. The NHANES program started in the early 1960s and was transformed into a countinuous program in 1999.
 
@@ -38,28 +38,28 @@ There are 5 types of continues NHANES survey data available to the public:
 
 We will focus on the continuou NHANES dataset in this series of tutorials. On this [CDC website](https://wwwn.cdc.gov/nchs/nhanes/), you will see all the continous NHANES ordered by year. 
 
-![image](https://i.imgur.com/8uGOUmc.png)
+![Figure 1. NHANES Datasets from 1999 to 2020](images/ContinuousNHANES.png)
 
 We will use NHANES 2013-2014 just for demostration in this tutorial. If you click on NHANES 2013-2014, you will be directed to the [page](https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2013) where you can access the data collected between 2013 and 2014:
 
-![image](https://i.imgur.com/I94dBUa.png)
+![Figure 2. NHANES 2013-2014](images/NHANES13-14.png)
 
 We will introduce how to access the data in the following section.
 
 **DO QUESTION 1 OF THE QUIZ NOW**
-> How many categories (available to public) are there in NHANES dataset?
+* How many categories (available to public) are there in NHANES dataset?
 
-## 2. Importing NHANES dataset from website
+## Importing NHANES dataset from website
 
 Now we will learn how to download the NHANES dataset from CDC website and import it to R. In the last section, we're on this [page](https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2013)  and we'll continue from there.
 
 For example, we want to use the Demographics Data for further analysis. The first step is to download the dataset - click on "Demographics Data":
 
-![image](https://i.imgur.com/wUReKXp.png)
+![Figure 3. NHANES 2013-2014 Demographics Data](images/Demo.png)
 
 Then, you will see the following page:
 
-![image](https://i.imgur.com/MhlrkEn.png)
+![Figure 4. NHANES 2013-2014 Demographics Data](images/Demo1.png)
 
 To download the dataset, click on *DEMO_H Data [XPT - 3.7 MB]* under the *Data File*. 
 
@@ -101,9 +101,9 @@ read.xport(
 **For example:** `read.xport("../input/demo-h/DEMO_H.XPT")`
 
 **DO QUESTION 2 OF THE QUIZ NOW**
-> Which package is read.xport() in?
+* Which package is read.xport() in?
 
-## 3. Importing NHANES dataset from R package: nhanesA
+## Importing NHANES dataset from R package: nhanesA
 
 Another way to access the NHANES dataset is to import it from R packages. One popular R package developed for retrieving NHANES dataset is the [**nhanesA**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3) package. 
 
@@ -220,45 +220,27 @@ nhanesTranslate(
 **For example:** `nhanesTranslate('DEMO_H', RIAGENDR, data = demo)`
 
 
-#### Try it yourself 3.1
+#### Try it yourself
 
-Find all the Examination Data in survey cycle 2013-2014
+a. Find all the Examination Data in survey cycle 2013-2014.
 
-#### Try it yourself 3.2
+b. Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014
 
-Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014
+c. Translate the following variables in the BPX dataset
 
-#### Try it yourself 3.3
-
-Translate the following variables in the BPX dataset
-
-BPXPULS - Pulse regular or irregular?
+    * BPXPULS - Pulse regular or irregular?
  
-BPAARM - Arm selected
+    * BPAARM - Arm selected
 
-**DO QUESTION 3 OF THE QUIZ NOW**
+**DO QUESTIONS 3-5 OF THE QUIZ NOW**
 
-> Fill in the blank to answer 'Try it yourself 3.1':
+Fill in the blank to answer the 'Try it yourself' sections:
 
-> nhanesTables(`___`,`___`)
+* nhanesTables(`___`,`___`)
 
+* bpx <- nhanes(`___`)
 
-**DO QUESTION 4 OF THE QUIZ NOW**
-> Fill in the blank to answer 'Try it yourself 3.2':
-
-> bpx <- nhanes(`___`)
-
-**DO QUESTION 5 OF THE QUIZ NOW**
-
-> Fill in the blank to answer 'Try it yourself 3.3':
-
-> bpx_translate <- nhanesTranslate(`___`,
-
->                    c('BPXPULS', # Pulse regular or irregular?
-                                  
->                    'BPAARM'), # Arm selected
-
->                    data = `___`)
+* bpx_translate <- nhanesTranslate(`___`, c('BPXPULS', 'BPAARM'), data = `___`)
 
 ### Other packages in R
 
@@ -370,8 +352,7 @@ The two imported datasets are identical! Fantastic, our new function works! And 
 The function that we went over in this tutorial is originally written by **___**. For simplification and educational purposes, the function has been simplified. You can find the original function here (**need to insert link to document**).
 
 
-
-## TAKEAWAYS
+## Summary and Takeaways
 
 By the end of this tutorial, you should be able to know what is NHANES and how to retrieve the NHANES dataset. You should also be familiar with the functions housed in nhanesA mentioned in this tutorial. 
 

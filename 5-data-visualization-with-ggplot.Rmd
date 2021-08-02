@@ -1,18 +1,18 @@
 # Data Visualization with ggplot2
 
-## INSTRUCTIONS
+## Instructions
 This tutorial will introduce us to data visualization on R, specially using the ggplot R package. For this purpose, we will focus on the basic and most commonly used functions of the ggplot package. We will be able to read through the step-by-step instructions on how to use each function as well as its different arguments.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/yUvW9Sg8mqEozyYu8)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 * Be familiar with the basics of ggplot including how to graph basic scatterplot (with smoothed conditional means), line graph, bar graph, and bar chart using geometric functions.
 * Get a brief understanding of coordinate functions with special emphasis on `coord_flip()` and `coord_polar()`.
 * Be able to create gridded subplots using facet functions.
 * Know how to customize a graph to our own liking - including changing the texts, font, size, and color.
 * Know how to export the final graph into a png file using `ggsave()`.
 
-## 1. SET UP
+## Set Up
 
 ### Loading required packages
 For this tutorial, we will only be focusing on the ggplot2 package. But we will also be using a few functions from the readr and dplyr packages from the previous tutorials.
@@ -46,9 +46,9 @@ head(demo_bpx)
 
 #### DO QUESTION 1 OF THE QUIZ NOW
 
-> **REVIEW** What is the name of the core that the packages readr, dplyr, and ggplot2 belong to?
+* **REVIEW** What is the name of the core that the packages readr, dplyr, and ggplot2 belong to?
 
-## 2. GGPLOT AND POINT GEOMETRICS
+## ggplot() and Point Geometrics
 
 Now that our dataset is all set up, it's time to plot our first graph! First, we need to start with an empty canvas and to do this, we need `ggplot()` as our base. Try running `ggplot()` alone. What do you see?
 
@@ -105,15 +105,16 @@ geom_point(
 
 **HINT**: We've covered how to look for help within and outside of R in our very first tutorial: Basics of R and RStudio.
 
-> What do you think the argument `na.rm = TRUE` does?
+* What do you think the argument `na.rm = TRUE` does?
 
-> What do you think the argument `show.legend = TRUE` does?
+* What do you think the argument `show.legend = TRUE` does?
 
-### 1.1 Try it yourself
+### Try it yourself
 Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).
 
 #### DO QUESTION 4 OF THE QUIZ NOW
-> What does the "Try it yourself" graph above look like?
+
+* What does the "Try it yourself" graph above look like?
 
 ### Aesthetics
 
@@ -202,13 +203,14 @@ ggplot(demo_bpx) +
              position = "jitter")
 ```
 
-### 1.2 Try it yourself
+### Try it yourself
 Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.
 
 #### DO QUESTION 5 OF THE QUIZ NOW
-> Which is the correct code for the question above?
 
-## 3. MULTIPLE GEOMETRIC FUNCTIONS UNDER ONE GGPLOT
+* Which is the correct code for the question above?
+
+## Multiple Geometric Functions under one ggplot
 
 Now that you're more familiar with `ggplot()` and `geom_point()`, we can try layering multiple graph types in one single ggplot canvas! For example, we can layer a line graph on top of a scatterplot.
 
@@ -252,9 +254,10 @@ geom_smooth(
 )
 
 #### DO QUESTION 6 OF THE QUIZ NOW
-> What do you think the argument `se = FALSE` does?
 
-## 5. OTHER GEOMETRIC FUNCTIONS
+* What do you think the argument `se = FALSE` does?
+
+## Other Geometric Functions
 
 Aside from `geom_point()`, there are other geometric functions that we can use to plot different types of graphs. Note that this list of geometrics functions is not extensive, and you are encouraged to explore more about them on R using the `?` or `??` command or on this [website](https://ggplot2.tidyverse.org/reference/) about ggplot!
 
@@ -348,7 +351,7 @@ ggplot(demo_bpx) +
 
 Since `geom_freqpoly()` divides the variable in the x axis into bins before counting the number of observations in each bin, we can further customize how we want our frequency polygon to look by changing the binwidth.
 
-### 1.3 Try it yourself
+### Try it yourself
 
 Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?
 
@@ -373,11 +376,11 @@ ggplot(demo_bpx) +
 You may notice that the x axis label for the graph above is incorrect! And the legend title is also wrong. Don't worry! We will go over how to manually add and edit graph elements later in this tutorial.
 
 #### DO QUESTIONS 7 & 8 OF THE QUIZ NOW
-> Increasing the binwidth of a bar graph makes the graph more detailed. (True or False)
+* Increasing the binwidth of a bar graph makes the graph more detailed. (True or False)
 
-> Match the geometrics with the correct graph type.
+* Match the geometrics with the correct graph type.
 
-## 6. FACET FUNCTIONS
+## Facet Functions
 
 Aside from using aesthetics, `facet_wrap()` is another good option to create subplots based on categorical variables. You can create divide the data up into subplots by 1 or 2 variables. Run the codes below to see what these two situations would look like.
 
@@ -393,16 +396,16 @@ ggplot(demo_bpx) +
   facet_grid(Race ~ Gender)
 ```
 
-#### DO QUESTION 9 ON CANVAS NOW
-> It is most useful to use facet functions when plotting continuous variables.
+#### DO QUESTION 9 OF THE QUIZ
+* It is most useful to use facet functions when plotting continuous variables.
 
-### 1.4 Try it yourself
+### Try it yourself
 
 Try recreating the graph above but without any missing (NA) values.
 
 **HINT**: Filter out any information we do not need using logical operators!
 
-## 7. CUSTOMIZING GRAPH ELEMENTS
+## Customizing Graph Elements
 
 We can customize how our graph looks like with different graph elements including graph title, axes labels, legendes, etc. In this section, we will cover as many graph elements as possible.
 
@@ -515,13 +518,13 @@ Some basic arguments of `theme()` are as follows:
 
 #### DO QUESTION 10 OF THE QUIZ NOW
 
-> What is the difference between `legend.title` and `legend.text`?
+* What is the difference between `legend.title` and `legend.text`?
 
-### 1.5 Try it yourself
+### Try it yourself
 
 Customize your own graph using the functions we just learned above!
 
-## 8. SAVING OUR GRAPH
+## Saving Our Graphs
 
 To explort our graph into a file like png, pdf, or jpeg, we can use the function `ggsave()` followed by the name that we want the file to have. To simplify this process, we can give our graph a name such as "Final_plot" using `<-`.
 
@@ -589,7 +592,7 @@ dir()
 
 We've reached the end of our tutorial! Note that this tutorial only covers the basics of ggplot. ggplot is a large package and you are encouraged to explore the many functions that it offers on your own. And remember that it takes practice to be fluent in this language!
 
-## 9. SUMMARY AND TAKEAWAYS
+## Summary and Takeaways
 
 By the end of this tutorial, you should be somewhat familiar with the ggplot package including how to create a basic graph on R as well as how to customize it to your liking.
 

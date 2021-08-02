@@ -1,18 +1,18 @@
 # Importing Data into R with readr
 
-## INSTRUCTIONS
+## Instructions
 This tutorial will teach you the basics of importing data from your hard drive into R. We will cover how to import a Comma-Separated Values (csv) file into R using the `read_csv()` function in the readr package. We will also be covering the different data types that R can recognize from a csv file, how to manipulate how data show up on R, as well as how to export the manipulated file back into a csv file.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/N9yDv5tkQMiGiUB29)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 * Know how to import a Comma-Separated Values (csv) file from a hard drive into R.
 * Understand the basics of `read_csv()` including how to use it to import data and how to manipulate the presentation of the data on R.
 * Be familiar with the different data types that R can recognize.
 * Know how to import other data files such as txt, xlsx, xpt, and sas into R.
 * Know how to export a csv file from R into a hard drive.
 
-## 1. SET UP
+## Set Up
 
 In this tutorial, we will be using the readr package, so we will need to install and attach this package onto our R and R session. The readr package is part of a larger **tidyverse core**. This tidyverse core contains many R packages that give us access to functions that mainly work to organize data. In this tutorial series, we will be covering three packages from tidyverse: readr (tutorial 2), dplyr (tutorial 4), and ggplot (tutorial 5).
 
@@ -39,9 +39,9 @@ getwd()
 There are two ways that we can approach this problem. We will go over how to do both in the next section of this tutorial.
 
 #### DO QUESTION 1 OF THE QUIZ NOW
-> **REVIEW:** Which of the following functions lets us set a new working directory?
+* **REVIEW:** Which of the following functions lets us set a new working directory?
 
-## 2. BASICS OF IMPORTING A CSV FILE INTO R
+## Basics Of Importing a CSV File Into R
 
 ### Method 1: Setting a Different Working Directory
 
@@ -91,7 +91,7 @@ read_csv("data/demo_csv.csv")
 Note that you can also store this imported data into an object using `<-`.
 
 ```{r}
-DEMO <- read_csv("data/demo_csv.csv", show_col_types = FALSE)
+DEMO <- read_csv("data/demo_csv.csv")
 ```
 
 Now, we can just type DEMO to see the data frame.
@@ -101,13 +101,13 @@ DEMO
 ```
 
 #### DO QUESTIONS 2-4 OF THE QUIZ NOW
-> **REVIEW:** Which of the following codes will print the entire DEMO data frame?
+* **REVIEW:** Which of the following codes will print the entire DEMO data frame?
 
-> read_csv can also be used to import Excel and txt files. (True or False)
+* read_csv can also be used to import Excel and txt files. (True or False)
 
-> Which R package does the function `read_csv()` belong to?
+* Which R package does the function `read_csv()` belong to?
 
-### 2.1 Try it yourself
+### Try it yourself
 
 Can you try importing the `bpx.csv` file into R using the function `read_csv()`?
 
@@ -123,9 +123,9 @@ The third point is related to one of the most common mistakes. When importing an
 Another point to note is that `read_csv()` automatically assumes that the first row of your csv file is the header. We will learn how to tell R this assumption is not correct in section 3 of this tutorial.
 
 #### DO QUESTION 5 OF THE QUIZ NOW
-> **REVIEW:** R is case sensitive. (True or False)
+* **REVIEW:** R is case sensitive. (True or False)
 
-### 2.2 Try it yourself
+### Try it yourself
 
 Can you identify the mistakes of the following codes?
 
@@ -144,7 +144,7 @@ Can you identify the mistakes of the following codes?
 ```
 
 #### DO QUESTION 6 OF THE QUIZ NOW
-> Which of the following statements about `read_csv()` are correct? (select all that apply)
+* Which of the following statements about `read_csv()` are correct? (select all that apply)
 
 ### Column Specification
 
@@ -161,15 +161,15 @@ As we can see after running the code above, there are five columns in our data f
 We can also see that there are two types of data in this data frame `col_double()` and `col_character()`.
 
 #### DO QUESTION 7 OF THE QUIZ NOW
-> Which of the following is the best an example of a data that would be classified as `col_double()`?
+* Which of the following is the best an example of a data that would be classified as `col_double()`?
 
-### 2.3 Try it yourself
+### Try it yourself
 
 Just by looking at the actual data frame, can you guess what type of data `col_double()` and `col_character()` are? 
 
 (**HINT**: doubles? integers? logical? character?)
 
-## 3. MORE ARGUMENTS OF READ_CSV
+## More Arguments Of read_csv
 
 ### Skip
 
@@ -190,9 +190,9 @@ DEMO
 When comparing the *Skip_2* table with our original *DEMO* table, we can see that *Skip_2* has two less rows. This is because the argument `skip = 2` has told R to not import the first two rows of our `demo.csv`. 
 
 #### DO QUESTION 8 OF THE QUIZ NOW
-> Which of the following statements is true about the argument `skip`?
+* Which of the following statements is true about the argument `skip`?
 
-### 2.4 Try it yourself
+### Try it yourself
 
 You may also notice that the header of *Skip_2* is incorrect. This is because R recognizes the header of our data as the first row, thus omiting it when importing `demo.csv` into R. 
 
@@ -224,7 +224,7 @@ Header_names
 ```
 
 #### DO QUESTION 9 OF THE QUIZ NOW
-> In which of the following scenarios do you think we would **NEED** to use `col_names = FALSE`? (select all that apply)
+* In which of the following scenarios do you think we would **NEED** to use `col_names = FALSE`? (select all that apply)
 
 With the added`col_names`, you may notice that the column specification for our data is not incorrect (everything is recognized as `col_character()`! 
 
@@ -251,9 +251,9 @@ Missing_values
 ```
 
 #### DO QUESTION 10 OF THE QUIZ NOW
-> Only characters can be assigned a value of NA, there is a different missing-value designation for numeric values. (True or False)
+* Only characters can be assigned a value of NA, there is a different missing-value designation for numeric values. (True or False)
 
-## 4. IMPORTING OTHER FILE TYPES INTO R
+## IMPORTING OTHER FILE TYPES INTO R
 
 While csv is the most common file type to import into R, we can also import other types of data file into R using different functions. In this section, you will be introduced to the very basics of how to import txt, xlsx, xpt, and sas files into R.
 
@@ -278,7 +278,7 @@ library(readxl)
 read_excel("data/demo_xlsx.xlsx")
 ```
 
-### 2.5 Try it yourself
+### Try it yourself
 
 Import the `bpx.xlsx` into R using the `read_excel()` function.
 
@@ -304,7 +304,7 @@ library("haven")
 read_sas("data/demo_sas.sas")
 ```
 
-## 5. EXPORTING THE DATA FRAME FROM R
+## Exporting the Data Frame From R
 
 After changing and manipulating our data in R, we can also export it back into a csv file to share it. To do this, we can use the function `write_csv()`. For example, let's say we want to export our "Missing_values" data frame.
 
@@ -326,7 +326,7 @@ dir()
 
 Congratulations! We have now succeeded in exporting a dataset from R to an external file! This will make our work much easier to share and access!
 
-## 6. SUMMARY AND TAKEWAYS
+## Summary and Takeaways
 
 In this tutorial, we have learned how to import csv files from our hard drive into R using `read_csv()`. This is an important first step in data analysis or manipulation since we need to be able to have the data in R in order to process it!
 

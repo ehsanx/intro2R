@@ -1,11 +1,11 @@
 # Introduction to R
 
-## INSTRUCTIONS
+## Instructions
 This tutorial will introduce you to the basics of the language of R. We will cover how to set up our working environment, mathematical and logical operators, the most common data types in R, explore a simple dataset, write an R function as well as how to seek for help within and outside of R.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/P5x4pRK39xrA9EJR9)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 * Be familiar with the basic procedures for setting up an R session with functions such as `getwd()`, `setwd()`, `dir()`, `install.packages()`, and `library()`.
 * Understand the very basic of how and when to use arithmetic and logical operators in R.
 * Be familiar with the most common types of data in R including string, vector, data frame, and list.
@@ -13,7 +13,7 @@ Accompanying this tutorial is **a short [Google quiz](https://forms.gle/P5x4pRK3
 * Know how to write a new function in R.
 * Be comfortable with and know how to seek for help within and outside of R.
 
-## 1. SET UP BASICS
+## Set Up Basics
 
 ### Working Directory
 
@@ -101,22 +101,22 @@ To make sure the package is successfully attached, we can try running a function
 ggplot()
 ```
 
-#### DO QUESTIONS 1-3 OF THE GOOGLE QUIZ NOW
-> What is a "Working Directory"?
+#### DO QUESTIONS 1-3 OF THE QUIZ NOW
+* What is a "Working Directory"?
 
-> What is the main difference between `setwd()` and `getwd()`?
+* What is the main difference between `setwd()` and `getwd()`?
 
-> We need to install the packages first before we can load them using `library()`. (True or False)
+* We need to install the packages first before we can load them using `library()`. (True or False)
 
-## 2. ARITHMETIC OPERATORS
+## Arithmetic Operators
 
 As expected from a data analysis software, you can use R like a calcultor using arithmetic operators! Here is a list of a few basic and common arithmetic operators in R:
 
-![Figure 1. Arithmetic Operators in R](https://i.imgur.com/1ww25MM.png)
+![Figure 1. Arithmetic Operators in R](images/arithmetic.png)
 
 These operators will prove themselves to be more useful in data analysis when we get to later tutorials, especially our Tutorial 4 on the dplyr package.
 
-### 1.1 Try it yourself
+### Try it yourself
 
 a. Can you replicate and solve these problems in R?
 * 2^2
@@ -132,13 +132,13 @@ a <- 9 + 3 * 6
 x <- a ÷ 2
 
 #### DO QUESTION 4 OF THE QUIZ NOW
-> The output of `10 %% 2` is equal to which of the following?
+* The output of `10 %% 2` is equal to which of the following?
 
-## 3. LOGICAL OPERATORS
+## Logical Operators
 
 In addition, logical operators are also available on R. The main difference between arithmetic operators and logical operators is that logical operators will yield a logical (or TRUE/FALSE) output. This is a list of some common logical operators that can be used on R:
 
-![Figure 2. Logical Operators in R](https://i.imgur.com/xG4F5kA.png)
+![Figure 2. Logical Operators in R](images/logical.png)
 
 Similarly, these operators will be more useful when we learn about filtering data in future tutorials and you will also be provided with more examples then.
 
@@ -167,7 +167,7 @@ a == b
     # note that in R, "equal to" is coded by ==, = has another meaning that you will see in section 4
 ```
 
-### 1.2 Try it yourself
+### Try it yourself
 
 Translate the following into R and find the output:
 * 8 times 3 is greater than 8?
@@ -175,9 +175,9 @@ Translate the following into R and find the output:
 * 9 is less than or equal to 18?
 
 #### DO QUESTION 5 OF THE QUIZ NOW
-> Which of the following operators code for "equal to"?
+* Which of the following operators code for "equal to"?
 
-## 4. MOST COMMON DATA TYPES IN R
+## Most Common Data Types In R
 
 ### Strings
 
@@ -233,7 +233,7 @@ logical <- c(TRUE, FALSE, TRUE)
 
 What we just did was assigning values to variables where numeric, character, and logical are all variables!
 
-### 1.3 Try it yourself
+### Try it yourself
 
 Can you try storing a string? Assign the string "hello world, I am here" to the variable named start. 
 
@@ -263,7 +263,7 @@ numeric[1:4] # the first 4 components
 character[2] # only the 2nd component
 ```
 
-### 1.4 Try it yourself
+### Try it yourself
 
 It is important to note that **R is case-sensitive**. This means that it distinguishes capitalized from non-capitalized characters, so logical and Logical are read as two separate things by R!
 
@@ -346,7 +346,7 @@ names(
 
 **For example:** `names(dataframe) <- c("Number", "Text", "T/F")`
 
-### 1.5 Try it yourself
+### Try it yourself
 
 Why do you think numeric, character, and logical are not in "" but Number, Text, and T/F are?
 
@@ -365,9 +365,9 @@ dataframe[3, 2] # only cell (3,2) - the third row and second column
 ```
 
 #### DO QUESTIONS 6 & 7 OF THE QUIZ NOW
-> Which of the following codes would extract only rows 1, 3, 6 and only column 1 from our data frame?
+* Which of the following codes would extract only rows 1, 3, 6 and only column 1 from our data frame?
 
-> What is the value of the cell in the first row and third column of our data frame?
+* What is the value of the cell in the first row and third column of our data frame?
 
 We can also add a new column to our data frame using the function `cbind()` like below. Note how the column name is in `""`. It is also important that the new column has the same number of values as the rest of the columns. If the new column contains less values than the other columns, you can use `NA`, or "not available" values, to fill up the rest of the places!
 
@@ -403,7 +403,7 @@ rbind(
 
 There exists many other types of [data types](https://www.statmethods.net/input/datatypes.html) on R, you are free to explore them on your own time. But what we have been introduced to are the most basic ones.
 
-## 5. EXPLORING A DATASET
+## Exploring a Dataset
 
 Now that you are familiar with the different data types and operators of R, we can move on to the fun parts of this tutorial: exploring a dataset!
 
@@ -430,7 +430,7 @@ print(
 
 **For example:** `print(faithful)`, `print(faithful$eruptions)`, `print(1:12)`
 
-### 1.6 Try it yourself
+### Try it yourself
 
 1. What are 2 ways that we can print rows 1 to 5 of the data frame faithful?
 2. What is the value of the cell in the fourth row and second column of the data frame faithful?
@@ -474,7 +474,7 @@ class(faithful$eruptions)
 
 Note how if we are checking the class of the variable eruption, we need to have the dataset name followed by a $ first before we can write the variable name.
 
-### 1.7 Try it yourself
+### Try it yourself
 Write a code to find the structure of the variable waiting in the faithful dataset.
 
 ### Length
@@ -491,7 +491,7 @@ length(faithful$eruption)
     ## the output should be 272 - the number of observations in this variable!
 ```
 
-### 1.8 Try it yourself
+### Try it yourself
 
 Remember those variables that we created earlier in the tutorial? Try finding the lengths of data frame and numeric. 
 
@@ -526,7 +526,7 @@ tail(faithful, 2)
 As you can see, `head()` and `tail()` allow you to check just a portion of the dataset. This is especially useful when you’re working with large datasets and you only want to see part of it to make sure everything is okay!
 
 #### DO QUESTION 8 OF THE QUIZ NOW
-> Which of the following codes is best to find how large our dataset is?
+* Which of the following codes is best to find how large our dataset is?
 
 ### Mathematical Functions in R
 
@@ -578,7 +578,7 @@ Another powerful function in R is `summary()`. It literally summarizes everythin
 summary(faithful)
 ```
 
-### 1.9 Try it yourself
+### Try it yourself
 
 Recall that in order for us to refer to a variable in a dataset, we need to first type the dataset name following by a $ before we can type the variable name.
 
@@ -587,9 +587,9 @@ A way to avoid repeating `faithful$` everytime is to attach the dataset using `a
 Try attaching the dataset faithful then find the mean of the variable eruptions without using $!
 
 #### DO QUESTION 9 OF THE QUIZ NOW
-> What information does the function `summary()` provide us with? (select all that apply)
+* What information does the function `summary()` provide us with? (select all that apply)
 
-## 6. WRITING A NEW FUNCTION IN R
+## Writing a New Function In R
 
 While R and its existing packages has a lot to offer, there may be times when the function that we want to use does not really exist. In situations like this, we may want to just write our own function! A function in R is a script and it aims to help you to write reproducible code.
 
@@ -668,7 +668,7 @@ math_work(3, 5)
 
 Once we have written a new function, it will saved in your Global Environment and we can continue to use it as long as the Environment is not wiped. Note that the new functions will not work if you open a new R session that does not store them as functions. But we can also run the code chunks above again to remind R of the new functions.
 
-## 7. FOR LOOPS
+## For Loops
 
 In R, we can also write for loops that iterate a particular action/code that we want. For example, we can write a loop that adds 1 to every number of a vector. To do this, we first need to create a vector and assign it to a variable. Let's say we want the vector 1:10 to be assigned to k.
 
@@ -737,7 +737,7 @@ for (i in 1:nrow(dataframe)){
 }
 ```
 
-## 8. HELP WITHIN AND OUTSIDE OF R
+## Help Within and Outside Of R
 
 It gets a while to get used to the language of R and no tutorials can fully explain the complexities and nuances of this language. Therefore, it is important to know how to and where to get help about R! There are so many ways for you to search for help on R, here are only a few methods:
 
@@ -763,7 +763,7 @@ After running the code above, you should see a list of functions, the package th
 
 If you are using RStudio, you can also use the search box in the help window at the bottom right corner of our screen.
 
-![Figure 3. Help window in RStudio](https://i.imgur.com/M9KAqcj.png)
+![Figure 3. Help window in RStudio](images/help.png)
 
 ### Outside of R
 
@@ -772,9 +772,9 @@ Outside of R, there are also plenty of resources for you to tap into [R Document
 Another resource is [Stack Overflow](https://stackoverflow.com/), an online forum where you can ask and answer questions relating to coding!
 
 #### DO QUESTION 10 OF THE QUIZ NOW
-> What are some of the ways that we can find help about R? (select all that apply)
+* What are some of the ways that we can find help about R? (select all that apply)
 
-## 9. SUMMARY AND TAKEWAYS
+## Summary and Takeaways
 
 In this tutorial, we learned a few basic steps of using R as a data analysis language. Completing this tutorial will prepare you more advanced tutorials in the future. Learning R is like learning another language, so the biggest tip is to practice practice practice!
 

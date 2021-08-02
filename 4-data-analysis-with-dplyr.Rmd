@@ -1,13 +1,13 @@
 # Data Analysis with dplyr
 
-## INSTRUCTIONS
+## Instructions
 
 This tutorial is aiming to introduce you to how to manipulate data and transfer the raw data into ready-to-analysis form in R. It will guide you to learn and practice the basic and useful functions in the dplyr package. In this tutorial, follow the step-by-step instruction as well as the  examples which demonstrating how the functions work. 
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/17WnX6paHx5U14jx6)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 * Be able to import nhanesA and dplyr package. Be able to understand dataframe.
 * Be able to use rename() and select() to rename and select variables (columns) in a dataframe.
 * Be able to use filter() to subset a dataframe based on conditions.
@@ -15,9 +15,9 @@ Accompanying this tutorial is **a short [Google quiz](https://forms.gle/17WnX6pa
 * Be able to use mutate() and transmute() to add new variables that are computed from existing variables in a dataframe.
 * Be able to use summarize() to get summary statistics from a dataframe; Be able to perform grouping with summarize(), filter(), and mutate().
 * Be able to use pipe to re-write mutilpe operations in a more readable way.
-* Be able to check missing values existence and deal with missing values while using the above functions
+* Be able to check missing values existence and deal with missing values while using the above functions.
 
-## 1. Set up
+## Set up
 ### Install and load packages
 
 First, we need to install and load the dplyr package as well as bring in our National Health and Nutrition Examination Survey (NHANES) dataset. This particular tutorial uses data from 2013-2014.
@@ -36,7 +36,7 @@ library(nhanesA)
 
 ### Set working directory
 
-We want to set the working directory 
+We want to set the working directory using `setwd()` - you may need to change the working directory to match your hard drive set-up.
 
 ```{r}
 # setwd('/kaggle/working')
@@ -149,17 +149,14 @@ is.na(
 
 **For example:** `is.na(demo)`
 
-**DO QUESTION 1 OF THE QUIZ NOW**
-> What package does the function `nhanes()` belong to?
+**DO QUESTIONS 1-3 OF THE QUIZ NOW**
+* What package does the function `nhanes()` belong to?
 
-**DO QUESTION 2 OF THE QUIZ NOW**
+* Which code below is the correct one to print the last 10 rows of a dataframe called temp?
 
-> Which code below is the correct one to print the last 10 rows of a dataframe called temp?
+* Suppose a cell contains NA. What is the output after perform is.na() on it?
 
-**DO QUESTION 3 OF THE QUIZ NOW**
-> Suppose a cell contains NA. What is the output after perform is.na() on it?
-
-## 2.Dataset preparation
+## Dataset Preparation
 
 Now that we've successfully imported the two datasets and we're ready to do further data manipulations. But before we proceed, there are three issues in the datasets:
 
@@ -292,7 +289,7 @@ select(
 
 **For example:** `select(demo, id:age))`
 
-### 4.1 Try it yourself
+### Try it yourself
 
 In the bpx dataframe, keep the following variables and top 5 rows only:
 
@@ -302,7 +299,7 @@ In the bpx dataframe, keep the following variables and top 5 rows only:
 + BPXSY1
 + BPXDI1
 
-### 4.2 Try it yourself
+### Try it yourself
 
 rename the variables in the following way:
 
@@ -312,15 +309,12 @@ rename the variables in the following way:
 + BPXSY1 -> systolic
 + BPXDI1 -> diastolic
 
-**DO QUESTION 4 OF THE QUIZ NOW**
-> Given the following code:
-> select(dataset,A,B)
-> What is the purpose of the code?
+**DO QUESTIONS 4-5 OF THE QUIZ NOW**
+* Given the following code: `select(dataset, A, B)`. What is the purpose of the code?
 
-**DO QUESTION 5 OF THE QUIZ NOW**
-> Which code below is the correct one to rename column A to B in a dataframe called dataset?
+* Which code below is the correct one to rename column A to B in a dataframe called dataset?
 
-## 3. Filter
+## Filter
 
 Sometimes, we want to focus on a subset of the dataset that satisifying some conditions for further analysis. In this case, we need to filter the dataset based on variables' values and conditions. 
 
@@ -364,14 +358,14 @@ filter(
 
 **Note:**
 
-1, pay attention to the difference between `=` and `==`
+1. Pay attention to the difference between `=` and `==`
 > `=` is assignment operator
 
 > `==` is comparison operator
 
 More comparison operators are `<`, `<=`,`>`, `>=`,`!=`.
 
-2, logical operators
+2. Logical operators
 
 Mutiple conditions can be combined using logical operators. Common logical operators are:
 
@@ -395,31 +389,26 @@ If you want to keep the NAs, you need to add the condition explicitly: `is.na(VA
 
 **For example:** `filter(new_demo, is.na(income) | income <= 50)`
 
-### 4.3 Try it yourself
+### Try it yourself
 In the demo dataframe, find all the records that:
 
-4.3.1 the participant who is a male
+a. The participant who is a male
 
-4.3.2 the participant who is a male and is older tha 50 years old
+b. The participant who is a male and is older tha 50 years old
 
-4.3.3 the education level is missing
+c. The education level is missing
 
-**DO QUESTION 6 OF THE QUIZ NOW**
-> Fill in the blank to answer '4.3.1 Try it yourself':
+**DO QUESTIONS 6-8 OF THE QUIZ NOW**
 
-> filter(final_demo, gender `___`)
+Fill in the blank to answer the 'Try it yourself' sections:
 
-**DO QUESTION 7 OF THE QUIZ NOW**
-> Fill in the blank to answer the second question in '4.3.2 Try it yourself':
+* filter(final_demo, gender `___`)
 
-> filter(final_demo, gender == 'Male' `___` age > 50)
+* filter(final_demo, gender == 'Male' `___` age > 50)
 
-**DO QUESTION 8 OF THE QUIZ NOW**
-> Fill in the blank to answer the third question in '4.3.3 Try it yourself':
+* filter(final_demo, `___`)
 
-> filter(final_demo, `___`)
-
-## 4.Re-order the rows
+## Re-order the Rows
 
 Suppose we want to re-order the observations by certain variables, we can use the arrange() function in R. 
 
@@ -477,16 +466,17 @@ In the last example, we notice that there are missing values in column 'income' 
 
 How does arrange() deal with missing value? **All NAs will be retained at the end.** Check the output above!
 
-### 4.4 Try it yourself
+### Try it yourself
 
 Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:
 
 **DO QUESTION 9 OF THE QUIZ NOW**
-> Fill in the blank to answer the question in '4.4 Try it yourself':
 
-> `___`(final_bpx,`___`)
+Fill in the blank to answer the 'Try it yourself' section:
 
-## 5. Add new variables
+* `___`(final_bpx,`___`)
+
+## Add new variables
 Suppose we want to gain more information about our observations and we want to constrcut a new variable based on the variables we have. The mutate() and transmute() in R helps us to add new variables into a dataframe. 
 
 For example, we want to add a new variable called born_year in the demo dataframe and born_year is calculated in this way: born_year = 2021- age:
@@ -534,24 +524,19 @@ transmute(
 You can find more details in how to use creation functions to create new variables in [Chapter I. Explore Chapter 3](https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform).
 
 
-### 4.5 Try it yourself
+### Try it yourself
 
-4.5.1. Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
+a. Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
 
-4.5.2. Create **rescale_bpt_sec** in the same way above and **only keep new variables**.
+b. Create **rescale_bpt_sec** in the same way above and **only keep new variables**.
 
 Note: Try to avoid using select().
 
 **DO QUESTION 10 OF THE QUIZ NOW**
-> What are the `?`s to answer '4.5.1 & 4.5.2 Try it yourself'?
+Fill in the blank to answer both parts of the 'Try it yourself' sections.
+* `___`(final_bpx, rescale_bpt_sec = bpt_sec/60)
 
-> `_?_`(final_bpx,
-    
->   rescale_bpt_sec = bpt_sec/60
-     
->    )
-
-## 6.Summary statistics and group_by
+## Summary Statistics and group_by
 
 Information about the whole dataframe such as mean is very useful for data analysis. However, things could be very complex when aggregating multiple functions. We'll start with the simple one: find a summary statistic from the whole dataset.
 
@@ -595,16 +580,17 @@ group_by(
 **For example:** `group_by(new_demo,age)`
 **Note:** if there is missing value in the variable, group_by() treats it as a new group
 
-###  4.6 Try it yourself
+### Try it yourself
 
 Find the average age in the demo dataframe per education level
 
 **DO QUESTION 11 OF THE QUIZ NOW**
-> Fill in the blanks to answer the question in '4.6 Try it yourself':
 
-> by_edu <- group_by(`___`)
+Fill in the blanks to answer the 'Try it yourself' section:
 
-> summarize(`___`, average_age = `___`(age, na.rm = TRUE))
+a. by_edu <- group_by(`___`)
+
+b. summarize(`___`, average_age = `___`(age, na.rm = TRUE))
 
 ### Group_by() extension
 
@@ -628,27 +614,24 @@ mutate(by_gender,
 #### Functions debunked
 [**n()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n) is the function we use to count the number of observations in each group  - it is housed in the dplyr package. It can only be used with the existence of summarize(), filter(), and mutate() and there is **no** argument in it.
 
-### 4.7 Try it yourself
+### Try it yourself
 Return the observations which has more than 3 records in each gender group.
 
-### 4.8 Try it yourself
+### Try it yourself
 Compute the difference in each age and the average mean in each education level group
 
-**DO QUESTION 12 OF THE QUIZ NOW**
-> Fill in the blanks to answer '4.7 Try it yourself':
+**DO QUESTIONS 12-13 OF THE QUIZ NOW**
+Fill in the blanks to answer the 'Try it yourself' sections:
 
-> by_gender <-group_by(final_demo,gender)
+a. by_gender <-group_by(final_demo,gender)
 
-> filter(by_edu,`___`)
+    * filter(by_edu,`___`)
 
-**DO QUESTION 13 OF THE QUIZ NOW**
-> Fill in the blanks to answer '4.8 Try it yourself':
+b. by_edu <-group_by(final_demo,edu)
 
-> by_edu <-group_by(final_demo,edu)
+    * mutate(by_edu, `___`)
 
-> mutate(by_edu, `___`)
-
-## 7. Pipe
+## Pipe
 
 You may have noticed that when doing multiple-step operations, we need to assign the output to a new variable every time when a step is done. It becomes more annoying when there are more steps to do. The pipe operator [**%>%**](https://www.rdocumentation.org/packages/magrittr/versions/2.0.1/topics/magrittr-package) - which is housed in the magrittr package - saves us from create many unnecessary variables: it takes the output from one function as an input to the following function. 
 
@@ -676,7 +659,7 @@ final_demo %>%
   mutate(born_year = 2021 - age)
 ```
 
-### 4.9 Try it yourself
+### Try it yourself
 Re-write the following code using pipe operator
 
 ```{r}
@@ -686,13 +669,13 @@ Re-write the following code using pipe operator
 ```
 
 **DO QUESTION 14 OF THE QUIZ NOW**
-> Fill in the blanks to answer the question in '4.9 Try it yourself':
+Fill in the blanks to answer the'Try it yourself' section:
 
-> `___` %>%
->   filter(`___`,systolic > 120) %>%
->   mutate(`___`,bpt_min = bpt_sec/60)
+* `___` %>%
+*   filter(`___`,systolic > 120) %>%
+*   mutate(`___`,bpt_min = bpt_sec/60)
 
-## 8. Summary of dealing with missing values
+## Summary of dealing with missing values
 Dealing with missing values can be complex. You need to be careful when using functions since different functions have different ways in dealing with missing values.
 
 filter(): excludes missing values. If you do want to retain missing values, use **is.na()** explicitly.
@@ -707,7 +690,7 @@ summarize(): retains missing values. If you want to remove missing values, set *
 
 group_by(): treats missing values as a group
 
-## ALTERNATIVES TO `NHANESTRANSLATE()`
+## Alternatives to NHANESTranslate()
 ### `case_when()`
 
 `case_when()` is another useful function that we can use that will aid our data analysis. This function acts like `mutate()`, except it changes the actual values of the variable. Here is an example of how we can use `case_when()` and `mutate()` together to change values within a variable:
@@ -842,7 +825,7 @@ demo_translate3 <- demo %>%
 head(demo_translate3, 10)
 ```
 
-## TAKEAWAYS 
+## Summary and Takeaways 
 By the end of this tutorial, you should be familiar with the dplyr package and be able to do basic data wrangling by yourself. 
 
 For more study materials on the dplyr package, check out this [textbook](https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform).

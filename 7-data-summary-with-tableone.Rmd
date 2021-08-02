@@ -1,12 +1,12 @@
 # Data Summary with tableone
 
-## INSTRUCTIONS
+## Instructions
 
 In this tutorial, we will be exploring how to summarize all variables of our datasets in one single table. We will familiarize ourselves with the R package tableone and its associated functions. This tutorial will show you how to be more efficient in analyzing data on R.
 
 Accompanying this tutorial is **a short [Google quiz](https://forms.gle/vDvUJhHDAuKHVNt98)** for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.
 
-## LEARNING OBJECTIVES
+## Learning Objectives
 
 * Understand the basics the tableone package and its applications.
 * Efficiently summarize whole datasets into one single table.
@@ -14,7 +14,7 @@ Accompanying this tutorial is **a short [Google quiz](https://forms.gle/vDvUJhHD
 * Know how to tell tableone which variables are continuous and which variables are categorical.
 * Be familiar with different `print()` arguments to customize a tableone.
 
-## 1. SET UP
+## Set Up
 
 For this tutorial, the main package that we will be working with is the **tableone** package. We will also need the dplyr package for a few basic functions and data from the nhanesA package. Let's go ahead and load them in our session!
 
@@ -60,7 +60,7 @@ Awesome, our data is looking much better now!
 
 We have learned how to analyze it with dplyr and visualize it with ggplot. But in this tutorial, we are going to learn how to summarize the data in this large dataset into one simple table.
 
-## 2. WHAT IS TABLEONE?
+## What is tableone?
 
 [tableone](http://rstudio-pubs-static.s3.amazonaws.com/13321_da314633db924dc78986a850813a50d5.html) is an R package that helps us construct "Table 1", or the baseline table that we see in biomedical research papers. This package gives us access to a lot of useful data summary function that we can use to summarize both categorical and continuous data. In addition, we can also identify normal and nonnormal variables so that R can analyze it more accurately.
 
@@ -68,11 +68,11 @@ tableone is unique in that it is very simple and easy to use. One single functio
 
 #### DO QUESTIONS 1-2 OF THE QUIZ NOW
 
-> tableone is part of the tidyverse core. (True or False)
+* tableone is part of the tidyverse core. (True or False)
 
-> What sort of data can tableone summarize? (Select all that apply)
+* What sort of data can tableone summarize? (Select all that apply)
 
-## 3. CREATING A TABLEONE
+## Creating a tableone
 
 ### CreateTableOne
 
@@ -109,7 +109,7 @@ After that, for ease of communication, let's also change the column names to som
 names(demo_translate) <- c("Gender", "Age", "Race", "Education")
 ```
 
-### 7.1 Try it yourself
+### Try it yourself
 **Challenge**: Why do you think we need to change the names of our variables AFTER we translate them?
 
 **Hint**: Think about the `data = demo` argument in `nhanesTranslate()`
@@ -134,9 +134,9 @@ You may have also noticed that "Female" is the only gender that is shown in this
 
 #### DO QUESTIONS 3-4 OF THE QUIZ NOW
 
-> What kind of information is summarized when the data is continuous?
+* What kind of information is summarized when the data is continuous?
 
-> What kind of information is summarized when the data is categorical?
+* What kind of information is summarized when the data is categorical?
 
 ### Solution 2: Identify Numerical Categorical Data
 
@@ -180,11 +180,11 @@ CreateTableOne(data = demo,
 
 We should be able to see that both tables in this subsection are identical!
 
-### 7.2 Try it yourself
+### Try it yourself
 Create a tableone without the `vars` argument. What do you see? 
 Do you think the `vars` argument is necessary in our case? If not, in what situation(s) do you think it would be necessary?
 
-## 4. OTHER ARGUMENTS TO CUSTOMIZE TABLEONE
+## Other Arguments to Customize tableone
 
 There are other arguments of `CreateTableOne()` that we can use to customize and adjust our tableone!
 
@@ -206,7 +206,7 @@ print(tab_nhanes,
 
 #### DO QUESTION 5 OF THE QUIZ NOW
 
-> What is the difference between `showAllLevels` and `cramVars`?
+* What is the difference between `showAllLevels` and `cramVars`?
 
 ### Nonnormal
 
@@ -223,12 +223,12 @@ print(tab_nhanes,
 
 In the table above, we can see that instead of the usual mean and standard deviation, we are provided with the median and interquartile range (IQR) for our nonnormal Age variable!
 
-### 7.3 Try it yourself
+### Try it yourself
 How do you know if a variable is nonnormal? Try using the function `summary()` and look at the number under skew. How do you decide if something is normal or nonnormal? Is the decision to make “Age” nonnormal accurate?
 
 #### DO QUESTION 6 OF THE QUIZ NOW
 
-> The decision to make “Age” nonnormal is accurate. (True or False)
+* The decision to make “Age” nonnormal is accurate. (True or False)
 
 ### Show Categorical or Continuous Variables Only
 
@@ -272,14 +272,14 @@ Let's unpack this table together. Firstly, we have the usual mean and standard d
 
 Second of all, we can also see a second table below our usual table with p-values and test. This only appears when we have stratified our data into two groups for comparison. The default test for categorical variables is `chisq.test()` and the default for continuous variables is `oneway.test()` (regular ANOVA). tableone also considers nonnorm as present by the word "nonnorm" under "test" in the table above. Otherwise, we also have the option to use `krushal.test()` for nonnormal continuous variables.
 
-### 7.4 Try it yourself
+### Try it yourself
 Create a tableone using the demo_translate dataset. Keep all variables and stratified the data using “Age”. What do you see? Do you think this is a helpful tableone?
 
 #### DO QUESTION 7 OF THE QUIZ NOW 
 
-> Which of the following is the least appropriate to stratify our dataset by?
+* Which of the following is the least appropriate to stratify our dataset by?
 
-## 5. EXPORT TABLEONE
+## Export tableone
 
 Finally, let's export our tableone!
 
@@ -293,7 +293,7 @@ tab_csv <- print(strata,
 
 #### DO QUESTION 8 OF THE QUIZ NOW
 
-> What does the argument `printToggle = FALSE` do?
+* What does the argument `printToggle = FALSE` do?
 
 Now we can use our `write.csv()` function like normal.
 
@@ -309,11 +309,11 @@ dir()
 
 #### DO QUESTIONS 9-10 OF THE QUIZ NOW
 
-> Which of the following arguments can be nested in `CreateTableOne()`?
+* Which of the following arguments can be nested in `CreateTableOne()`?
 
-> Which of the following arguments can be nested in `print()`?
+* Which of the following arguments can be nested in `print()`?
 
-## 6. ALTERNATIVES TO TABLEONE
+## Alternatives to tableone
 
 Data summary is one of the many applications that R specializes at. With this said, there are multiple other R packages that also do data summary aside from tableone. We will not go over any of these packages, but know that each package has its own strengths and so are most optimally used in different situations.
 
@@ -384,10 +384,10 @@ library(skimr)
 ```
 
 ```{r}
-#skim(demo_translate)
+skim(demo_translate)
 ```
 
-## 7. SUMMARY AND TAKEAWAYS
+## Summary and Takeaways
 
 Congratulations on finishing tutorial 7 on Data Summary with tableone! After this tutorial, you should be familiar with the R package tableone as well as the function `CreateTableOne()`. In addition, you should also be familiar with the different arguments of `print()` to customize your own tableone.
 
