@@ -3,20 +3,18 @@
 \setcounter{chapter}{0}
 \renewcommand{\thechapter}{\Alph{chapter}}
 
-# APPENDIX
-
-## Exercise solutions 
+# Appendix: Exercise Solutions
 
 ```{r, echo=TRUE, message= FALSE}
 require(dplyr)
 ```
 
 
-## Introduction to R
+## Tutorial 2: Introduction to R {-}
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 1: Introduction to R**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 1.1
+### 2.1 {-}
 a. Can you replicate and solve these problems in R?
 * 2^2
 * 2 × 2
@@ -45,7 +43,7 @@ x
 ## x is equal to 13.5!
 ```
 
-### 1.2
+### 2.2 {-}
 
 Translate the following into R and find the output:
 * 8 times 3 is greater than 8?
@@ -58,7 +56,7 @@ Translate the following into R and find the output:
 9 <= 18
 ```
 
-### 1.3
+### 2.3 {-}
 
 Can you try storing a string? Assign the string "hello world, I am here" to the variable named start. 
 
@@ -70,7 +68,7 @@ start
 **Note how the string is in "" but the variable name is not. Why do you think this is?**
 Because `start` is now a known variable that stores a string. In other words, `start` does not mean "start", instead it means "hello world, I am here".
 
-### 1.4
+### 2.4 {-}
 
 It is important to note that **R is case-sensitive**. This means that it distinguishes capitalized from non-capitalized characters, so logical and Logical are read as two separate things by R!
 
@@ -81,13 +79,13 @@ Try typing Logical with a capitalized "L". How does R respond to this?
     ### an error message that says "object 'Logical' not found" pops up
 ```
 
-### 1.5
+### 2.5 {-}
 
 Why do you think numeric, character, and logical are not in "" but Number, Text, and T/F are?
 
 Because numeric, character, and logical are known variables that hold meanings (and that we already defined), while Number, Text, and T/F are not. They are actually just texts that we use to rename our column names - they do not hold any meanings.
 
-### 1.6
+### 2.6 {-}
 
 1. What are 2 ways that we can print rows 1 to 5 of the data frame faithful?
 
@@ -103,15 +101,15 @@ Because numeric, character, and logical are known variables that hold meanings (
 ## faithful[4,2]
 ```
 
-### 1.7
-Try it yourself
+### 2.7 {-}
+
 Write a code to find the structure of the variable waiting in the faithful dataset.
 
 ```{r}
 ## str(faithful$waiting)
 ```
 
-### 1.8
+### 2.8 {-}
 
 Remember those variables that we created earlier in the tutorial? Try finding the lengths of data frame and numeric. 
 
@@ -124,7 +122,7 @@ Remember those variables that we created earlier in the tutorial? Try finding th
 ## length(dataframe$numeric)
 ```
 
-### 1.9
+### 2.9 {-}
 
 Recall that in order for us to refer to a variable in a dataset, we need to first type the dataset name following by a $ before we can type the variable name.
 
@@ -137,11 +135,11 @@ Try attaching the dataset faithful then find the mean of the variable eruptions 
 ## mean(eruptions)
 ```
 
-## Importing Data into R with readr
+## Tutorial 3: Importing Data into R with readr
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 2: Importing Data into R with readr**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 2.1
+### 3.1 {-}
 
 Can you try importing the `bpx.csv` file into R using the function `read_csv()`?
 
@@ -149,7 +147,7 @@ Can you try importing the `bpx.csv` file into R using the function `read_csv()`?
 #read_csv("../input/import/bpx.csv")
 ```
 
-### 2.2
+### 3.2 {-}
 
 Can you identify the mistakes of the following codes?
 
@@ -161,7 +159,7 @@ Can you identify the mistakes of the following codes?
 
 **d.** The entire pathway needs to be in "" instead of just the file name
 
-### 2.3
+### 3.3 {-}
 
 Just by looking at the actual data frame, can you guess what type of data `col_double()` and `col_character()` are? 
 
@@ -178,7 +176,7 @@ Here is a list of `col_x()` and what they mean:
 
 This list is not extensive, so you can use `?cols` to learn more about column specification!
 
-### 2.4
+### 3.4 {-}
 
 You may also notice that the header of *Skip_2* is incorrect. This is because R recognizes the header of our data as the first row, thus omiting it when importing `demo.csv` into R. 
 
@@ -190,7 +188,7 @@ Let's say this is not what we really want. What we actually want to do is to rem
 #DEMO[3:10, ]
 ```
 
-### 2.5 
+### 3.5 {-} 
 
 Import the `bpx.xlsx` into R using the `read_excel()` function.
 
@@ -199,44 +197,39 @@ Import the `bpx.xlsx` into R using the `read_excel()` function.
 ```
 
 
-
-## Introduction to NHANES
+## Tutorial 4: Introduction to NHANES
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **Tutorial 3: Introduction to NHANES**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 3.1
+### 4.1 {-}
 
-Find all the Examination Data in survey cycle 2013-2014
+a. Find all the Examination Data in survey cycle 2013-2014
 
 ```{r}
 ## nhanesTables('EXAM', 2013)
 ```
 
-### 3.2
-
-Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014
+b. Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014
 
 ```{r}
 ## bpx <- nhanes('BPX_H')
 ```
 
-### 3.3
+c. Translate the following variables in the BPX dataset
 
-Translate the following variables in the BPX dataset
-
-BPXPULS - Pulse regular or irregular?
+* BPXPULS - Pulse regular or irregular?
  
-BPAARM - Arm selected
+* BPAARM - Arm selected
 
 ```{r}
 ## bpxtranslate <- nhanesTranslate('BPX_H',  c('BPXPULS', 'BPAARM'), data = bpx)
 ```
 
-## Data Analysis with dplyr
+## Tutorial 5: Data Analysis with dplyr
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **Tutorial 4: Data Analysis with dplyr**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 4.1
+### 5.1 {-}
 
 In the bpx dataframe, keep the following variables and top 5 rows only:
 
@@ -256,7 +249,7 @@ In the bpx dataframe, keep the following variables and top 5 rows only:
 ## new_bpx <- head(new_bpx,5)
 ```
 
-### 4.2
+### 5.2 {-}
 
 + SEQN -> id
 + PEASCST1 -> bp_status
@@ -273,46 +266,44 @@ In the bpx dataframe, keep the following variables and top 5 rows only:
 ##                    diastolic = BPXDI1)
 ```
 
-### 4.3
+### 5.3 {-}
 
 In the demo dataframe, find all the records that:
 
-#### 4.3.1 the participant who is a male
+a. he participant who is a male
 
 ```{r}
 ## filter(final_demo, gender == "Male")
 ```
 
-#### 4.3.2 the participant who is a male and is older tha 50 years old
+b. the participant who is a male and is older tha 50 years old
 
 ```{r}
 ## filter(final_demo, gender == 'Male' && age > 50)
 ```
 
-#### 4.3.3 the education level is missing
+c. the education level is missing
 
 ```{r}
 ## filter(final_demo, is.na(edu))
 ```
 
-### 4.4 
+### 5.4 {-}
 Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:
 
 ```{r}
 ## arrange(final_bpx,desc(bpt_sec))
 ```
 
-### 4.5
+### 5.5 {-}
 
-#### 4.5.1
-Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
+a. Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
 
 ```{r}
 ##  mutate(final_bpx,rescale_bpt_sec = bpt_sec/60)
 ```
 
-#### 4.5.2
-Create **rescale_bpt_sec** in the same way above and **only keep new variables**.
+b. Create **rescale_bpt_sec** in the same way above and **only keep new variables**.
 
 Note: Try to avoid using select().
 
@@ -320,7 +311,7 @@ Note: Try to avoid using select().
 ##  transmute(final_bpx,rescale_bpt_sec = bpt_sec/60)
 ```
 
-### 4.6
+### 5.6 {-}
 Find the average age in the demo dataframe per education level
 
 ```{r}
@@ -329,7 +320,7 @@ Find the average age in the demo dataframe per education level
 ## summarize(by_edu, average_age = mean(age, na.rm = TRUE))
 ```
 
-### 4.7
+### 5.7 {-}
 
 Return the observations which has more than 3 records in each gender group.
 
@@ -339,7 +330,7 @@ Return the observations which has more than 3 records in each gender group.
 ## filter(by_edu,n()>3)
 ```
 
-### 4.8
+### 5.8 {-}
 
 Compute the difference in each age and the average mean in each education level group
 
@@ -349,7 +340,7 @@ Compute the difference in each age and the average mean in each education level 
 ## mutate(by_edu, diff_age = age - mean(age, na.rm = T))
 ```
 
-### 4.9
+### 5.9 {-}
 
 Re-write the following code using pipe operator
 
@@ -366,11 +357,11 @@ Re-write the following code using pipe operator
 ```
 
 
-## Data Visualization with ggplot2
+## Tutorial 6: Data Visualization with ggplot2 {-}
 
 This notebook contains the solutions for all of the **Try it yourself** sections of tutorial 5: Data Visualization with ggplot. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 1.1
+### 6.1 {-}
 Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).
 
 ```{r}
@@ -380,7 +371,7 @@ Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-
 ##              na.rm = TRUE)
 ```
 
-### 1.2 
+### 6.2 {-} 
 Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.
 
 ```{r}
@@ -391,13 +382,13 @@ Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables 
 ##              na.rm = TRUE)
 ```
 
-### 1.3
+### 6.3 {-}
 
 Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?
 
 Higher binwidths give us less fluctuations than lower binwidths. When we are increasing the binwidths, we are actually increasing the length of intervals, which leads to less intervals. In other words, each data point are a bit further away from each other, so when connected, the graph looks less detailed and smoother.
 
-### 1.4 
+### 6.4 {-}
 
 Try recreating the graph above but without any missing (NA) values.
 
@@ -417,11 +408,11 @@ Then, we can graph our facets normally:
 ##   facet_grid(Race ~ Gender)
 ```
 
-## Date and Time Data with lubridate
+## Tutorial 7: Date and Time Data with lubridate {-}
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 6: Date & Time Data with lubridate**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 6.1
+### 7.1 {-}
 
 After running the `today()` and `now()` codes above, what do you see?
 
@@ -432,7 +423,7 @@ After running `today()` and `now()`, you should see that `today()` is a date dat
 
 Changing the time zone means that the date and time will be different if we run `today()` and `now()` again.
 
-### 6.2
+### 7.2 {-}
 Try creating a new column named "Day_visit" that only contains information of the Year, Month, and Day columns using the Friends_visits dataframe that we just created.
 
 ```{r}
@@ -442,7 +433,7 @@ Try creating a new column named "Day_visit" that only contains information of th
 ##    )
 ```
 
-### 6.3
+### 7.3 {-}
 
 Using the functions introduced above, solve the following questions:
 1. What day of the week is April 2, 2014?
@@ -460,7 +451,7 @@ Using the functions introduced above, solve the following questions:
 #4. tail(month(Friends_visits$Visit_time, label = TRUE), 11)
 ```
 
-### 6.4
+### 7.4 {-}
 
 Using the same Friends_visit dataset, create a similar graph as above but the x-axis is days of the week. In other words, create a bar graph that shows how many visits there are in each day of the week.
 
@@ -471,7 +462,7 @@ Using the same Friends_visit dataset, create a similar graph as above but the x-
 ##  geom_bar()
 ```
 
-### 6.5 
+### 7.5 {-} 
 Try to update our month to 13. What happened to our date/time? What is the output?
 
 ```{r}
@@ -481,7 +472,7 @@ Try to update our month to 13. What happened to our date/time? What is the outpu
 ## The year turns to 2021 because a year only has 12 months!
 ```
 
-### 6.6
+### 7.6 {-}
 
 Recreate the frequency polygon above but change the binwidth so that all flights within each 30 minutes are clumped into one single data point. How do the graphs differ? Can you think of a few scenarios where one would be preferred?
 
@@ -493,29 +484,29 @@ Recreate the frequency polygon above but change the binwidth so that all flights
 ```
 
 
-## Data Summary with tableone
+## Tutorial 8: Data Summary with tableone {-}
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 7: Data Summary with tableone**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
-### 7.1
+### 8.1 {-}
 **Challenge**: Why do you think we need to change the names of our variables AFTER we translate them?
 
 **Hint**: Think about the `data = demo` argument in `nhanesTranslate()`
 
 Because after we use the function `names()` our data is no longer recognizable by R as being connected to the DEMO_H dataset that we downloaded from NHANES.
 
-### 7.2
+### 8.2 {-}
 Create a tableone without the `vars` argument. What do you see? 
 Do you think the `vars` argument is necessary in our case? If not, in what situation(s) do you think it would be necessary?
 
 The `vars` argument tells R which variables you want to include in your tableone. If it is missing from `CreateTableOne()`, this means that we want R to select **ALL** variables of the original table in our tablone. Therefore, in our case, `vars` is not neccesary because we are selecting all variables anyway. But in cases where we only want to select some variables to include in our tableone, `vars` is an absolute must!
 
-### 7.3
+### 8.3 {-}
 How do you know if a variable is nonnormal? Try using the function `summary()` and look at the number under skew. How do you decide if something is normal or nonnormal? Is the decision to make “Age” nonnormal accurate?
 
 After you plug the dataset name into `summary()`, you should see a numerical value below "skew" that tells us the skewness of the data. The further it is from 0 (both negative and positive), the further it is from normal! The decision to make "Age" nonnormal is arguably not quite accurate because the skewness of "Age" is only 0.4.
 
-### 7.4
+### 8.4 {-}
 Create a tableone using the demo_translate dataset. Keep all variables and stratified the data using “Age”. What do you see? Do you think this is a helpful tableone?
 
 ```{r}

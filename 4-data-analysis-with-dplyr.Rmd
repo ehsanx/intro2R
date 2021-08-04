@@ -61,13 +61,11 @@ demo <- nhanes('DEMO_H')
 bpx <- nhanes('BPX_H')
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 `nhanes()` is the function we use to import our NHANES data and save it in a dataframe. What is a dataframe? We'll introduce it below. The arguments are as follows: 
 
-nhanes(
-> 'NAME OF DATASET'
-
-)
+nhanes('Name of Dataset')
 
 **For example:** `nhanes('DEMO_H')`
 
@@ -149,7 +147,7 @@ is.na(
 
 **For example:** `is.na(demo)`
 
-**DO QUESTIONS 1-3 OF THE QUIZ NOW**
+#### **DO QUESTIONS 1-3 OF THE QUIZ NOW** {-}
 * What package does the function `nhanes()` belong to?
 
 * Which code below is the correct one to print the last 10 rows of a dataframe called temp?
@@ -251,45 +249,21 @@ final_demo <- head(new_demo,10)
 final_demo
 ```
 
-#### Functions debunked
-[**nhanesTranslate**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTranslate) is the function we use to translate variables in a dataset - it is housed in the nhanesA package. The arguments are as follows: 
-
-nhanesTranslate(
-> 'NAME OF DATASET',
-
-> COLUMNS YOU WANT TO BE TRANSLATED, (can be written as a vector)
-
-> data = SOURCE DATAFRAME
-
-)
-
-**For example:** `nhanesTranslate('DEMO_H', RIAGENDR, data = demo)`
-
 [**rename()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) is the function we use to rename the variables and return all variables - it is housed in the dplyr package. The arguments are as follows: 
 
-rename(
-> NAME OF DATAFRAME,
-
-> NEW_VARIABLE_NAME = OLD_VARIABLE_NAME
-
-)
+rename(**Name of Data Frame**, **New Variable Name** = **Old Variable Name**)
 
 **For example:** `rename(demo, id = SEQN)`
 
 [**select()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) is the function we use to only return the varibles we want  - it is housed in the dplyr package. The arguments are as follows: 
 
-select(
-> NAME OF DATAFRAME,
-
-> VARIABLES, (can be written as a vector)
-
-)
+select(**Name of Data Frame**, **Variables (can be written as a vector)**)
 
 **For example:** `select(demo, c(id,gender,age))`
 
 **For example:** `select(demo, id:age))`
 
-### Try it yourself
+### [Try it yourself 5.1][5.1] {-}
 
 In the bpx dataframe, keep the following variables and top 5 rows only:
 
@@ -299,7 +273,7 @@ In the bpx dataframe, keep the following variables and top 5 rows only:
 + BPXSY1
 + BPXDI1
 
-### Try it yourself
+### [Try it yourself 5.2][5.2] {-}
 
 rename the variables in the following way:
 
@@ -309,7 +283,8 @@ rename the variables in the following way:
 + BPXSY1 -> systolic
 + BPXDI1 -> diastolic
 
-**DO QUESTIONS 4-5 OF THE QUIZ NOW**
+#### **DO QUESTIONS 4 & 5 OF THE QUIZ NOW** {-}
+
 * Given the following code: `select(dataset, A, B)`. What is the purpose of the code?
 
 * Which code below is the correct one to rename column A to B in a dataframe called dataset?
@@ -338,21 +313,11 @@ Another way of writing the code above is to use the `%in%` operator:
 filter(final_demo, age %in% c(40, 41))
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**filter()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/filter) is the function we use to subset the dataset based on  their values and conditions - it is housed in the dplyr package. The arguments are as follows: 
 
-filter(
-> NAME OF DATASET,
-
-> CONDITION 1
-
-> CONDITION 2 
-
-> ...
-
-> CONDITION n
-
-)
+filter(**Name of Dataset**, **Condition 1**, **Condition 2**, **...**, **Condition n**)
 
 **For example:** `filter(new_demo, gender == 1)`
 
@@ -389,7 +354,7 @@ If you want to keep the NAs, you need to add the condition explicitly: `is.na(VA
 
 **For example:** `filter(new_demo, is.na(income) | income <= 50)`
 
-### Try it yourself
+### [Try it yourself 5.3][5.3] {-}
 In the demo dataframe, find all the records that:
 
 a. The participant who is a male
@@ -398,7 +363,7 @@ b. The participant who is a male and is older tha 50 years old
 
 c. The education level is missing
 
-**DO QUESTIONS 6-8 OF THE QUIZ NOW**
+#### **DO QUESTIONS 6-8 OF THE QUIZ NOW** {-}
 
 Fill in the blank to answer the 'Try it yourself' sections:
 
@@ -440,7 +405,8 @@ For example, re-order the observations by age,id:
 arrange(final_demo,age,id)
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**arrange()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/arrange) is the function we use to change the order of the observations by columns - it is housed in the dplyr package. The arguments are as follows: 
 
 arrange(
@@ -466,11 +432,11 @@ In the last example, we notice that there are missing values in column 'income' 
 
 How does arrange() deal with missing value? **All NAs will be retained at the end.** Check the output above!
 
-### Try it yourself
+### [Try it yourself 5.4][5.4] {-}
 
 Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:
 
-**DO QUESTION 9 OF THE QUIZ NOW**
+#### **DO QUESTION 9 OF THE QUIZ NOW** {-}
 
 Fill in the blank to answer the 'Try it yourself' section:
 
@@ -495,7 +461,8 @@ transmute(final_demo,
      )
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**mutate()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate) is the function we use to create new variables based on variables we have and add them to the original dataframe - it is housed in the dplyr package. The arguments are as follows: 
 
 mutate(
@@ -524,7 +491,7 @@ transmute(
 You can find more details in how to use creation functions to create new variables in [Chapter I. Explore Chapter 3](https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform).
 
 
-### Try it yourself
+### [Try it yourself 5.5][5.5] {-}
 
 a. Create a new variable called called **rescale_bpt_sec** that records the Blood Pressure Time in miuntes. Keep both original and new variables.
 
@@ -532,8 +499,10 @@ b. Create **rescale_bpt_sec** in the same way above and **only keep new variable
 
 Note: Try to avoid using select().
 
-**DO QUESTION 10 OF THE QUIZ NOW**
+#### **DO QUESTION 10 OF THE QUIZ NOW** {-}
+
 Fill in the blank to answer both parts of the 'Try it yourself' sections.
+
 * `___`(final_bpx, rescale_bpt_sec = bpt_sec/60)
 
 ## Summary Statistics and group_by
@@ -556,35 +525,27 @@ by_gender <- group_by(final_demo,gender)
 summarize(by_gender, average_age = mean(age, na.rm = TRUE))
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**summarize()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/summarise) is the function we use to compute the summary statistics for the whole dataframe  - it is housed in the dplyr package. The arguments are as follows: 
 
-summarize(
-> NAME OF DATAFRAME,
-
-> NAME OF SUMMARY STATISTIC = FUNCTION()
-
-)
+summarize(**Name of Data Frame**, **Name of Summary Statistic** = **Function()**)
 
 **For example:** `summarize(new_demo, mean(age,na.rm = TRUE))`
 
 [**group_by()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by) is the function we use to create a grouped dataframe grouping by one or more variables  - it is housed in the dplyr package. The arguments are as follows: 
 
-group_by(
-> NAME OF DATAFRAME,
-
-> NAME OF VARIABLE
-
-)
+group_by(**Name of Data Frame**, **Name of Variable**)
 
 **For example:** `group_by(new_demo,age)`
+
 **Note:** if there is missing value in the variable, group_by() treats it as a new group
 
-### Try it yourself
+### [Try it yourself 5.6][5.6] {-}
 
 Find the average age in the demo dataframe per education level
 
-**DO QUESTION 11 OF THE QUIZ NOW**
+#### **DO QUESTION 11 OF THE QUIZ NOW** {-}
 
 Fill in the blanks to answer the 'Try it yourself' section:
 
@@ -611,16 +572,18 @@ mutate(by_gender,
       diff_age = age - mean(age, na.rm = T))
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**n()**](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n) is the function we use to count the number of observations in each group  - it is housed in the dplyr package. It can only be used with the existence of summarize(), filter(), and mutate() and there is **no** argument in it.
 
-### Try it yourself
+### [Try it yourself 5.7][5.7] {-}
 Return the observations which has more than 3 records in each gender group.
 
-### Try it yourself
+### [Try it yourself 5.8][5.8] {-}
 Compute the difference in each age and the average mean in each education level group
 
-**DO QUESTIONS 12-13 OF THE QUIZ NOW**
+#### **DO QUESTIONS 12 & 13 OF THE QUIZ NOW** {-}
+
 Fill in the blanks to answer the 'Try it yourself' sections:
 
 a. by_gender <-group_by(final_demo,gender)
@@ -659,7 +622,7 @@ final_demo %>%
   mutate(born_year = 2021 - age)
 ```
 
-### Try it yourself
+### [Try it yourself 5.9][5.9] {-}
 Re-write the following code using pipe operator
 
 ```{r}
@@ -668,7 +631,7 @@ Re-write the following code using pipe operator
 # temp
 ```
 
-**DO QUESTION 14 OF THE QUIZ NOW**
+#### **DO QUESTION 14 OF THE QUIZ NOW** {-}
 Fill in the blanks to answer the'Try it yourself' section:
 
 * `___` %>%
@@ -764,12 +727,11 @@ less_categories <- demo %>%
 head(less_categories, 10)
 ```
 
-### Functions debunked
+#### Functions debunked {-}
 
 **[case_when()](https://dplyr.tidyverse.org/reference/case_when.html)** is a function that we use to change or translate the values of our variables into something else that is still meaningful. The arguments are as follows:
 
-case_when(
-> **A VARIABLE** == **value as it is written in the original dataset** ~ **"NEW/TRANSLATED VALUE"**
+case_when(**A Variable** == **Value as it is written in the original dataset** ~ **"New/Translated Value"**
 )
 
 Note that if none of the cases match, then R will automatically regard it as a missing (NA) value.

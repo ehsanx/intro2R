@@ -46,7 +46,8 @@ We will use NHANES 2013-2014 just for demostration in this tutorial. If you clic
 
 We will introduce how to access the data in the following section.
 
-**DO QUESTION 1 OF THE QUIZ NOW**
+#### **DO QUESTION 1 OF THE QUIZ NOW** {-}
+
 * How many categories (available to public) are there in NHANES dataset?
 
 ## Importing NHANES dataset from website
@@ -91,16 +92,16 @@ head(demo,5)
 
 Now that we've successfully imported the dataset!
 
-#### Functions debunked
-[**read.xport()**](https://www.rdocumentation.org/packages/SASxport/versions/1.7.0/topics/read.xport) is the function we use to read and load SAS XPORT file in R - it is housed in the SASxport package. The arguments are as follows: 
-read.xport(
-> FILE PATH
+#### Functions debunked {-}
 
-)
+[**read.xport()**](https://www.rdocumentation.org/packages/SASxport/versions/1.7.0/topics/read.xport) is the function we use to read and load SAS XPORT file in R - it is housed in the SASxport package. The arguments are as follows: 
+
+read.xport(**File Path**)
 
 **For example:** `read.xport("../input/demo-h/DEMO_H.XPT")`
 
-**DO QUESTION 2 OF THE QUIZ NOW**
+#### **DO QUESTION 2 OF THE QUIZ NOW** {-}
+
 * Which package is read.xport() in?
 
 ## Importing NHANES dataset from R package: nhanesA
@@ -139,27 +140,23 @@ To see all the Dietary Data in survey cycle 2014-2015:
 nhanesTables('DIETARY', 2014)
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**nhanesTables()**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTables) is the function we use to display the data in a table format - it is housed in the nhanesA package. The arguments are as follows: 
 
-nhanesTables(
-> 'DATA CATEGORY',
-
-> YEAR
-
-)
+nhanesTables(**'Data Category'**, **Year**)
 
 **Note**:Abbreviation for the data category in the first argument is listed below:
 
-> Demographics Data = DEMO
+* Demographics Data = DEMO
 
-> Dietary Data = DIETARY
+* Dietary Data = DIETARY
 
-> Examination Data = EXAM
+* Examination Data = EXAM
 
-> Labortary Data = LAB
+* Labortary Data = LAB
 
-> Questionnaire Data = Q
+* Questionnaire Data = Q
 
 **For example:** `nhanesTables('DEMO', 2013)`
 
@@ -183,13 +180,11 @@ Go back to the output from *nhanesTables('DEMO', 2013)* above, now we have the d
 
 As you are getting familiar with the dataset, you may notice that different letter represents different survey cycle year. For example, `H` represents survey cycle 2013-2014 and `I` represents survey cycle 2015-2016.
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**nhanes()**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanes) is the function we use to retrieve the dataset and return a dataframe - it is housed in the nhanesA package. The arguments are as follows: 
 
-nhanesTranslate(
-> NAME OF TABLE
-
-)
+nhanesTranslate(**'Name of Table'**)
 
 **For example:** `nhanes('DEMO_H')`
 
@@ -205,22 +200,16 @@ demo_translate <- nhanesTranslate('DEMO_H',
 head(demo_translate,5)
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**nhanesTranslate()**](https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTranslate) is the function we use to translate variables in a dataset - it is housed in the nhanesA package. The arguments are as follows: 
 
-nhanesTranslate(
-> 'NAME OF DATASET',
-
-> COLUMNS YOU WANT TO BE TRANSLATED, (can be written as a vector)
-
-> data = SOURCE DATAFRAME
-
-)
+nhanesTranslate(**'Name of Dataset'**, **Columns you want to be translated (can be written as a vector)**, data = **Source Data Frame**)
 
 **For example:** `nhanesTranslate('DEMO_H', RIAGENDR, data = demo)`
 
 
-#### Try it yourself
+### Try it yourself 4.1][4.1] {-}
 
 a. Find all the Examination Data in survey cycle 2013-2014.
 
@@ -232,7 +221,7 @@ c. Translate the following variables in the BPX dataset
  
     * BPAARM - Arm selected
 
-**DO QUESTIONS 3-5 OF THE QUIZ NOW**
+#### **DO QUESTIONS 3-5 OF THE QUIZ NOW** {-}
 
 Fill in the blank to answer the 'Try it yourself' sections:
 
@@ -281,19 +270,11 @@ To do this, we need to create a variable that contains the .XPT's URL. If we loo
 url <- paste('https://wwwn.cdc.gov/nchs/nhanes/', years,'/', prefix_suffix, '.XPT', sep = '')
 ```
 
-### Function debunked
+#### Function debunked {-}
 
 **[paste()](https://www.journaldev.com/40396/paste-in-r)** is a function we use to combine multiple elements from multiple vectors into one single element. In this case, we are combining hard-wired characters and open variables together into one single url. Some of the main arguments are as follows:
 
-paste(
-
-> **'TEXT STRING THAT WE WANT TO INCLUDE (note that quotation marks)'**,
-
-> **A DEFINED VARIABLE**,
-
-> sep = **''** OR **'/'** OR **'_'** OR **'&'** etc (this argument tells R how you want each element to be separated, in our case, we don't want any separator, that's why there is nothing between the '' quotation marks)
-
-)
+paste(**'Text string that we want to include (note the quotation marks)'**, **A Defined Variable**, sep = **''** OR **'/'** OR **'_'** OR **'&'** etc (this argument tells R how you want each element to be separated, in our case, we don't want any separator, that's why there is nothing between the '' quotation marks))
 
 **For example:** `paste('https://wwwn.cdc.gov/nchs/nhanes/', years,'/', prefix_suffix, '.XPT', sep = '')`
 
@@ -349,7 +330,7 @@ head(
 
 The two imported datasets are identical! Fantastic, our new function works! And that's just a sneak peak of what goes behind our `nhanes()` function.
 
-The function that we went over in this tutorial is originally written by **___**. For simplification and educational purposes, the function has been simplified. You can find the original function here (**need to insert link to document**).
+The function that we went over in this tutorial is originally found on the CDC website. For simplification and educational purposes, the function has been simplified. You can find the original function [here](https://wwwn.cdc.gov/nchs/data/tutorials/module3_examples_R.r).
 
 
 ## Summary and Takeaways

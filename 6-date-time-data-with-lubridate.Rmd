@@ -155,13 +155,13 @@ today()
 now()
 ```
 
-### Try it yourself
+### [Try it yourself 7.1][7.1] {-}
 
 After running the `today()` and `now()` codes above, what do you see?
 
 Try to also change the time zone to where you are or to something else. Now what do you see when you run `today()` and `now()`?
 
-#### DO QUESTIONS 1-3 OF THE QUIZ NOW
+#### DO QUESTIONS 1-3 OF THE QUIZ NOW {-}
 
 * Which of the following is a date data?
 
@@ -222,7 +222,7 @@ make_datetime_new <- function(year, month, day, time) {
 }
 ```
 
-#### DO QUESTION 4 OF THE QUIZ NOW
+#### DO QUESTION 4 OF THE QUIZ NOW {-}
 
 * **REVIEW:** What is the difference between %/% and %%?
 
@@ -245,34 +245,23 @@ Another simpler way to use `make_datetime()` is to insert the numerical values o
 make_datetime(2014, 8, 22, 9)
 ```
 
-#### DO QUESTION 5 OF THE QUIZ NOW
+#### DO QUESTION 5 OF THE QUIZ NOW {-}
 
 * Using the Friends_visits data frame, which of the following code will give us a new column named "Year_Month" that only has information of the year and month of each friend visit?
 
-### Functions Debunked
+### Functions Debunked {-}
+
 **[make_datetime()](https://lubridate.tidyverse.org/reference/make_datetime.html)** can be used to create new datetime data. The arguments are as follows:
 
-make_datetime(
-
-> **VALUES OF YEAR,**
-
-> **VALUES OF MONTH,**
-
-> **VALUES OF DAY,**
-
-> **VALUES OF HOUR,**
-
-> **VALUES OF MINUTE,**
-
-> **VALUES OF SECOND,**
-
-)
+make_datetime(**Values of Year**, **Values of Month**, **Values of Day**, **Values of Hour**, **Values of Minute**, **Values of Second**)
 
 **For example:** 
+
 * Combine columns of a dataset: `flights_datetime %>% make_datetime(year, month, day, hour, minute)`
+
 * Insert values directly: `make_datetime(2014, 8, 22, 9)`
 
-### Try it yourself
+### [Try it yourself 7.2][7.2] {-}
 
 Try creating a new column named "Day_visit" that only contains information of the Year, Month, and Day columns using the Friends_visits dataframe that we just created.
 
@@ -362,7 +351,7 @@ head(
     )
 ```
 
-### Try it yourself
+### [Try it yourself 7.3][7.3] {-}
 
 Using the functions introduced above, solve the following questions:
 1. What day of the week is April 2, 2014?
@@ -402,11 +391,11 @@ Friends_visits %>%
     geom_bar()
 ```
 
-#### DO QUESTION 6 OF THE QUIZ NOW
+#### DO QUESTION 6 OF THE QUIZ NOW {-}
 
 * What is the difference between `%>%` and `+`? (Select all that apply)
 
-### Try it yourself
+### [Try it yourself 7.4][7.4] {-}
 
 Using the same Friends_visit dataset, create a similar graph as above but the x-axis is days of the week. In other words, create a bar graph that shows how many visits there are in each day of the week.
 
@@ -433,7 +422,7 @@ DT %>%
 
 `update()` automatically adjusts it to May 1st instead because April 31st does not exist!
 
-### Try it yourself
+### [Try it yourself 7.5][7.5] {-}
 
 Try to update our month to 13. What happened to our date/time? What is the output?
 
@@ -497,11 +486,11 @@ What information can you conclude from the graph above? Around what timeframe do
 
 Note that each binwidth (i.e. binwidth = 1) is equal to one second. So `binwidth = 3600` means we are clumping all flights within each 60 minutes (1 hour) together into one single data point in our frequency polygon.
 
-### Try it yourself
+### [Try it yourself 7.6][7.6] {-}
 
 Recreate the frequency polygon above but change the binwidth so that all flights within each 30 minutes are clumped into one single data point. How do the graphs differ? Can you think of a few scenarios where one would be preferred?
 
-#### DO QUESTION 7 OF THE QUIZ NOW
+#### DO QUESTION 7 OF THE QUIZ NOW {-}
 
 * What should the binwidth be if we want to have each data point to represent a separate 2 hour interval?
 
@@ -565,7 +554,7 @@ As you may have seen, telling someone you are 7,797 days old is quite a mouthful
 as.duration(age)
 ```
 
-#### DO QUESTION 8 OF THE QUIZ NOW
+#### DO QUESTION 8 OF THE QUIZ NOW {-}
 
 * We can use `now()` to calculate our age as well. (True or False)
 
@@ -613,7 +602,7 @@ ymd_hms("2021-03-14 1:00:00",
     ddays(1)
 ```
 
-#### DO QUESTIONS 9-10 OF THE QUIZ NOW
+#### DO QUESTIONS 9 & 10 OF THE QUIZ NOW {-}
 
 * Which of these functions account for date and time changes throughout the years?
 

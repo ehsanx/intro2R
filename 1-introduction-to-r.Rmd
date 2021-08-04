@@ -48,13 +48,9 @@ You will see that there are 2 CSV files in our working directory: last_15_bpx.cs
 The example above is only to demonstrate how we would change our working directory. But since we want to remain in our default working directory for the rest of this tutorial, we will set our working directory back to the original directory.
 
 ```{r}
-# setwd("..") # this ".." argument allows us to move back 1 folder
-# setwd("..") 
-# setwd("..") # so doing this three times means that we are moving back 3 folders
+setwd("..") # this ".." argument allows us to move back 1 folder
 
-
-# setwd("./data/") 
-# now we're back in the large folder that houses both input/tutorial-demo and kaggle/working
+#setwd("") # and then we can set our working directory back to the original by copying and pasting its pathway
 ```
 
 After setting a new working directory, it is in our best interest to check the working directory again to see if we are in the right place.
@@ -64,7 +60,7 @@ After setting a new working directory, it is in our best interest to check the w
 getwd()
 ```
 
-#### Functions Debunked
+#### Functions Debunked {-}
 
 Throughout our tutorials, you will see a recurring section named **Functions Debunked**. These sections aim to break down the function that you were just introduced to. Each of these section will include a link for you to find more information about the function, the different arguments that can be nested within each function, and an example.
 
@@ -101,7 +97,8 @@ To make sure the package is successfully attached, we can try running a function
 ggplot()
 ```
 
-#### DO QUESTIONS 1-3 OF THE QUIZ NOW
+#### DO QUESTIONS 1-3 OF THE QUIZ NOW {-}
+
 * What is a "Working Directory"?
 
 * What is the main difference between `setwd()` and `getwd()`?
@@ -116,7 +113,7 @@ As expected from a data analysis software, you can use R like a calcultor using 
 
 These operators will prove themselves to be more useful in data analysis when we get to later tutorials, especially our Tutorial 4 on the dplyr package.
 
-### Try it yourself
+### [Try it yourself 2.1][2.1] {-}
 
 a. Can you replicate and solve these problems in R?
 * 2^2
@@ -131,7 +128,8 @@ a <- 9 + 3 * 6
 
 x <- a ÷ 2
 
-#### DO QUESTION 4 OF THE QUIZ NOW
+#### DO QUESTION 4 OF THE QUIZ NOW {-}
+
 * The output of `10 %% 2` is equal to which of the following?
 
 ## Logical Operators
@@ -167,14 +165,15 @@ a == b
     # note that in R, "equal to" is coded by ==, = has another meaning that you will see in section 4
 ```
 
-### Try it yourself
+### [Try it yourself 2.2][2.2] {-}
 
 Translate the following into R and find the output:
 * 8 times 3 is greater than 8?
 * eleven divided by seven is not equal to 2?
 * 9 is less than or equal to 18?
 
-#### DO QUESTION 5 OF THE QUIZ NOW
+#### DO QUESTION 5 OF THE QUIZ NOW {-}
+
 * Which of the following operators code for "equal to"?
 
 ## Most Common Data Types In R
@@ -233,7 +232,7 @@ logical <- c(TRUE, FALSE, TRUE)
 
 What we just did was assigning values to variables where numeric, character, and logical are all variables!
 
-### Try it yourself
+### [Try it yourself 2.3][2.3] {-}
 
 Can you try storing a string? Assign the string "hello world, I am here" to the variable named start. 
 
@@ -263,7 +262,7 @@ numeric[1:4] # the first 4 components
 character[2] # only the 2nd component
 ```
 
-### Try it yourself
+### [Try it yourself 2.4][2.4] {-}
 
 It is important to note that **R is case-sensitive**. This means that it distinguishes capitalized from non-capitalized characters, so logical and Logical are read as two separate things by R!
 
@@ -285,14 +284,11 @@ Similarly, you can also extract specific information from this list using `[]`. 
 list[2]
 ```
 
-#### Functions Debunked
+#### Functions Debunked {-}
 
 The arguments for [list()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list) are as follows:
 
-list(
-> **VARIABLE NAME OF ANY DATA TYPE** = **ANY DATA STORED WITHIN THAT VARIABLE** OR **ANY STRING**
-
-)
+list(**Variable name of any data type** = **Any data stored within that variable** OR **Any string**)
 
 **For example:** `list(numeric = 1, character = c("bonjour", "hello"), dataframe = logical)`
 
@@ -308,18 +304,11 @@ dataframe <- data.frame(numeric, character, logical)
 dataframe
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
 
 The arguments for [data.frame()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame) are as follows:
 
-data.frame(
-> **VECTOR 1**
-
-> **VECTOR 2**
-
-> **VECTOR n**
-
-)
+data.frame(**Vector 1**, **Vector 2**, **Vector n**)
 
 **For example:** `dataframe <- data.frame(numeric, character, logical)`
 
@@ -335,18 +324,15 @@ Now if we check our data frame again, the new column names should appear.
 dataframe
 ```
 
-#### Functions Debunked
+#### Functions Debunked {-}
 
 The arguments for [names()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/names) are as follows:
 
-names(
-> **NAME OF DATASET**) <-
-
-> **A VECTOR OF COMPONENTS WHOSE LENGTH MATCHES WITH THAT OF THE DATASET** (we will go over length in section 5 of this tutorial)
+names(**Name of Dataset**) <- **A vector of components which length matches with that of the dataset** (we will go over length in section 5 of this tutorial)
 
 **For example:** `names(dataframe) <- c("Number", "Text", "T/F")`
 
-### Try it yourself
+### [Try it yourself 2.5][2.5] {-}
 
 Why do you think numeric, character, and logical are not in "" but Number, Text, and T/F are?
 
@@ -364,7 +350,8 @@ dataframe[, 2] # only the second column
 dataframe[3, 2] # only cell (3,2) - the third row and second column
 ```
 
-#### DO QUESTIONS 6 & 7 OF THE QUIZ NOW
+#### DO QUESTIONS 6 & 7 OF THE QUIZ NOW {-}
+
 * Which of the following codes would extract only rows 1, 3, 6 and only column 1 from our data frame?
 
 * What is the value of the cell in the first row and third column of our data frame?
@@ -384,22 +371,15 @@ Similarly, the function to add a new row is `rbind()`. The two functions work al
 
 You may have noticed that the code above has an extra `()` that encompasses the whole code. This `()` is another way for us to print the output of our function - it is equivalent to if we just run the name of data frame new_row. Try removing the extra `()` and see what happens!
 
-#### Functions Debunked
+#### Functions Debunked {-}
+
 **[cbind()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cbind)** is used to create new columns in a data frame. The arguments are as follows:
-cbind(
-> **THE CURRENT DATAFRAME**
 
-> "**NAME OF THE NEW COLUMN**" = **VALUE(S) IN THE NEW COLUMN**
-
-)
+cbind(**the Current Data Frame**, "**Name of the New Column**" = **Value(s) in the New Column**)
 
 **[rbind](https://www.rdocumentation.org/packages/SparkR/versions/2.4.6/topics/rbind)** is used to create new rows in a data frame. The arguments are as follows:
-rbind(
-> **THE CURRENT DATAFRAME**
 
-> **VALUES IN THE NEW ROW**
-
-)
+rbind(**the Current Data Frame**, **Values in the New Row**)
 
 There exists many other types of [data types](https://www.statmethods.net/input/datatypes.html) on R, you are free to explore them on your own time. But what we have been introduced to are the most basic ones.
 
@@ -423,14 +403,11 @@ To introduce you to the concept of exploring data on R, we will be using a datas
 #### Functions Debunked
 **[print()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print)** is another option for you to use if you want to see a variable, dataset, or any other type of output.
 
-print(
-> **ANY OBJECT**
-
-)
+print(**Any Object**)
 
 **For example:** `print(faithful)`, `print(faithful$eruptions)`, `print(1:12)`
 
-### Try it yourself
+### [Try it yourself 2.6][2.6] {-}
 
 1. What are 2 ways that we can print rows 1 to 5 of the data frame faithful?
 2. What is the value of the cell in the fourth row and second column of the data frame faithful?
@@ -474,7 +451,7 @@ class(faithful$eruptions)
 
 Note how if we are checking the class of the variable eruption, we need to have the dataset name followed by a $ first before we can write the variable name.
 
-### Try it yourself
+### [Try it yourself 2.7][2.7] {-}
 Write a code to find the structure of the variable waiting in the faithful dataset.
 
 ### Length
@@ -491,7 +468,7 @@ length(faithful$eruption)
     ## the output should be 272 - the number of observations in this variable!
 ```
 
-### Try it yourself
+### [Try it yourself 2.8][2.8] {-}
 
 Remember those variables that we created earlier in the tutorial? Try finding the lengths of data frame and numeric. 
 
@@ -525,7 +502,8 @@ tail(faithful, 2)
 
 As you can see, `head()` and `tail()` allow you to check just a portion of the dataset. This is especially useful when you’re working with large datasets and you only want to see part of it to make sure everything is okay!
 
-#### DO QUESTION 8 OF THE QUIZ NOW
+#### DO QUESTION 8 OF THE QUIZ NOW {-}
+
 * Which of the following codes is best to find how large our dataset is?
 
 ### Mathematical Functions in R
@@ -578,7 +556,7 @@ Another powerful function in R is `summary()`. It literally summarizes everythin
 summary(faithful)
 ```
 
-### Try it yourself
+### [Try it yourself 2.9][2.9] {-}
 
 Recall that in order for us to refer to a variable in a dataset, we need to first type the dataset name following by a $ before we can type the variable name.
 
@@ -586,7 +564,8 @@ A way to avoid repeating `faithful$` everytime is to attach the dataset using `a
 
 Try attaching the dataset faithful then find the mean of the variable eruptions without using $!
 
-#### DO QUESTION 9 OF THE QUIZ NOW
+#### DO QUESTION 9 OF THE QUIZ NOW {-}
+
 * What information does the function `summary()` provide us with? (select all that apply)
 
 ## Writing a New Function In R
@@ -771,7 +750,8 @@ Outside of R, there are also plenty of resources for you to tap into [R Document
 
 Another resource is [Stack Overflow](https://stackoverflow.com/), an online forum where you can ask and answer questions relating to coding!
 
-#### DO QUESTION 10 OF THE QUIZ NOW
+#### DO QUESTION 10 OF THE QUIZ NOW {-}
+
 * What are some of the ways that we can find help about R? (select all that apply)
 
 ## Summary and Takeaways

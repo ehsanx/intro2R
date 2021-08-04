@@ -44,7 +44,7 @@ demo_bpx <- read_csv("data/demo_bpx.csv")
 head(demo_bpx)
 ```
 
-#### DO QUESTION 1 OF THE QUIZ NOW
+#### DO QUESTION 1 OF THE QUIZ NOW {-}
 
 * **REVIEW** What is the name of the core that the packages readr, dplyr, and ggplot2 belong to?
 
@@ -78,30 +78,19 @@ ggplot(demo_bpx) +
 
 As you can see, point geometrics (and all other geometric functions) always have to go after our `ggplot()` function. In addition, note that `ggplot()` and `geom_point()` are separated by a `+`.
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**ggplot**](https://ggplot2.tidyverse.org/reference/ggplot.html) is our blank canvas - this function is housed in the ggplot2 package! The arguments are as follows: 
 
-ggplot(
-> **NAME OF DATAFRAME**,
-
-> aes(x = **VARIABLE ON THE X AXIS**, y = **VARIABLE ON THE Y AXIS**)
-
-)
+ggplot(**Name of Data Frame**, aes(x = **Variable on the x-axis**, y = **Variable on the y-axis**))
 
 [**geom_point**](https://ggplot2.tidyverse.org/reference/geom_point.html) is the function we use to draw scatterplots - it is also housed in the ggplot2 package. The arguments that will be covered in this tutorial are as follows - you are welcomed to explore this function in more detail on your own:
 
-geom_point(
-> aes(**AESTHETICS** - to be covered later in the tutorial),
-
-> na.rm = **TRUE OR FALSE**,
-
-> show.legend = **TRUE OR FALSE**
-
-)
+geom_point(aes(**Aesthetics** - to be covered later in the tutorial), na.rm = **True or False**, show.legend = **True or False**)
 
 **For example:** `ggplot(demo_bpx) + geom_point(aes(x = Systolic, y = Diastolic, color = Gender), na.rm = TRUE)`
 
-#### DO QUESTIONS 2 & 3 OF THE QUIZ NOW
+#### DO QUESTIONS 2 & 3 OF THE QUIZ NOW {-}
 
 **HINT**: We've covered how to look for help within and outside of R in our very first tutorial: Basics of R and RStudio.
 
@@ -109,10 +98,10 @@ geom_point(
 
 * What do you think the argument `show.legend = TRUE` does?
 
-### Try it yourself
+### [Try it yourself 6.1][6.1] {-}
 Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).
 
-#### DO QUESTION 4 OF THE QUIZ NOW
+#### DO QUESTION 4 OF THE QUIZ NOW {-}
 
 * What does the "Try it yourself" graph above look like?
 
@@ -203,10 +192,10 @@ ggplot(demo_bpx) +
              position = "jitter")
 ```
 
-### Try it yourself
+### [Try it yourself 6.2][6.2] {-}
 Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.
 
-#### DO QUESTION 5 OF THE QUIZ NOW
+#### DO QUESTION 5 OF THE QUIZ NOW {-}
 
 * Which is the correct code for the question above?
 
@@ -235,25 +224,13 @@ ggplot(demo_bpx, aes(x = Systolic, y = Diastolic)) +
                 na.rm = TRUE)
 ```
 
-#### Functions debunked
+#### Functions debunked {-}
+
 [**geom_smooth**](https://ggplot2.tidyverse.org/reference/ggplot.html) is how we show the smoothed conditional means line on our scatterplot. The arguments are as follows: 
 
-geom_smooth(
-> mapping = aes(**AESTHETICS**),
+geom_smooth(mapping = aes(**Aesthetics**), method = **"Smoothing Method (Function)"**, formula = **Formula to use in Smoothing Function**, na.rm = **True or False**, show.legend = **True or False**, se = **True or False**)
 
-> method = **"SMOOTHING METHOD (FUNCTION)"**, e.g. loess, gam, lm, glm
-
-> formula = **FORMULA TO USE IN SMOOTHING FUNCTION**, usually y ~ x when there are less than 1,000 observations
-
-> na.rm = **TRUE OR FALSE**,
-
-> show.legend = **TRUE OR FALSE**,
-
-> se = **TRUE OR FALSE**
-
-)
-
-#### DO QUESTION 6 OF THE QUIZ NOW
+#### DO QUESTION 6 OF THE QUIZ NOW {-}
 
 * What do you think the argument `se = FALSE` does?
 
@@ -351,7 +328,7 @@ ggplot(demo_bpx) +
 
 Since `geom_freqpoly()` divides the variable in the x axis into bins before counting the number of observations in each bin, we can further customize how we want our frequency polygon to look by changing the binwidth.
 
-### Try it yourself
+### [Try it yourself 6.3][6.3] {-}
 
 Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?
 
@@ -375,7 +352,8 @@ ggplot(demo_bpx) +
 
 You may notice that the x axis label for the graph above is incorrect! And the legend title is also wrong. Don't worry! We will go over how to manually add and edit graph elements later in this tutorial.
 
-#### DO QUESTIONS 7 & 8 OF THE QUIZ NOW
+#### DO QUESTIONS 7 & 8 OF THE QUIZ NOW {-}
+
 * Increasing the binwidth of a bar graph makes the graph more detailed. (True or False)
 
 * Match the geometrics with the correct graph type.
@@ -396,10 +374,11 @@ ggplot(demo_bpx) +
   facet_grid(Race ~ Gender)
 ```
 
-#### DO QUESTION 9 OF THE QUIZ
+#### DO QUESTION 9 OF THE QUIZ {-}
+
 * It is most useful to use facet functions when plotting continuous variables.
 
-### Try it yourself
+### [Try it yourself 6.4][6.4] {-}
 
 Try recreating the graph above but without any missing (NA) values.
 
@@ -422,21 +401,11 @@ ggplot(demo_bpx) +
 
 The first three lines of codes are similar to what we have previously, and the last one is new. Let's go over the last line of codes together in the following functions debunked.
 
-#### Functions Debunked
+#### Functions bebunked {-}
 
 `labs` lets us change the axes labels, graph title, and legend title! The basic arguments are as follows:
 
-**[labs](https://ggplot2.tidyverse.org/reference/labs.html)**(
-
-> title = "**TITLE OF GRAPH**", 
-
-> x = "**X AXIS LABEL**",
-
-> y = "**Y AXIS LABEL**",
-
-> color = "**LEGEND TITLE**"
-
-)
+**[labs](https://ggplot2.tidyverse.org/reference/labs.html)**(title = "**Title of Graph**", x = "**x-axis label**", y = "**y-axis label**", color = "**Legend Title**")
 
 **For example:** `labs(x = "Blood Pressure (Hg mm)", color = "Legend")`
 
@@ -496,31 +465,19 @@ ggplot(demo_bpx) +
           legend.text = element_text(family = "Helvetica", size = 12))
 ```
 
-#### Functions Debunked
+#### Functions debunked {-}
 
 Some basic arguments of `theme()` are as follows:
 
-**[theme](https://ggplot2.tidyverse.org/reference/theme.html)**(
-
-> plot.title = element_text(family = "**FONT NAME**", face = "**EMPHASIS TYPE**, size = **SIZE NUMBER**, color = "**A COLOR THAT R RECOGNIZES**"), 
-
-> axis.title = [*same arguments as before*],
-
-> axis.text = [*same arguments as before*],
-
-> legend.title = [*same arguments as before*],
-
-> legend.text = [*same arguments as before*]
-
-)
+**[theme](https://ggplot2.tidyverse.org/reference/theme.html)**(plot.title = element_text(family = "**Font Name**", face = "**Emphasis Type**, size = **Size Number**, color = "**A Color that R Recognizes**"), axis.title = [*same arguments as before*], axis.text = [*same arguments as before*], legend.title = [*same arguments as before*], legend.text = [*same arguments as before*])
 
 **For example:** `theme(plot.title = element_text(family = "Helvetica", face = "bold", size = 20, color = "cyan4"))`
 
-#### DO QUESTION 10 OF THE QUIZ NOW
+#### DO QUESTION 10 OF THE QUIZ NOW {-}
 
 * What is the difference between `legend.title` and `legend.text`?
 
-### Try it yourself
+### Try it yourself 6.5 {-}
 
 Customize your own graph using the functions we just learned above!
 
