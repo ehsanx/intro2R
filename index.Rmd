@@ -31,7 +31,7 @@ This is a R online textbook for those who are not familiar with data wrangling. 
 
 ## Version history {-}
 
-Currently under development. The conception of this online textbook is loosely based on lab materials from the PhD level course SPPH 504/007 (developed in 2018 Fall, and updated in 2019 fall and 2020 fall). A more comprehensive version of this textbook was put together by a team of underhgraduate students, working under the supervision of Dr. Ehsan Karim. Initial team members included An Hoang and Yang Qu. The work was partially supported by Work Learn program at UBC in 2021 May-August (during Covid-19 pandemic). 
+Currently under development. The conception of this online textbook is loosely based on lab materials from the PhD level course SPPH 504/007 (developed in 2018 Fall, and updated in 2019 fall and 2020 fall). A more comprehensive version of this textbook was put together by a team of undergraduate students, working under the supervision of Dr. Ehsan Karim. Initial team members included An Hoang and Yang Qu. The work was partially supported by Work Learn program at UBC in 2021 May-August (during Covid-19 pandemic). 
 
 ## Contributor list {-}
 

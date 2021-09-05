@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Data Visualization with ggplot2 | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Data Visualization with ggplot2 | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Data Visualization with ggplot2 | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-09-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-analysis-with-dplyr.html"/>
+<link rel="next" href="date-time-data-with-lubridate.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> Instructions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> What is R?</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> Download and Install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> Download and Install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> RStudio Basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#summary-and-takeaways"><i class="fa fa-check"></i><b>1.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> Set Up Basics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> Arithmetic Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.12.1"><span>Try it yourself 2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> Logical Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.22.2"><span>Try it yourself 2.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> Most Common Data Types In R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.32.3"><span>Try it yourself 2.3</span></a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.42.4"><span>Try it yourself 2.4</span></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.3</b> Lists</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.4</b> Dataframe</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.52.5"><span>Try it yourself 2.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> Exploring a Dataset</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.62.6"><span>Try it yourself 2.6</span></a></li>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.1</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.2</b> Structure</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.3</b> Class</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.72.7"><span>Try it yourself 2.7</span></a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.4</b> Length</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.82.8"><span>Try it yourself 2.8</span></a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.5</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.6</b> Mathematical Functions in R</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.92.9"><span>Try it yourself 2.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> Writing a New Function In R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> For Loops</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> Help Within and Outside Of R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>2.11</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> Instructions</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> Set Up</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> Basics Of Importing a CSV File Into R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.13.1"><span>Try it yourself 3.1</span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.3</b> Key Notes About Importing Data into R</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.23.2"><span>Try it yourself 3.2</span></a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.4</b> Column Specification</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.33.3"><span>Try it yourself 3.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> More Arguments Of read_csv</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.43.4"><span>Try it yourself 3.4</span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.2</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.3</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> Importing Other File Types into R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.53.5"><span>Try it yourself 3.5</span></a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.3</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.4</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> Exporting the Data Frame From R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>3.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li><a href="introduction-to-nhanes.html#try-it-yourself-4.14.1">Try it yourself 4.1]<span>4.1</span></a></li>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#summary-and-takeaways-3"><i class="fa fa-check"></i><b>4.6</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> Instructions</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> Dataset Preparation</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.15.1"><span>Try it yourself 5.1</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.25.2"><span>Try it yourself 5.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> Filter</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.35.3"><span>Try it yourself 5.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> Re-order the Rows</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.45.4"><span>Try it yourself 5.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> Add new variables</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.55.5"><span>Try it yourself 5.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> Summary Statistics and group_by</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.65.6"><span>Try it yourself 5.6</span></a></li>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.1</b> Group_by() extension</a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.75.7"><span>Try it yourself 5.7</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.85.8"><span>Try it yourself 5.8</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> Pipe</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.95.9"><span>Try it yourself 5.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> Alternatives to NHANESTranslate()</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-and-takeaways-4"><i class="fa fa-check"></i><b>5.15</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> Instructions</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> ggplot() and Point Geometrics</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.16.1"><span>Try it yourself 6.1</span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.2</b> Aesthetics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.26.2"><span>Try it yourself 6.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> Multiple Geometric Functions under one ggplot</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> Other Geometric Functions</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.36.3"><span>Try it yourself 6.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> Facet Functions</a>
+<ul>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.46.4"><span>Try it yourself 6.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> Customizing Graph Elements</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.5"><i class="fa fa-check"></i>Try it yourself 6.5</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graphs"><i class="fa fa-check"></i><b>6.9</b> Saving Our Graphs</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways-5"><i class="fa fa-check"></i><b>6.10</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> Set Up</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> Exploring Friends Visits Dataset</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> Creating Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.17.1"><span>Try it yourself 7.1</span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.2</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.3</b> Dataset</a></li>
+<li class="chapter" data-level="" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-20"><i class="fa fa-check"></i>Functions Debunked</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.27.2"><span>Try it yourself 7.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> Retrieving Information from Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.37.3"><span>Try it yourself 7.3</span></a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.4</b> Plotting Retrieved Information</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.47.4"><span>Try it yourself 7.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> Updating &amp; Plotting Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.57.5"><span>Try it yourself 7.5</span></a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.2</b> Plotting Date/Time</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.67.6"><span>Try it yourself 7.6</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> Arithmetic Operators with Date/Time</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-6"><i class="fa fa-check"></i><b>7.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> Set Up</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> What is tableone?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> Creating a tableone</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.18.1"><span>Try it yourself 8.1</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.3</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.28.2"><span>Try it yourself 8.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> Other Arguments to Customize tableone</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.38.3"><span>Try it yourself 8.3</span></a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.3</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.4</b> Strata</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.48.4"><span>Try it yourself 8.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> Export tableone</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> Alternatives to tableone</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-7"><i class="fa fa-check"></i><b>8.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html"><i class="fa fa-check"></i><b>9</b> Appendix: Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-2-introduction-to-r"><i class="fa fa-check"></i>Tutorial 2: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section"><i class="fa fa-check"></i>2.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-1"><i class="fa fa-check"></i>2.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-2"><i class="fa fa-check"></i>2.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-3"><i class="fa fa-check"></i>2.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-4"><i class="fa fa-check"></i>2.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-5"><i class="fa fa-check"></i>2.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-6"><i class="fa fa-check"></i>2.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-7"><i class="fa fa-check"></i>2.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-8"><i class="fa fa-check"></i>2.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.1" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-3-importing-data-into-r-with-readr"><i class="fa fa-check"></i><b>9.1</b> Tutorial 3: Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-9"><i class="fa fa-check"></i>3.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-10"><i class="fa fa-check"></i>3.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-11"><i class="fa fa-check"></i>3.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-12"><i class="fa fa-check"></i>3.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-13"><i class="fa fa-check"></i>3.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-4-introduction-to-nhanes"><i class="fa fa-check"></i><b>9.2</b> Tutorial 4: Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-14"><i class="fa fa-check"></i>4.1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-5-data-analysis-with-dplyr"><i class="fa fa-check"></i><b>9.3</b> Tutorial 5: Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-15"><i class="fa fa-check"></i>5.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-16"><i class="fa fa-check"></i>5.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-17"><i class="fa fa-check"></i>5.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-18"><i class="fa fa-check"></i>5.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-19"><i class="fa fa-check"></i>5.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-20"><i class="fa fa-check"></i>5.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-21"><i class="fa fa-check"></i>5.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-22"><i class="fa fa-check"></i>5.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-23"><i class="fa fa-check"></i>5.9</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-6-data-visualization-with-ggplot2"><i class="fa fa-check"></i>Tutorial 6: Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-24"><i class="fa fa-check"></i>6.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-25"><i class="fa fa-check"></i>6.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-26"><i class="fa fa-check"></i>6.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-27"><i class="fa fa-check"></i>6.4</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-7-date-and-time-data-with-lubridate"><i class="fa fa-check"></i>Tutorial 7: Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-28"><i class="fa fa-check"></i>7.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-29"><i class="fa fa-check"></i>7.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-30"><i class="fa fa-check"></i>7.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-31"><i class="fa fa-check"></i>7.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-32"><i class="fa fa-check"></i>7.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-33"><i class="fa fa-check"></i>7.6</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-8-data-summary-with-tableone"><i class="fa fa-check"></i>Tutorial 8: Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-34"><i class="fa fa-check"></i>8.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-35"><i class="fa fa-check"></i>8.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-36"><i class="fa fa-check"></i>8.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-37"><i class="fa fa-check"></i>8.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-visualization-with-ggplot2" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Data Visualization with ggplot2</h1>
+<div id="instructions-5" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Instructions</h2>
+<p>This tutorial will introduce us to data visualization on R, specially using the ggplot R package. For this purpose, we will focus on the basic and most commonly used functions of the ggplot package. We will be able to read through the step-by-step instructions on how to use each function as well as its different arguments.</p>
+<p>Accompanying this tutorial is <strong>a short <a href="https://forms.gle/yUvW9Sg8mqEozyYu8">Google quiz</a></strong> for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.</p>
+</div>
+<div id="learning-objectives-5" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Learning Objectives</h2>
+<ul>
+<li>Be familiar with the basics of ggplot including how to graph basic scatterplot (with smoothed conditional means), line graph, bar graph, and bar chart using geometric functions.</li>
+<li>Get a brief understanding of coordinate functions with special emphasis on <code>coord_flip()</code> and <code>coord_polar()</code>.</li>
+<li>Be able to create gridded subplots using facet functions.</li>
+<li>Know how to customize a graph to our own liking - including changing the texts, font, size, and color.</li>
+<li>Know how to export the final graph into a png file using <code>ggsave()</code>.</li>
+</ul>
+</div>
+<div id="set-up-2" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Set Up</h2>
+<div id="loading-required-packages" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Loading required packages</h3>
+<p>For this tutorial, we will only be focusing on the ggplot2 package. But we will also be using a few functions from the readr and dplyr packages from the previous tutorials.</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="data-visualization-with-ggplot2.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;dplyr&quot;)</span></span>
+<span id="cb342-2"><a href="data-visualization-with-ggplot2.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb342-3"><a href="data-visualization-with-ggplot2.html#cb342-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-4"><a href="data-visualization-with-ggplot2.html#cb342-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;readr&quot;)</span></span>
+<span id="cb342-5"><a href="data-visualization-with-ggplot2.html#cb342-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb342-6"><a href="data-visualization-with-ggplot2.html#cb342-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-7"><a href="data-visualization-with-ggplot2.html#cb342-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;ggplot2&quot;)</span></span>
+<span id="cb342-8"><a href="data-visualization-with-ggplot2.html#cb342-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+</div>
+<div id="importing-data" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Importing Data</h3>
+<p>Like we have learned in the previous tutorial, the first step after loading the required packages is to import the data that we will be working with! In this tutorial, we will be working with the same Demographics and Blood Pressure datasets from NHANES. However, to make things easier for us, a dataset consisting of both Demographics and Blood Pressure information have already been created, translated, and combined. As a challenge (this is completely optional), you can try to recreate this data frame on your own! Here is more information about the data frame we will be using for this tutorial:
+* Its name is “demo_bpx.csv” - it is a csv file
+* It contains the Respondent Sequence Number of each participant, along with their reported Gender, Race, Systolic and Diastolic Blood Pressures, and Blood Pressure Time in seconds. The first three are from the DEMO_H dataset, the rest are from the BPX_H dataset.
+* It only contains information of the first 200 participants.
+* The first column (X1) is automatically added by R.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="data-visualization-with-ggplot2.html#cb343-1" aria-hidden="true" tabindex="-1"></a>demo_bpx <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/demo_bpx.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1</code></pre>
+<pre><code>## Rows: 210 Columns: 7</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (2): Gender, Race
+## dbl (5): ...1, ID, Systolic, Diastolic, BPT</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="data-visualization-with-ggplot2.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_bpx)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##    ...1    ID Gender Race               Systolic Diastolic   BPT
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1     1 73557 Male   Non-Hispanic Black      114        76   620
+## 2     2 73558 Male   Non-Hispanic White      160        80   766
+## 3     3 73559 Male   Non-Hispanic White      140        76   665
+## 4     4 73560 Male   Non-Hispanic White      102        34   803
+## 5     5 73561 Female Non-Hispanic White      134        88   949
+## 6     6 73562 Male   Mexican American        158        82  1064</code></pre>
+<div id="do-question-1-of-the-quiz-now-3" class="section level4 unnumbered">
+<h4>DO QUESTION 1 OF THE QUIZ NOW</h4>
+<ul>
+<li><strong>REVIEW</strong> What is the name of the core that the packages readr, dplyr, and ggplot2 belong to?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="ggplot-and-point-geometrics" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> ggplot() and Point Geometrics</h2>
+<p>Now that our dataset is all set up, it’s time to plot our first graph! First, we need to start with an empty canvas and to do this, we need <code>ggplot()</code> as our base. Try running <code>ggplot()</code> alone. What do you see?</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="data-visualization-with-ggplot2.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p>If you answered “nothing” then you are completely right! Again, <code>ggplot()</code> alone only acts as a blank canvas. Usually, we would only have the dataset that we want to plot in the <code>()</code> of <code>ggplot()</code>. For example:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="data-visualization-with-ggplot2.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p>As for the actual graph, in order to plot it, we need geometric functions.</p>
+<div id="point-geometrics" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Point Geometrics</h3>
+<p>Point geometrics, <code>geom_point()</code>, lets you graph scatterplots. The most basic argument that you can nest in <code>geom_point()</code> is <code>aes(x, y)</code> which basically tells <code>geom_point()</code> the x and y variables that you want to graph! <code>aes</code> stands for “aesthetics,” we will cover more of this later in this tutorial.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="data-visualization-with-ggplot2.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb352-2"><a href="data-visualization-with-ggplot2.html#cb352-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, </span>
+<span id="cb352-3"><a href="data-visualization-with-ggplot2.html#cb352-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> Diastolic), </span>
+<span id="cb352-4"><a href="data-visualization-with-ggplot2.html#cb352-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb352-5"><a href="data-visualization-with-ggplot2.html#cb352-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">show.legend =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p>As you can see, point geometrics (and all other geometric functions) always have to go after our <code>ggplot()</code> function. In addition, note that <code>ggplot()</code> and <code>geom_point()</code> are separated by a <code>+</code>.</p>
+<div id="functions-debunked-17" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><strong>ggplot</strong></a> is our blank canvas - this function is housed in the ggplot2 package! The arguments are as follows:</p>
+<p>ggplot(<strong>Name of Data Frame</strong>, aes(x = <strong>Variable on the x-axis</strong>, y = <strong>Variable on the y-axis</strong>))</p>
+<p><a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><strong>geom_point</strong></a> is the function we use to draw scatterplots - it is also housed in the ggplot2 package. The arguments that will be covered in this tutorial are as follows - you are welcomed to explore this function in more detail on your own:</p>
+<p>geom_point(aes(<strong>Aesthetics</strong> - to be covered later in the tutorial), na.rm = <strong>True or False</strong>, show.legend = <strong>True or False</strong>)</p>
+<p><strong>For example:</strong> <code>ggplot(demo_bpx) + geom_point(aes(x = Systolic, y = Diastolic, color = Gender), na.rm = TRUE)</code></p>
+</div>
+<div id="do-questions-2-3-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 2 &amp; 3 OF THE QUIZ NOW</h4>
+<p><strong>HINT</strong>: We’ve covered how to look for help within and outside of R in our very first tutorial: Basics of R and RStudio.</p>
+<ul>
+<li><p>What do you think the argument <code>na.rm = TRUE</code> does?</p></li>
+<li><p>What do you think the argument <code>show.legend = TRUE</code> does?</p></li>
+</ul>
+</div>
+</div>
+<div id="try-it-yourself-6.16.1" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-24">Try it yourself 6.1</a></h3>
+<p>Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).</p>
+<div id="do-question-4-of-the-quiz-now-1" class="section level4 unnumbered">
+<h4>DO QUESTION 4 OF THE QUIZ NOW</h4>
+<ul>
+<li>What does the “Try it yourself” graph above look like?</li>
+</ul>
+</div>
+</div>
+<div id="aesthetics" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Aesthetics</h3>
+<p>Besides the x and y axes, there are other aesthetics that you can use to customize your graph as well! For example, you can change the color, size, opacity, and shape of your data points based on a particular variable of the dataset!</p>
+<div id="colors" class="section level4" number="6.4.2.1">
+<h4><span class="header-section-number">6.4.2.1</span> Colors</h4>
+<p>We can tell ggplot to use different colors for different genders using the argument <code>color =</code> like so:</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="data-visualization-with-ggplot2.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb353-2"><a href="data-visualization-with-ggplot2.html#cb353-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic,</span>
+<span id="cb353-3"><a href="data-visualization-with-ggplot2.html#cb353-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> Diastolic,</span>
+<span id="cb353-4"><a href="data-visualization-with-ggplot2.html#cb353-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> Gender), </span>
+<span id="cb353-5"><a href="data-visualization-with-ggplot2.html#cb353-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<div id="missing-values-3" class="section level5" number="6.4.2.1.1">
+<h5><span class="header-section-number">6.4.2.1.1</span> Missing Values</h5>
+<p>Looking at the graph above, we can see that there are a few NA data points for the variable gender. Let’s rename all of these NA values to “Unstated,” instead, to more accurately represent our data. To do this, we need to use the <code>replace_na()</code> function from the tidyr package like so:</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="data-visualization-with-ggplot2.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;tidry&quot;)</span></span>
+<span id="cb354-2"><a href="data-visualization-with-ggplot2.html#cb354-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="data-visualization-with-ggplot2.html#cb355-1" aria-hidden="true" tabindex="-1"></a>demo_bpx <span class="sc">%&gt;%</span> </span>
+<span id="cb355-2"><a href="data-visualization-with-ggplot2.html#cb355-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">Gender =</span> <span class="st">&quot;Unstated&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb355-3"><a href="data-visualization-with-ggplot2.html#cb355-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb355-4"><a href="data-visualization-with-ggplot2.html#cb355-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, </span>
+<span id="cb355-5"><a href="data-visualization-with-ggplot2.html#cb355-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> Diastolic, </span>
+<span id="cb355-6"><a href="data-visualization-with-ggplot2.html#cb355-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> Gender), </span>
+<span id="cb355-7"><a href="data-visualization-with-ggplot2.html#cb355-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+</div>
+</div>
+<div id="shapes" class="section level4" number="6.4.2.2">
+<h4><span class="header-section-number">6.4.2.2</span> Shapes</h4>
+<p>We can also use different shapes to represent the different genders in our dataset. To do this, we use the argument <code>shapes =</code>. This argument is more appropriate to use this argument when we are trying to distinguish between discrete variables since there are no in-between shapes to accurately reflect continuous variables!</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="data-visualization-with-ggplot2.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb356-2"><a href="data-visualization-with-ggplot2.html#cb356-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic,</span>
+<span id="cb356-3"><a href="data-visualization-with-ggplot2.html#cb356-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> Diastolic,</span>
+<span id="cb356-4"><a href="data-visualization-with-ggplot2.html#cb356-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> Gender), </span>
+<span id="cb356-5"><a href="data-visualization-with-ggplot2.html#cb356-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+</div>
+<div id="size" class="section level4" number="6.4.2.3">
+<h4><span class="header-section-number">6.4.2.3</span> Size</h4>
+<p>You can also change the size of your data points using the argument <code>size =</code> and then any number. You can also use this argument to distinguish data points of different genders with different point sizes, but this is not recommended. If you want to plot points of different sizes, it is most appropriate if you use it to distinguish a particular continuous variable.</p>
+<p>In the example below, not how the argument <code>size = 2</code> is outside of the aesthetics bracket. This tells R that we want ALL of our data points to be of the same size 2.</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="data-visualization-with-ggplot2.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb357-2"><a href="data-visualization-with-ggplot2.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic),</span>
+<span id="cb357-3"><a href="data-visualization-with-ggplot2.html#cb357-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb357-4"><a href="data-visualization-with-ggplot2.html#cb357-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+</div>
+<div id="opacity" class="section level4" number="6.4.2.4">
+<h4><span class="header-section-number">6.4.2.4</span> Opacity</h4>
+<p>Similar to size, if using opacity as an indication of different categories of a variable is most appropriate if the variable is continuous. So in the example below, the graph shows all data points with the same opacity because the argument <code>alpha = 11</code> is outside of the aesthetics brackets.</p>
+<p>Also note that alpha values range from 0 to 1. The other neat thing about changing the data points opacity is that we can identify where data points overlap. For example, in the graph below, you can see some data points are darker than others. This means that those data points have multiple replicates!</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="data-visualization-with-ggplot2.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb358-2"><a href="data-visualization-with-ggplot2.html#cb358-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic),</span>
+<span id="cb358-3"><a href="data-visualization-with-ggplot2.html#cb358-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb358-4"><a href="data-visualization-with-ggplot2.html#cb358-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+<p>Why do you think some point aesthetics better demonstrate discrete variables while others better demonstrate continuous variables?</p>
+</div>
+<div id="jitter-position" class="section level4" number="6.4.2.5">
+<h4><span class="header-section-number">6.4.2.5</span> Jitter Position</h4>
+<p>After the graph above, you, hopefully, should have noticed that there are a lot of overlapping points in our dataset. To address this issue of overplotting, we can add random noise to each point to spread points out because no two points are likely to have same random noise. We can do this by nesting the position/argument jitter to our scatterplot like so:</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="data-visualization-with-ggplot2.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb359-2"><a href="data-visualization-with-ggplot2.html#cb359-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, </span>
+<span id="cb359-3"><a href="data-visualization-with-ggplot2.html#cb359-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> Diastolic, </span>
+<span id="cb359-4"><a href="data-visualization-with-ggplot2.html#cb359-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> Gender), </span>
+<span id="cb359-5"><a href="data-visualization-with-ggplot2.html#cb359-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb359-6"><a href="data-visualization-with-ggplot2.html#cb359-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+</div>
+</div>
+<div id="try-it-yourself-6.26.2" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-25">Try it yourself 6.2</a></h3>
+<p>Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.</p>
+<div id="do-question-5-of-the-quiz-now-2" class="section level4 unnumbered">
+<h4>DO QUESTION 5 OF THE QUIZ NOW</h4>
+<ul>
+<li>Which is the correct code for the question above?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="multiple-geometric-functions-under-one-ggplot" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Multiple Geometric Functions under one ggplot</h2>
+<p>Now that you’re more familiar with <code>ggplot()</code> and <code>geom_point()</code>, we can try layering multiple graph types in one single ggplot canvas! For example, we can layer a line graph on top of a scatterplot.</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="data-visualization-with-ggplot2.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb360-2"><a href="data-visualization-with-ggplot2.html#cb360-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic, <span class="at">color =</span> Gender), </span>
+<span id="cb360-3"><a href="data-visualization-with-ggplot2.html#cb360-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb360-4"><a href="data-visualization-with-ggplot2.html#cb360-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic), </span>
+<span id="cb360-5"><a href="data-visualization-with-ggplot2.html#cb360-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, </span>
+<span id="cb360-6"><a href="data-visualization-with-ggplot2.html#cb360-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> x, </span>
+<span id="cb360-7"><a href="data-visualization-with-ggplot2.html#cb360-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
+<p>To clean up our codes even more, we can nest the aesthetics into the <code>ggplot()</code> function instead of the geometric functions. But note that everything you nest in your <code>ggplot()</code> will be applied to all following geometrics.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="data-visualization-with-ggplot2.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx, <span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic)) <span class="sc">+</span> </span>
+<span id="cb361-2"><a href="data-visualization-with-ggplot2.html#cb361-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Gender), </span>
+<span id="cb361-3"><a href="data-visualization-with-ggplot2.html#cb361-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb361-4"><a href="data-visualization-with-ggplot2.html#cb361-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>,</span>
+<span id="cb361-5"><a href="data-visualization-with-ggplot2.html#cb361-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb361-6"><a href="data-visualization-with-ggplot2.html#cb361-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<div id="functions-debunked-18" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><strong>geom_smooth</strong></a> is how we show the smoothed conditional means line on our scatterplot. The arguments are as follows:</p>
+<p>geom_smooth(mapping = aes(<strong>Aesthetics</strong>), method = <strong>“Smoothing Method (Function)”</strong>, formula = <strong>Formula to use in Smoothing Function</strong>, na.rm = <strong>True or False</strong>, show.legend = <strong>True or False</strong>, se = <strong>True or False</strong>)</p>
+</div>
+<div id="do-question-6-of-the-quiz-now-1" class="section level4 unnumbered">
+<h4>DO QUESTION 6 OF THE QUIZ NOW</h4>
+<ul>
+<li>What do you think the argument <code>se = FALSE</code> does?</li>
+</ul>
+</div>
+</div>
+<div id="other-geometric-functions" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Other Geometric Functions</h2>
+<p>Aside from <code>geom_point()</code>, there are other geometric functions that we can use to plot different types of graphs. Note that this list of geometrics functions is not extensive, and you are encouraged to explore more about them on R using the <code>?</code> or <code>??</code> command or on this <a href="https://ggplot2.tidyverse.org/reference/">website</a> about ggplot!</p>
+<div id="bar-graph" class="section level3" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> Bar graph</h3>
+<p>We use <code>geom_bar()</code> to create bar graphs. Different than <code>geom_point()</code>, <code>geom_bar()</code> only needs us to define either the x or y aesthetic, not both. This is because one of the axes needs to be the count of whatever variable we chose! For example, if we want to count how many individuals there are of each reported gender:</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="data-visualization-with-ggplot2.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb362-2"><a href="data-visualization-with-ggplot2.html#cb362-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Gender))</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p>We can also tell R to calculate the proportion of each gender instead of counting:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="data-visualization-with-ggplot2.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb363-2"><a href="data-visualization-with-ggplot2.html#cb363-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> ..prop.., <span class="at">group =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<div id="fill-position" class="section level4" number="6.6.1.1">
+<h4><span class="header-section-number">6.6.1.1</span> Fill Position</h4>
+<p>A neat argument/position that we can nest in <code>geom_bar()</code> is fill. Fill lets us add another variable to our graph and further divides up our columns into separate categories. For example, if we want to know the different combination of genders and races in our dataset:</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="data-visualization-with-ggplot2.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb364-2"><a href="data-visualization-with-ggplot2.html#cb364-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">fill =</span> Race))</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+</div>
+<div id="dodge-position" class="section level4" number="6.6.1.2">
+<h4><span class="header-section-number">6.6.1.2</span> Dodge Position</h4>
+<p>Another option is the dogdge argument/position. This argument separates our columns into smaller, side-by-side columns so we can easily compare the different variables.</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="data-visualization-with-ggplot2.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb365-2"><a href="data-visualization-with-ggplot2.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">fill =</span> Race), </span>
+<span id="cb365-3"><a href="data-visualization-with-ggplot2.html#cb365-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p>Another way that we can choose to present our bar graph is in the form of a circular graph. To do this, we can add another function <code>coord_polar()</code> to our ggplot canvas.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="data-visualization-with-ggplot2.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx, <span class="fu">aes</span>(<span class="at">x =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb366-2"><a href="data-visualization-with-ggplot2.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb366-3"><a href="data-visualization-with-ggplot2.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>()</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="data-visualization-with-ggplot2.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx, <span class="fu">aes</span>(<span class="at">x =</span> Race)) <span class="sc">+</span></span>
+<span id="cb367-2"><a href="data-visualization-with-ggplot2.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb367-3"><a href="data-visualization-with-ggplot2.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>()</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+</div>
+</div>
+<div id="line-graph" class="section level3" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> Line Graph</h3>
+<p>Another graph type that the ggplot R package offers is line graph. To plot a line graph, we use the function <code>geom_line()</code>.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="data-visualization-with-ggplot2.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb368-2"><a href="data-visualization-with-ggplot2.html#cb368-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
+<p>Line graphs may also be an interesting way for us to demonstrate ranges of a particular continuous variable of a categorical variable. For example, we can see the range of Systolic Blood Pressures of different races with the following graph:</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="data-visualization-with-ggplot2.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb369-2"><a href="data-visualization-with-ggplot2.html#cb369-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Race), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level3" number="6.6.3">
+<h3><span class="header-section-number">6.6.3</span> Boxplot</h3>
+<p>If you are not a fan of the line graph above, boxplots is another option that we can explore together. To plot a boxplot, we use <code>geom_boxplot()</code> like so:</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="data-visualization-with-ggplot2.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx, <span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Race)) <span class="sc">+</span></span>
+<span id="cb370-2"><a href="data-visualization-with-ggplot2.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="data-visualization-with-ggplot2.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Diastolic)) <span class="sc">+</span></span>
+<span id="cb371-2"><a href="data-visualization-with-ggplot2.html#cb371-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-204-1.png" width="672" /></p>
+</div>
+<div id="frequency-polygon" class="section level3" number="6.6.4">
+<h3><span class="header-section-number">6.6.4</span> Frequency Polygon</h3>
+<p>Frequency polygon is another option that we can explore. They are similar to bar graphs, except frequency polygon visualize the counts with lines. We can plot frequency polygons using <code>geom_freqpoly()</code> like so:</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="data-visualization-with-ggplot2.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb372-2"><a href="data-visualization-with-ggplot2.html#cb372-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic), <span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<p>Since <code>geom_freqpoly()</code> divides the variable in the x axis into bins before counting the number of observations in each bin, we can further customize how we want our frequency polygon to look by changing the binwidth.</p>
+</div>
+<div id="try-it-yourself-6.36.3" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-26">Try it yourself 6.3</a></h3>
+<p>Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="data-visualization-with-ggplot2.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb373-2"><a href="data-visualization-with-ggplot2.html#cb373-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="data-visualization-with-ggplot2.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb374-2"><a href="data-visualization-with-ggplot2.html#cb374-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic), <span class="at">binwidth =</span> <span class="dv">20</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
+<p>We can also layer multiple <code>geom_freqpoly()</code> on each other and give them different colors:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="data-visualization-with-ggplot2.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb375-2"><a href="data-visualization-with-ggplot2.html#cb375-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">color =</span> <span class="st">&quot;Systolic&quot;</span>), <span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb375-3"><a href="data-visualization-with-ggplot2.html#cb375-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Diastolic, <span class="at">color =</span> <span class="st">&quot;Diastolic&quot;</span>), <span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
+<p>You may notice that the x axis label for the graph above is incorrect! And the legend title is also wrong. Don’t worry! We will go over how to manually add and edit graph elements later in this tutorial.</p>
+<div id="do-questions-7-8-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 7 &amp; 8 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>Increasing the binwidth of a bar graph makes the graph more detailed. (True or False)</p></li>
+<li><p>Match the geometrics with the correct graph type.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="facet-functions" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Facet Functions</h2>
+<p>Aside from using aesthetics, <code>facet_wrap()</code> is another good option to create subplots based on categorical variables. You can create divide the data up into subplots by 1 or 2 variables. Run the codes below to see what these two situations would look like.</p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="data-visualization-with-ggplot2.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb376-2"><a href="data-visualization-with-ggplot2.html#cb376-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Diastolic, <span class="at">y =</span> Systolic), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb376-3"><a href="data-visualization-with-ggplot2.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Gender, <span class="at">nrow =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="data-visualization-with-ggplot2.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb377-2"><a href="data-visualization-with-ggplot2.html#cb377-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Diastolic, <span class="at">y =</span> Systolic), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb377-3"><a href="data-visualization-with-ggplot2.html#cb377-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Race <span class="sc">~</span> Gender)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<div id="do-question-9-of-the-quiz" class="section level4 unnumbered">
+<h4>DO QUESTION 9 OF THE QUIZ</h4>
+<ul>
+<li>It is most useful to use facet functions when plotting continuous variables.</li>
+</ul>
+</div>
+<div id="try-it-yourself-6.46.4" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-27">Try it yourself 6.4</a></h3>
+<p>Try recreating the graph above but without any missing (NA) values.</p>
+<p><strong>HINT</strong>: Filter out any information we do not need using logical operators!</p>
+</div>
+</div>
+<div id="customizing-graph-elements" class="section level2" number="6.8">
+<h2><span class="header-section-number">6.8</span> Customizing Graph Elements</h2>
+<p>We can customize how our graph looks like with different graph elements including graph title, axes labels, legendes, etc. In this section, we will cover as many graph elements as possible.</p>
+<p>But for your own information and exploration, more information on editing graph elements can be found <a href="http://environmentalcomputing.net/plotting-with-ggplot-adding-titles-and-axis-names/">here</a>. Here is also a <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">list of colors</a> that R recognizes that may come in handy.</p>
+<p>Going back to the frequency polygon above where the x axis label is incorrect, this is what the code for the correct graph would look like:</p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="data-visualization-with-ggplot2.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span> </span>
+<span id="cb378-2"><a href="data-visualization-with-ggplot2.html#cb378-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">color =</span> <span class="st">&quot;Systolic&quot;</span>), <span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb378-3"><a href="data-visualization-with-ggplot2.html#cb378-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">x =</span> Diastolic, <span class="at">color =</span> <span class="st">&quot;Diastolic&quot;</span>), <span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb378-4"><a href="data-visualization-with-ggplot2.html#cb378-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Blood Pressure (Hg mm)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Type of Blood Pressure&quot;</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
+<p>The first three lines of codes are similar to what we have previously, and the last one is new. Let’s go over the last line of codes together in the following functions debunked.</p>
+<div id="functions-bebunked" class="section level4 unnumbered">
+<h4>Functions bebunked</h4>
+<p><code>labs</code> lets us change the axes labels, graph title, and legend title! The basic arguments are as follows:</p>
+<p><strong><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></strong>(title = “<strong>Title of Graph</strong>,” x = “<strong>x-axis label</strong>,” y = “<strong>y-axis label</strong>,” color = “<strong>Legend Title</strong>”)</p>
+<p><strong>For example:</strong> <code>labs(x = "Blood Pressure (Hg mm)", color = "Legend")</code></p>
+<p>We can customize our graphs even more by changing the texts’ fonts, emphasis, or even size! To do this, we can nest multiple arguments in a function called <code>theme()</code>. Going back to the main objective of our tutorial: create a graph that shows the relationship between Diastolic and Systolic Blood Pressure of the first 200 Males and Females in the 2013-2014 NHANES datasets, let us recall what that graph originally looks like:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="data-visualization-with-ggplot2.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb379-2"><a href="data-visualization-with-ggplot2.html#cb379-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic, <span class="at">color =</span> Gender), </span>
+<span id="cb379-3"><a href="data-visualization-with-ggplot2.html#cb379-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb379-4"><a href="data-visualization-with-ggplot2.html#cb379-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb379-5"><a href="data-visualization-with-ggplot2.html#cb379-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic),</span>
+<span id="cb379-6"><a href="data-visualization-with-ggplot2.html#cb379-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;loess&quot;</span>,</span>
+<span id="cb379-7"><a href="data-visualization-with-ggplot2.html#cb379-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb379-8"><a href="data-visualization-with-ggplot2.html#cb379-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
+<p>Now, we can change the axes labels, legend title, and add a graph title using <code>labs()</code>:</p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="data-visualization-with-ggplot2.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb380-2"><a href="data-visualization-with-ggplot2.html#cb380-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic, <span class="at">color =</span> Gender), </span>
+<span id="cb380-3"><a href="data-visualization-with-ggplot2.html#cb380-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb380-4"><a href="data-visualization-with-ggplot2.html#cb380-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb380-5"><a href="data-visualization-with-ggplot2.html#cb380-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic), </span>
+<span id="cb380-6"><a href="data-visualization-with-ggplot2.html#cb380-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;loess&quot;</span>,</span>
+<span id="cb380-7"><a href="data-visualization-with-ggplot2.html#cb380-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb380-8"><a href="data-visualization-with-ggplot2.html#cb380-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb380-9"><a href="data-visualization-with-ggplot2.html#cb380-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Systolic vs. Diastolic Blood Pressures of Different Genders&quot;</span>,</span>
+<span id="cb380-10"><a href="data-visualization-with-ggplot2.html#cb380-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Systolic Blood Pressure (mm Hg)&quot;</span>, </span>
+<span id="cb380-11"><a href="data-visualization-with-ggplot2.html#cb380-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Diastolic Blood Pressure (mm Hg)&quot;</span>,</span>
+<span id="cb380-12"><a href="data-visualization-with-ggplot2.html#cb380-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;Genders of Respondents&quot;</span>)</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
+<p>After that, we can use <code>theme()</code> to change the font, emphasis, size, and color of our texts.</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="data-visualization-with-ggplot2.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb381-2"><a href="data-visualization-with-ggplot2.html#cb381-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb381-3"><a href="data-visualization-with-ggplot2.html#cb381-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic, <span class="at">color =</span> Gender), </span>
+<span id="cb381-4"><a href="data-visualization-with-ggplot2.html#cb381-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb381-5"><a href="data-visualization-with-ggplot2.html#cb381-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb381-6"><a href="data-visualization-with-ggplot2.html#cb381-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb381-7"><a href="data-visualization-with-ggplot2.html#cb381-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic),</span>
+<span id="cb381-8"><a href="data-visualization-with-ggplot2.html#cb381-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;loess&quot;</span>,</span>
+<span id="cb381-9"><a href="data-visualization-with-ggplot2.html#cb381-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb381-10"><a href="data-visualization-with-ggplot2.html#cb381-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb381-11"><a href="data-visualization-with-ggplot2.html#cb381-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb381-12"><a href="data-visualization-with-ggplot2.html#cb381-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Systolic vs. Diastolic Blood Pressures of Different Genders&quot;</span>,</span>
+<span id="cb381-13"><a href="data-visualization-with-ggplot2.html#cb381-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Systolic Blood Pressure (mm Hg)&quot;</span>, </span>
+<span id="cb381-14"><a href="data-visualization-with-ggplot2.html#cb381-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Diastolic Blood Pressure (mm Hg)&quot;</span>,</span>
+<span id="cb381-15"><a href="data-visualization-with-ggplot2.html#cb381-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;Genders of Respondents&quot;</span>) <span class="sc">+</span></span>
+<span id="cb381-16"><a href="data-visualization-with-ggplot2.html#cb381-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb381-17"><a href="data-visualization-with-ggplot2.html#cb381-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;cyan4&quot;</span>),</span>
+<span id="cb381-18"><a href="data-visualization-with-ggplot2.html#cb381-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb381-19"><a href="data-visualization-with-ggplot2.html#cb381-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb381-20"><a href="data-visualization-with-ggplot2.html#cb381-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="at">size =</span> <span class="dv">15</span>), </span>
+<span id="cb381-21"><a href="data-visualization-with-ggplot2.html#cb381-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div>
+<pre><code>## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+## found in Windows font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+## found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+## found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+</div>
+<div id="functions-debunked-19" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p>Some basic arguments of <code>theme()</code> are as follows:</p>
+<p><strong><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></strong>(plot.title = element_text(family = “<strong>Font Name</strong>,” face = “<strong>Emphasis Type</strong>, size = <strong>Size Number</strong>, color =”<strong>A Color that R Recognizes</strong>"), axis.title = [<em>same arguments as before</em>], axis.text = [<em>same arguments as before</em>], legend.title = [<em>same arguments as before</em>], legend.text = [<em>same arguments as before</em>])</p>
+<p><strong>For example:</strong> <code>theme(plot.title = element_text(family = "Helvetica", face = "bold", size = 20, color = "cyan4"))</code></p>
+</div>
+<div id="do-question-10-of-the-quiz-now-3" class="section level4 unnumbered">
+<h4>DO QUESTION 10 OF THE QUIZ NOW</h4>
+<ul>
+<li>What is the difference between <code>legend.title</code> and <code>legend.text</code>?</li>
+</ul>
+</div>
+<div id="try-it-yourself-6.5" class="section level3 unnumbered">
+<h3>Try it yourself 6.5</h3>
+<p>Customize your own graph using the functions we just learned above!</p>
+</div>
+</div>
+<div id="saving-our-graphs" class="section level2" number="6.9">
+<h2><span class="header-section-number">6.9</span> Saving Our Graphs</h2>
+<p>To explort our graph into a file like png, pdf, or jpeg, we can use the function <code>ggsave()</code> followed by the name that we want the file to have. To simplify this process, we can give our graph a name such as “Final_plot” using <code>&lt;-</code>.</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="data-visualization-with-ggplot2.html#cb388-1" aria-hidden="true" tabindex="-1"></a>Final_plot <span class="ot">&lt;-</span> </span>
+<span id="cb388-2"><a href="data-visualization-with-ggplot2.html#cb388-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb388-3"><a href="data-visualization-with-ggplot2.html#cb388-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(demo_bpx) <span class="sc">+</span></span>
+<span id="cb388-4"><a href="data-visualization-with-ggplot2.html#cb388-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb388-5"><a href="data-visualization-with-ggplot2.html#cb388-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic, <span class="at">color =</span> Gender), </span>
+<span id="cb388-6"><a href="data-visualization-with-ggplot2.html#cb388-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb388-7"><a href="data-visualization-with-ggplot2.html#cb388-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb388-8"><a href="data-visualization-with-ggplot2.html#cb388-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb388-9"><a href="data-visualization-with-ggplot2.html#cb388-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> Systolic, <span class="at">y =</span> Diastolic), </span>
+<span id="cb388-10"><a href="data-visualization-with-ggplot2.html#cb388-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;loess&quot;</span>,</span>
+<span id="cb388-11"><a href="data-visualization-with-ggplot2.html#cb388-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb388-12"><a href="data-visualization-with-ggplot2.html#cb388-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb388-13"><a href="data-visualization-with-ggplot2.html#cb388-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb388-14"><a href="data-visualization-with-ggplot2.html#cb388-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Systolic vs. Diastolic Blood Pressures of Different Genders&quot;</span>,</span>
+<span id="cb388-15"><a href="data-visualization-with-ggplot2.html#cb388-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Systolic Blood Pressure (mm Hg)&quot;</span>, </span>
+<span id="cb388-16"><a href="data-visualization-with-ggplot2.html#cb388-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Diastolic Blood Pressure (mm Hg)&quot;</span>,</span>
+<span id="cb388-17"><a href="data-visualization-with-ggplot2.html#cb388-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;Genders of Respondents&quot;</span>) <span class="sc">+</span></span>
+<span id="cb388-18"><a href="data-visualization-with-ggplot2.html#cb388-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb388-19"><a href="data-visualization-with-ggplot2.html#cb388-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;cyan4&quot;</span>),</span>
+<span id="cb388-20"><a href="data-visualization-with-ggplot2.html#cb388-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb388-21"><a href="data-visualization-with-ggplot2.html#cb388-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb388-22"><a href="data-visualization-with-ggplot2.html#cb388-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="at">size =</span> <span class="dv">15</span>), </span>
+<span id="cb388-23"><a href="data-visualization-with-ggplot2.html#cb388-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="data-visualization-with-ggplot2.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;images/Final plot.png&quot;</span>)</span></code></pre></div>
+<pre><code>## Saving 7 x 5 in image</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p>By default, <code>ggsave()</code> will save the last plot that we ran before it. But we can also tell it exactly which plot we are referring to using another argument after the file name.</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="data-visualization-with-ggplot2.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;images/Final plot-1.png&quot;</span>, Final_plot)</span></code></pre></div>
+<pre><code>## Saving 7 x 5 in image</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p>We can also change the width and height of our saved file. Remember to specify the units as well!</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="data-visualization-with-ggplot2.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;images/Final plot-2.png&quot;</span>, Final_plot, <span class="at">width =</span> <span class="dv">40</span>, <span class="at">height =</span> <span class="dv">30</span>, <span class="at">units =</span> <span class="st">&#39;cm&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p>More information on <code>ggsave()</code> can be found <a href="https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggsave">here</a>.</p>
+<p>Now we can check our working directory to see if all of our graphs are there.</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="data-visualization-with-ggplot2.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;_book&quot;                                 
+##  [2] &quot;_bookdown.yml&quot;                         
+##  [3] &quot;_bookdown_files&quot;                       
+##  [4] &quot;_build.sh&quot;                             
+##  [5] &quot;_deploy.sh&quot;                            
+##  [6] &quot;_output.yml&quot;                           
+##  [7] &quot;0-r-and-rstudio-set-up.Rmd&quot;            
+##  [8] &quot;1-introduction-to-r.Rmd&quot;               
+##  [9] &quot;2-importing-data-into-r-with-readr.Rmd&quot;
+## [10] &quot;3-introduction-to-nhanes.Rmd&quot;          
+## [11] &quot;4-data-analysis-with-dplyr.Rmd&quot;        
+## [12] &quot;5-data-visualization-with-ggplot.Rmd&quot;  
+## [13] &quot;6-date-time-data-with-lubridate.Rmd&quot;   
+## [14] &quot;7-data-summary-with-tableone.Rmd&quot;      
+## [15] &quot;8-Exercise-Solutions.Rmd&quot;              
+## [16] &quot;9-references.Rmd&quot;                      
+## [17] &quot;book.bib&quot;                              
+## [18] &quot;data&quot;                                  
+## [19] &quot;DESCRIPTION&quot;                           
+## [20] &quot;Dockerfile&quot;                            
+## [21] &quot;docs&quot;                                  
+## [22] &quot;header.html&quot;                           
+## [23] &quot;images&quot;                                
+## [24] &quot;index.Rmd&quot;                             
+## [25] &quot;intro2R.html&quot;                          
+## [26] &quot;intro2R.log&quot;                           
+## [27] &quot;intro2R.Rmd&quot;                           
+## [28] &quot;intro2R.tex&quot;                           
+## [29] &quot;intro2R_cache&quot;                         
+## [30] &quot;intro2R_files&quot;                         
+## [31] &quot;LICENSE&quot;                               
+## [32] &quot;now.json&quot;                              
+## [33] &quot;packages.bib&quot;                          
+## [34] &quot;preamble.tex&quot;                          
+## [35] &quot;R.Rproj&quot;                               
+## [36] &quot;README.md&quot;                             
+## [37] &quot;style.css&quot;                             
+## [38] &quot;toc.css&quot;</code></pre>
+<p>If there is a present file that you think should not be there, we can use the function <code>file.remove()</code> followed by the name of the file to remove it.</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="data-visualization-with-ggplot2.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">&quot;Rplot001.png&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in file.remove(&quot;Rplot001.png&quot;): cannot remove file &#39;Rplot001.png&#39;,
+## reason &#39;No such file or directory&#39;</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Then, we can check our directory again and all of the relevant files should be there!</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="data-visualization-with-ggplot2.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;_book&quot;                                 
+##  [2] &quot;_bookdown.yml&quot;                         
+##  [3] &quot;_bookdown_files&quot;                       
+##  [4] &quot;_build.sh&quot;                             
+##  [5] &quot;_deploy.sh&quot;                            
+##  [6] &quot;_output.yml&quot;                           
+##  [7] &quot;0-r-and-rstudio-set-up.Rmd&quot;            
+##  [8] &quot;1-introduction-to-r.Rmd&quot;               
+##  [9] &quot;2-importing-data-into-r-with-readr.Rmd&quot;
+## [10] &quot;3-introduction-to-nhanes.Rmd&quot;          
+## [11] &quot;4-data-analysis-with-dplyr.Rmd&quot;        
+## [12] &quot;5-data-visualization-with-ggplot.Rmd&quot;  
+## [13] &quot;6-date-time-data-with-lubridate.Rmd&quot;   
+## [14] &quot;7-data-summary-with-tableone.Rmd&quot;      
+## [15] &quot;8-Exercise-Solutions.Rmd&quot;              
+## [16] &quot;9-references.Rmd&quot;                      
+## [17] &quot;book.bib&quot;                              
+## [18] &quot;data&quot;                                  
+## [19] &quot;DESCRIPTION&quot;                           
+## [20] &quot;Dockerfile&quot;                            
+## [21] &quot;docs&quot;                                  
+## [22] &quot;header.html&quot;                           
+## [23] &quot;images&quot;                                
+## [24] &quot;index.Rmd&quot;                             
+## [25] &quot;intro2R.html&quot;                          
+## [26] &quot;intro2R.log&quot;                           
+## [27] &quot;intro2R.Rmd&quot;                           
+## [28] &quot;intro2R.tex&quot;                           
+## [29] &quot;intro2R_cache&quot;                         
+## [30] &quot;intro2R_files&quot;                         
+## [31] &quot;LICENSE&quot;                               
+## [32] &quot;now.json&quot;                              
+## [33] &quot;packages.bib&quot;                          
+## [34] &quot;preamble.tex&quot;                          
+## [35] &quot;R.Rproj&quot;                               
+## [36] &quot;README.md&quot;                             
+## [37] &quot;style.css&quot;                             
+## [38] &quot;toc.css&quot;</code></pre>
+<p>We’ve reached the end of our tutorial! Note that this tutorial only covers the basics of ggplot. ggplot is a large package and you are encouraged to explore the many functions that it offers on your own. And remember that it takes practice to be fluent in this language!</p>
+</div>
+<div id="summary-and-takeaways-5" class="section level2" number="6.10">
+<h2><span class="header-section-number">6.10</span> Summary and Takeaways</h2>
+<p>By the end of this tutorial, you should be somewhat familiar with the ggplot package including how to create a basic graph on R as well as how to customize it to your liking.</p>
+<p>If you are interested in learning more about ggplot, this <a href="https://ggplot2.tidyverse.org/">website</a> is also a good resource for you to tap into.</p>
+<p>Here is also a <a href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf">cheat sheet</a> of more ggplot functions.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-analysis-with-dplyr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="date-time-data-with-lubridate.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/5-data-visualization-with-ggplot.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

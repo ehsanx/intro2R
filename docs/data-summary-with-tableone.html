@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Data Summary with tableone | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Data Summary with tableone | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Data Summary with tableone | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-09-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="date-time-data-with-lubridate.html"/>
+<link rel="next" href="appendix-exercise-solutions.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> Instructions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> What is R?</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> Download and Install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> Download and Install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> RStudio Basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#summary-and-takeaways"><i class="fa fa-check"></i><b>1.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> Set Up Basics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> Arithmetic Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.12.1"><span>Try it yourself 2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> Logical Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.22.2"><span>Try it yourself 2.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> Most Common Data Types In R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.32.3"><span>Try it yourself 2.3</span></a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.42.4"><span>Try it yourself 2.4</span></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.3</b> Lists</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.4</b> Dataframe</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.52.5"><span>Try it yourself 2.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> Exploring a Dataset</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.62.6"><span>Try it yourself 2.6</span></a></li>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.1</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.2</b> Structure</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.3</b> Class</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.72.7"><span>Try it yourself 2.7</span></a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.4</b> Length</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.82.8"><span>Try it yourself 2.8</span></a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.5</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.6</b> Mathematical Functions in R</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.92.9"><span>Try it yourself 2.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> Writing a New Function In R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> For Loops</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> Help Within and Outside Of R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>2.11</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> Instructions</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> Set Up</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> Basics Of Importing a CSV File Into R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.13.1"><span>Try it yourself 3.1</span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.3</b> Key Notes About Importing Data into R</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.23.2"><span>Try it yourself 3.2</span></a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.4</b> Column Specification</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.33.3"><span>Try it yourself 3.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> More Arguments Of read_csv</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.43.4"><span>Try it yourself 3.4</span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.2</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.3</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> Importing Other File Types into R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.53.5"><span>Try it yourself 3.5</span></a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.3</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.4</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> Exporting the Data Frame From R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>3.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li><a href="introduction-to-nhanes.html#try-it-yourself-4.14.1">Try it yourself 4.1]<span>4.1</span></a></li>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#summary-and-takeaways-3"><i class="fa fa-check"></i><b>4.6</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> Instructions</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> Dataset Preparation</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.15.1"><span>Try it yourself 5.1</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.25.2"><span>Try it yourself 5.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> Filter</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.35.3"><span>Try it yourself 5.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> Re-order the Rows</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.45.4"><span>Try it yourself 5.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> Add new variables</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.55.5"><span>Try it yourself 5.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> Summary Statistics and group_by</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.65.6"><span>Try it yourself 5.6</span></a></li>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.1</b> Group_by() extension</a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.75.7"><span>Try it yourself 5.7</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.85.8"><span>Try it yourself 5.8</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> Pipe</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.95.9"><span>Try it yourself 5.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> Alternatives to NHANESTranslate()</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-and-takeaways-4"><i class="fa fa-check"></i><b>5.15</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> Instructions</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> ggplot() and Point Geometrics</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.16.1"><span>Try it yourself 6.1</span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.2</b> Aesthetics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.26.2"><span>Try it yourself 6.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> Multiple Geometric Functions under one ggplot</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> Other Geometric Functions</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.36.3"><span>Try it yourself 6.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> Facet Functions</a>
+<ul>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.46.4"><span>Try it yourself 6.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> Customizing Graph Elements</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.5"><i class="fa fa-check"></i>Try it yourself 6.5</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graphs"><i class="fa fa-check"></i><b>6.9</b> Saving Our Graphs</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways-5"><i class="fa fa-check"></i><b>6.10</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> Set Up</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> Exploring Friends Visits Dataset</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> Creating Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.17.1"><span>Try it yourself 7.1</span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.2</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.3</b> Dataset</a></li>
+<li class="chapter" data-level="" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-20"><i class="fa fa-check"></i>Functions Debunked</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.27.2"><span>Try it yourself 7.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> Retrieving Information from Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.37.3"><span>Try it yourself 7.3</span></a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.4</b> Plotting Retrieved Information</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.47.4"><span>Try it yourself 7.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> Updating &amp; Plotting Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.57.5"><span>Try it yourself 7.5</span></a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.2</b> Plotting Date/Time</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.67.6"><span>Try it yourself 7.6</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> Arithmetic Operators with Date/Time</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-6"><i class="fa fa-check"></i><b>7.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> Set Up</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> What is tableone?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> Creating a tableone</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.18.1"><span>Try it yourself 8.1</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.3</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.28.2"><span>Try it yourself 8.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> Other Arguments to Customize tableone</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.38.3"><span>Try it yourself 8.3</span></a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.3</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.4</b> Strata</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.48.4"><span>Try it yourself 8.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> Export tableone</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> Alternatives to tableone</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-7"><i class="fa fa-check"></i><b>8.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html"><i class="fa fa-check"></i><b>9</b> Appendix: Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-2-introduction-to-r"><i class="fa fa-check"></i>Tutorial 2: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section"><i class="fa fa-check"></i>2.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-1"><i class="fa fa-check"></i>2.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-2"><i class="fa fa-check"></i>2.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-3"><i class="fa fa-check"></i>2.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-4"><i class="fa fa-check"></i>2.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-5"><i class="fa fa-check"></i>2.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-6"><i class="fa fa-check"></i>2.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-7"><i class="fa fa-check"></i>2.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-8"><i class="fa fa-check"></i>2.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.1" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-3-importing-data-into-r-with-readr"><i class="fa fa-check"></i><b>9.1</b> Tutorial 3: Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-9"><i class="fa fa-check"></i>3.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-10"><i class="fa fa-check"></i>3.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-11"><i class="fa fa-check"></i>3.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-12"><i class="fa fa-check"></i>3.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-13"><i class="fa fa-check"></i>3.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-4-introduction-to-nhanes"><i class="fa fa-check"></i><b>9.2</b> Tutorial 4: Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-14"><i class="fa fa-check"></i>4.1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-5-data-analysis-with-dplyr"><i class="fa fa-check"></i><b>9.3</b> Tutorial 5: Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-15"><i class="fa fa-check"></i>5.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-16"><i class="fa fa-check"></i>5.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-17"><i class="fa fa-check"></i>5.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-18"><i class="fa fa-check"></i>5.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-19"><i class="fa fa-check"></i>5.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-20"><i class="fa fa-check"></i>5.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-21"><i class="fa fa-check"></i>5.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-22"><i class="fa fa-check"></i>5.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-23"><i class="fa fa-check"></i>5.9</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-6-data-visualization-with-ggplot2"><i class="fa fa-check"></i>Tutorial 6: Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-24"><i class="fa fa-check"></i>6.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-25"><i class="fa fa-check"></i>6.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-26"><i class="fa fa-check"></i>6.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-27"><i class="fa fa-check"></i>6.4</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-7-date-and-time-data-with-lubridate"><i class="fa fa-check"></i>Tutorial 7: Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-28"><i class="fa fa-check"></i>7.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-29"><i class="fa fa-check"></i>7.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-30"><i class="fa fa-check"></i>7.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-31"><i class="fa fa-check"></i>7.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-32"><i class="fa fa-check"></i>7.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-33"><i class="fa fa-check"></i>7.6</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-8-data-summary-with-tableone"><i class="fa fa-check"></i>Tutorial 8: Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-34"><i class="fa fa-check"></i>8.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-35"><i class="fa fa-check"></i>8.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-36"><i class="fa fa-check"></i>8.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-37"><i class="fa fa-check"></i>8.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-summary-with-tableone" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Data Summary with tableone</h1>
+<div id="instructions-7" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Instructions</h2>
+<p>In this tutorial, we will be exploring how to summarize all variables of our datasets in one single table. We will familiarize ourselves with the R package tableone and its associated functions. This tutorial will show you how to be more efficient in analyzing data on R.</p>
+<p>Accompanying this tutorial is <strong>a short <a href="https://forms.gle/vDvUJhHDAuKHVNt98">Google quiz</a></strong> for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.</p>
+</div>
+<div id="learning-objectives-7" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Learning Objectives</h2>
+<ul>
+<li>Understand the basics the tableone package and its applications.</li>
+<li>Efficiently summarize whole datasets into one single table.</li>
+<li>Be familiar with the function <code>CreateTableOne()</code> and a few of its basic arguments.</li>
+<li>Know how to tell tableone which variables are continuous and which variables are categorical.</li>
+<li>Be familiar with different <code>print()</code> arguments to customize a tableone.</li>
+</ul>
+</div>
+<div id="set-up-4" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Set Up</h2>
+<p>For this tutorial, the main package that we will be working with is the <strong>tableone</strong> package. We will also need the dplyr package for a few basic functions and data from the nhanesA package. Let’s go ahead and load them in our session!</p>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="data-summary-with-tableone.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;tableone&quot;)</span></span>
+<span id="cb523-2"><a href="data-summary-with-tableone.html#cb523-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableone)</span>
+<span id="cb523-3"><a href="data-summary-with-tableone.html#cb523-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb523-4"><a href="data-summary-with-tableone.html#cb523-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;dplyr&quot;)</span></span>
+<span id="cb523-5"><a href="data-summary-with-tableone.html#cb523-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb523-6"><a href="data-summary-with-tableone.html#cb523-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb523-7"><a href="data-summary-with-tableone.html#cb523-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;nhanesA&quot;)</span></span>
+<span id="cb523-8"><a href="data-summary-with-tableone.html#cb523-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nhanesA)</span></code></pre></div>
+<p>Alright, so we are going back to the NHANES dataset for this tutorial. Let’s, once again, download the “DEMO_H” dataset and save it in an object called “demo_original.”</p>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="data-summary-with-tableone.html#cb524-1" aria-hidden="true" tabindex="-1"></a>demo_original <span class="ot">&lt;-</span> <span class="fu">nhanes</span>(<span class="st">&quot;DEMO_H&quot;</span>)</span></code></pre></div>
+<pre><code>## Processing SAS dataset DEMO_H     ..</code></pre>
+<p>Just a reminder to everyone that this is what our raw dataset look like.</p>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="data-summary-with-tableone.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_original)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+## 4 73560        8        2        1        9       NA        3        3        1
+## 5 73561        8        2        2       73       NA        3        3        1
+## 6 73562        8        2        1       56       NA        1        1        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+## 6       NA        1       2        1        1       NA       NA        4
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+## 6        3       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+## 6        2        2        1        1        1        0        0        0
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+## 6        1       56        1        4        3       NA 24978.14 25344.99
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00
+## 6       1      111        9        9     4.79</code></pre>
+<p>As we can see, the data is quite overwhelming! Let’s only select a few familiar variables to make the summary a bit more manageable and comprehensible.</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="data-summary-with-tableone.html#cb528-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">select</span>(demo_original, </span>
+<span id="cb528-2"><a href="data-summary-with-tableone.html#cb528-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="st">&quot;RIAGENDR&quot;</span>, <span class="co"># Gender</span></span>
+<span id="cb528-3"><a href="data-summary-with-tableone.html#cb528-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;RIDAGEYR&quot;</span>, <span class="co"># Age</span></span>
+<span id="cb528-4"><a href="data-summary-with-tableone.html#cb528-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;RIDRETH3&quot;</span>, <span class="co"># Race</span></span>
+<span id="cb528-5"><a href="data-summary-with-tableone.html#cb528-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;DMDEDUC2&quot;</span>) <span class="co"># Education</span></span>
+<span id="cb528-6"><a href="data-summary-with-tableone.html#cb528-6" aria-hidden="true" tabindex="-1"></a>               )</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="data-summary-with-tableone.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo)</span></code></pre></div>
+<pre><code>##   RIAGENDR RIDAGEYR RIDRETH3 DMDEDUC2
+## 1        1       69        4        3
+## 2        1       54        3        3
+## 3        1       72        3        4
+## 4        1        9        3       NA
+## 5        2       73        3        5
+## 6        1       56        1        4</code></pre>
+<p>Awesome, our data is looking much better now!</p>
+<p>We have learned how to analyze it with dplyr and visualize it with ggplot. But in this tutorial, we are going to learn how to summarize the data in this large dataset into one simple table.</p>
+</div>
+<div id="what-is-tableone" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> What is tableone?</h2>
+<p><a href="http://rstudio-pubs-static.s3.amazonaws.com/13321_da314633db924dc78986a850813a50d5.html">tableone</a> is an R package that helps us construct “Table 1,” or the baseline table that we see in biomedical research papers. This package gives us access to a lot of useful data summary function that we can use to summarize both categorical and continuous data. In addition, we can also identify normal and nonnormal variables so that R can analyze it more accurately.</p>
+<p>tableone is unique in that it is very simple and easy to use. One single function can do tremendous data summary as we will see in the later sections in this tutorial.</p>
+<div id="do-questions-1-2-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 1 &amp; 2 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>tableone is part of the tidyverse core. (True or False)</p></li>
+<li><p>What sort of data can tableone summarize? (Select all that apply)</p></li>
+</ul>
+</div>
+</div>
+<div id="creating-a-tableone" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Creating a tableone</h2>
+<div id="createtableone" class="section level3" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> CreateTableOne</h3>
+<p>The simples way that we can use tableone is to use the function <code>CreateTableOne()</code> with the nested dataset between then <code>()</code> like so:</p>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="data-summary-with-tableone.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOne</span>(<span class="at">data =</span> demo)</span></code></pre></div>
+<pre><code>##                       
+##                        Overall      
+##   n                    10175        
+##   RIAGENDR (mean (SD))  1.51 (0.50) 
+##   RIDAGEYR (mean (SD)) 31.48 (24.42)
+##   RIDRETH3 (mean (SD))  3.29 (1.61) 
+##   DMDEDUC2 (mean (SD))  3.52 (1.24)</code></pre>
+<p>As we can see in the output above, this function has cleanly summarize all of our data into one table. It gives us how many records there are in the dataset (n), as well as the mean and standard deviation of all of our variables!</p>
+<p>It looks pretty neat right now, but recall that the variables <strong>RIAGENDR (Gender), RIDAGEYR (Age), and RIDRETH3 (Race)</strong> are all categorical! So it does not make any sense to have a mean for these variables at all.</p>
+<p>But do not worry at all! There are actually several ways that we can solve this problem:
+1. First solution is, we can use nhanesTranslate and these variables will instantly be converted to categorical, and
+2. Second solution is, we can use the <code>factorVars</code> argument in <code>CreateTableOne()</code> to identify categorical variables.</p>
+</div>
+<div id="solution-1-nhanestranslate-createtableone" class="section level3" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Solution 1: nhanesTranslate &amp; CreateTableOne</h3>
+<p>First, let’s translate all of our variables using the <code>nhanesTranslate()</code> function that we have learned in previous tutorials like so.</p>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="data-summary-with-tableone.html#cb533-1" aria-hidden="true" tabindex="-1"></a>demo_translate <span class="ot">&lt;-</span> <span class="fu">nhanesTranslate</span>(<span class="st">&quot;DEMO_H&quot;</span>,</span>
+<span id="cb533-2"><a href="data-summary-with-tableone.html#cb533-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">&quot;RIAGENDR&quot;</span>,</span>
+<span id="cb533-3"><a href="data-summary-with-tableone.html#cb533-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;RIDAGEYR&quot;</span>,</span>
+<span id="cb533-4"><a href="data-summary-with-tableone.html#cb533-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;RIDRETH3&quot;</span>, </span>
+<span id="cb533-5"><a href="data-summary-with-tableone.html#cb533-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;DMDEDUC2&quot;</span>),</span>
+<span id="cb533-6"><a href="data-summary-with-tableone.html#cb533-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> demo)</span></code></pre></div>
+<pre><code>## Translated columns: RIAGENDR RIDRETH3 DMDEDUC2</code></pre>
+<p>After that, for ease of communication, let’s also change the column names to something that we can all understand.</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="data-summary-with-tableone.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(demo_translate) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>)</span></code></pre></div>
+</div>
+<div id="try-it-yourself-8.18.1" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-34">Try it yourself 8.1</a></h3>
+<p><strong>Challenge</strong>: Why do you think we need to change the names of our variables AFTER we translate them?</p>
+<p><strong>Hint</strong>: Think about the <code>data = demo</code> argument in <code>nhanesTranslate()</code></p>
+<p>Now, this is what our dataset should look like. Look familiar?</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="data-summary-with-tableone.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_translate)</span></code></pre></div>
+<pre><code>##   Gender Age               Race                        Education
+## 1   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3   Male  72 Non-Hispanic White        Some college or AA degree
+## 4   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 5 Female  73 Non-Hispanic White        College graduate or above
+## 6   Male  56   Mexican American        Some college or AA degree</code></pre>
+<p>This table should look exactly like the one that you have seen in previous tutorials! The only difference here is that, <strong>in this tutorial, we are using and summarizing the ENTIRE dataset!</strong> We will not be scaling down to only analyzing or visualizing the first or last few rows!</p>
+<p>Now if we use the <code>CreateTableOne()</code> function again but on our new <code>demo_translate</code> object, we should be able to see a quite different table.</p>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="data-summary-with-tableone.html#cb538-1" aria-hidden="true" tabindex="-1"></a>(tab_nhanes <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">data =</span> demo_translate))</span></code></pre></div>
+<pre><code>##                                      
+##                                       Overall      
+##   n                                   10175        
+##   Gender = Female (%)                  5172 (50.8) 
+##   Age (mean (SD))                     31.48 (24.42)
+##   Race (%)                                         
+##      Mexican American                  1730 (17.0) 
+##      Other Hispanic                     960 ( 9.4) 
+##      Non-Hispanic White                3674 (36.1) 
+##      Non-Hispanic Black                2267 (22.3) 
+##      Non-Hispanic Asian                1074 (10.6) 
+##      Other Race - Including Multi-Rac   470 ( 4.6) 
+##   Education (%)                                    
+##      Less than 9th grade                455 ( 7.9) 
+##      9-11th grade (Includes 12th grad   791 (13.7) 
+##      High school graduate/GED or equi  1303 (22.6) 
+##      Some college or AA degree         1770 (30.7) 
+##      College graduate or above         1443 (25.0) 
+##      Refused                              2 ( 0.0) 
+##      Don&#39;t Know                           5 ( 0.1)</code></pre>
+<p>The count of records (n) is still there and we are still provided with the mean and standard deviation of participants’ age. However, instead of a single mean and standard deviation for gender, race, and education, we now have all of the categories of these variables fleshed out. In addition, we are also given the count and percentage of each category!</p>
+<p>You may have also noticed that “Female” is the only gender that is shown in this table. This is because this variable only has two levels: Female and Male. For this reason, we can infer the count and percentage of the other category just based on the one that tableone gives us. There is a way that we can force tableone to show all categories of a variable. We will cover this in a later section of this tutorial.</p>
+<div id="do-questions-3-4-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 3 &amp; 4 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>What kind of information is summarized when the data is continuous?</p></li>
+<li><p>What kind of information is summarized when the data is categorical?</p></li>
+</ul>
+</div>
+</div>
+<div id="solution-2-identify-numerical-categorical-data" class="section level3" number="8.5.3">
+<h3><span class="header-section-number">8.5.3</span> Solution 2: Identify Numerical Categorical Data</h3>
+<p>Before we hop to this second solution, again, let’s rename all of our variables to something more comprehensible so that everything is easier to understand. In this subsection, however, we will be renaming our <code>demo</code> dataset, instead of the <code>demo_translate</code> dataset that we renamed earlier.</p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="data-summary-with-tableone.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(demo) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>)</span></code></pre></div>
+<p>Okay, now we are ready to go! Note that this second solution is more transferrable and will work for datasets that do not come from NHANES.</p>
+<p>The second way that we can help tableone know which variable is categorical is by telling it directly using the argument <code>factorVars</code>. <code>factorVars</code> is especially useful for identifying numerical categorical data like the ones that we have.</p>
+<p>Coupled with <code>factorVars</code> is also <code>vars</code>. <code>vars</code> is used to select which variables we want to keep in our tableone. Combined what we have learned about <code>CreateTableOne()</code> so far with <code>factorVars</code> and <code>vars</code>, this is what our function with clearly identified numerical categorical data should look like:</p>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="data-summary-with-tableone.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOne</span>(<span class="at">data =</span> demo,</span>
+<span id="cb541-2"><a href="data-summary-with-tableone.html#cb541-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>),</span>
+<span id="cb541-3"><a href="data-summary-with-tableone.html#cb541-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>)</span>
+<span id="cb541-4"><a href="data-summary-with-tableone.html#cb541-4" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
+<pre><code>##                  
+##                   Overall      
+##   n               10175        
+##   Gender = 2 (%)   5172 (50.8) 
+##   Age (mean (SD)) 31.48 (24.42)
+##   Race (%)                     
+##      1             1730 (17.0) 
+##      2              960 ( 9.4) 
+##      3             3674 (36.1) 
+##      4             2267 (22.3) 
+##      6             1074 (10.6) 
+##      7              470 ( 4.6) 
+##   Education (%)                
+##      1              455 ( 7.9) 
+##      2              791 (13.7) 
+##      3             1303 (22.6) 
+##      4             1770 (30.7) 
+##      5             1443 (25.0) 
+##      7                2 ( 0.0) 
+##      9                5 ( 0.1)</code></pre>
+<p>As we can see, this tableone that we just created should look somewhat familiar to the table that we created above. The only difference is that because we did not use nhanesTranslate, all of the categories in our categorical variables are numerical. This will not be an issue if we know which number corresponds to which gender, race, or education level of the participants. Other than that, the counts and percentages of these categorical variables should be identical.</p>
+<p>If the amount of vectors <code>c()</code> and strings in the code above is a bit confusing and hard on our eyes, we can also define <code>factorVars</code> and <code>vars</code> before inputting them into <code>CreateTableOne()</code> like so:</p>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="data-summary-with-tableone.html#cb543-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="data-summary-with-tableone.html#cb544-1" aria-hidden="true" tabindex="-1"></a>factorVars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="data-summary-with-tableone.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOne</span>(<span class="at">data =</span> demo,</span>
+<span id="cb545-2"><a href="data-summary-with-tableone.html#cb545-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">vars =</span> vars,</span>
+<span id="cb545-3"><a href="data-summary-with-tableone.html#cb545-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">factorVars =</span> factorVars</span>
+<span id="cb545-4"><a href="data-summary-with-tableone.html#cb545-4" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
+<pre><code>##                  
+##                   Overall      
+##   n               10175        
+##   Gender = 2 (%)   5172 (50.8) 
+##   Age (mean (SD)) 31.48 (24.42)
+##   Race (%)                     
+##      1             1730 (17.0) 
+##      2              960 ( 9.4) 
+##      3             3674 (36.1) 
+##      4             2267 (22.3) 
+##      6             1074 (10.6) 
+##      7              470 ( 4.6) 
+##   Education (%)                
+##      1              455 ( 7.9) 
+##      2              791 (13.7) 
+##      3             1303 (22.6) 
+##      4             1770 (30.7) 
+##      5             1443 (25.0) 
+##      7                2 ( 0.0) 
+##      9                5 ( 0.1)</code></pre>
+<p>We should be able to see that both tables in this subsection are identical!</p>
+</div>
+<div id="try-it-yourself-8.28.2" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-35">Try it yourself 8.2</a></h3>
+<p>Create a tableone without the <code>vars</code> argument. What do you see?
+Do you think the <code>vars</code> argument is necessary in our case? If not, in what situation(s) do you think it would be necessary?</p>
+</div>
+</div>
+<div id="other-arguments-to-customize-tableone" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Other Arguments to Customize tableone</h2>
+<p>There are other arguments of <code>CreateTableOne()</code> that we can use to customize and adjust our tableone!</p>
+<div id="show-all-levels" class="section level3" number="8.6.1">
+<h3><span class="header-section-number">8.6.1</span> Show All Levels</h3>
+<p>Recall how our Gender variable only shows the “Female” category. If we want both categories “Female” and “Male” to be shown, we can add <code>showAllLevels = TRUE</code> to our <code>print()</code> function like so:</p>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="data-summary-with-tableone.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab_nhanes, </span>
+<span id="cb547-2"><a href="data-summary-with-tableone.html#cb547-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##                  
+##                   level                            Overall      
+##   n                                                10175        
+##   Gender (%)      Male                              5003 (49.2) 
+##                   Female                            5172 (50.8) 
+##   Age (mean (SD))                                  31.48 (24.42)
+##   Race (%)        Mexican American                  1730 (17.0) 
+##                   Other Hispanic                     960 ( 9.4) 
+##                   Non-Hispanic White                3674 (36.1) 
+##                   Non-Hispanic Black                2267 (22.3) 
+##                   Non-Hispanic Asian                1074 (10.6) 
+##                   Other Race - Including Multi-Rac   470 ( 4.6) 
+##   Education (%)   Less than 9th grade                455 ( 7.9) 
+##                   9-11th grade (Includes 12th grad   791 (13.7) 
+##                   High school graduate/GED or equi  1303 (22.6) 
+##                   Some college or AA degree         1770 (30.7) 
+##                   College graduate or above         1443 (25.0) 
+##                   Refused                              2 ( 0.0) 
+##                   Don&#39;t Know                           5 ( 0.1)</code></pre>
+<p>Another way that we can show both Male and Femal is to use <code>cramVars</code>. But this argument only works on 2-level variables (i.e. variables with only 2 categories) because all categories will be placed in the same row.</p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="data-summary-with-tableone.html#cb549-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab_nhanes, </span>
+<span id="cb549-2"><a href="data-summary-with-tableone.html#cb549-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">cramVars =</span> <span class="st">&quot;Gender&quot;</span>)</span></code></pre></div>
+<pre><code>##                                      
+##                                       Overall               
+##   n                                       10175             
+##   Gender = Male/Female (%)            5003/5172 (49.2/50.8) 
+##   Age (mean (SD))                         31.48 (24.42)     
+##   Race (%)                                                  
+##      Mexican American                      1730 (17.0)      
+##      Other Hispanic                         960 ( 9.4)      
+##      Non-Hispanic White                    3674 (36.1)      
+##      Non-Hispanic Black                    2267 (22.3)      
+##      Non-Hispanic Asian                    1074 (10.6)      
+##      Other Race - Including Multi-Rac       470 ( 4.6)      
+##   Education (%)                                             
+##      Less than 9th grade                    455 ( 7.9)      
+##      9-11th grade (Includes 12th grad       791 (13.7)      
+##      High school graduate/GED or equi      1303 (22.6)      
+##      Some college or AA degree             1770 (30.7)      
+##      College graduate or above             1443 (25.0)      
+##      Refused                                  2 ( 0.0)      
+##      Don&#39;t Know                               5 ( 0.1)</code></pre>
+<div id="do-question-5-of-the-quiz-now-4" class="section level4 unnumbered">
+<h4>DO QUESTION 5 OF THE QUIZ NOW</h4>
+<ul>
+<li>What is the difference between <code>showAllLevels</code> and <code>cramVars</code>?</li>
+</ul>
+</div>
+</div>
+<div id="nonnormal" class="section level3" number="8.6.2">
+<h3><span class="header-section-number">8.6.2</span> Nonnormal</h3>
+<p>Right now, our tableones assume that the data of all of our continuous variables are normal, but what if our data is not normal?</p>
+<p>If we know that some or all of our continous variables are not normal, we can tell R this by using the <code>nonnormal</code> argument of <code>print()</code>. For example, if our Age variable is nonnormal, then:</p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="data-summary-with-tableone.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab_nhanes, </span>
+<span id="cb551-2"><a href="data-summary-with-tableone.html#cb551-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb551-3"><a href="data-summary-with-tableone.html#cb551-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">nonnormal =</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb551-4"><a href="data-summary-with-tableone.html#cb551-4" aria-hidden="true" tabindex="-1"></a>     )</span></code></pre></div>
+<pre><code>##                     
+##                      level                            Overall             
+##   n                                                   10175               
+##   Gender (%)         Male                              5003 (49.2)        
+##                      Female                            5172 (50.8)        
+##   Age (median [IQR])                                  26.00 [10.00, 52.00]
+##   Race (%)           Mexican American                  1730 (17.0)        
+##                      Other Hispanic                     960 ( 9.4)        
+##                      Non-Hispanic White                3674 (36.1)        
+##                      Non-Hispanic Black                2267 (22.3)        
+##                      Non-Hispanic Asian                1074 (10.6)        
+##                      Other Race - Including Multi-Rac   470 ( 4.6)        
+##   Education (%)      Less than 9th grade                455 ( 7.9)        
+##                      9-11th grade (Includes 12th grad   791 (13.7)        
+##                      High school graduate/GED or equi  1303 (22.6)        
+##                      Some college or AA degree         1770 (30.7)        
+##                      College graduate or above         1443 (25.0)        
+##                      Refused                              2 ( 0.0)        
+##                      Don&#39;t Know                           5 ( 0.1)</code></pre>
+<p>In the table above, we can see that instead of the usual mean and standard deviation, we are provided with the median and interquartile range (IQR) for our nonnormal Age variable!</p>
+</div>
+<div id="try-it-yourself-8.38.3" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-36">Try it yourself 8.3</a></h3>
+<p>How do you know if a variable is nonnormal? Try using the function <code>summary()</code> and look at the number under skew. How do you decide if something is normal or nonnormal? Is the decision to make “Age” nonnormal accurate?</p>
+<div id="do-question-6-of-the-quiz-now-3" class="section level4 unnumbered">
+<h4>DO QUESTION 6 OF THE QUIZ NOW</h4>
+<ul>
+<li>The decision to make “Age” nonnormal is accurate. (True or False)</li>
+</ul>
+</div>
+</div>
+<div id="show-categorical-or-continuous-variables-only" class="section level3" number="8.6.3">
+<h3><span class="header-section-number">8.6.3</span> Show Categorical or Continuous Variables Only</h3>
+<p>We also have the option to only create tableones with only categorical or continuous variables.</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="data-summary-with-tableone.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Categorical variables only</span></span>
+<span id="cb553-2"><a href="data-summary-with-tableone.html#cb553-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb553-3"><a href="data-summary-with-tableone.html#cb553-3" aria-hidden="true" tabindex="-1"></a>tab_nhanes<span class="sc">$</span>CatTable</span></code></pre></div>
+<pre><code>##                                      
+##                                       Overall     
+##   n                                   10175       
+##   Gender = Female (%)                 5172 (50.8) 
+##   Race (%)                                        
+##      Mexican American                 1730 (17.0) 
+##      Other Hispanic                    960 ( 9.4) 
+##      Non-Hispanic White               3674 (36.1) 
+##      Non-Hispanic Black               2267 (22.3) 
+##      Non-Hispanic Asian               1074 (10.6) 
+##      Other Race - Including Multi-Rac  470 ( 4.6) 
+##   Education (%)                                   
+##      Less than 9th grade               455 ( 7.9) 
+##      9-11th grade (Includes 12th grad  791 (13.7) 
+##      High school graduate/GED or equi 1303 (22.6) 
+##      Some college or AA degree        1770 (30.7) 
+##      College graduate or above        1443 (25.0) 
+##      Refused                             2 ( 0.0) 
+##      Don&#39;t Know                          5 ( 0.1)</code></pre>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="data-summary-with-tableone.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Continuous variables only</span></span>
+<span id="cb555-2"><a href="data-summary-with-tableone.html#cb555-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-3"><a href="data-summary-with-tableone.html#cb555-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab_nhanes<span class="sc">$</span>ContTable, <span class="at">nonnormal =</span> <span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
+<pre><code>##                     
+##                      Overall             
+##   n                  10175               
+##   Age (median [IQR]) 26.00 [10.00, 52.00]</code></pre>
+</div>
+<div id="strata" class="section level3" number="8.6.4">
+<h3><span class="header-section-number">8.6.4</span> Strata</h3>
+<p>In a way, strata is like the function <code>group_by()</code> in dplyr or facets in ggplot. It groups data together into groups or “strata” and then summarizes each group individually.</p>
+<p>Note that while <code>showAllLevels</code> and <code>nonnormal</code> are arguments of the function <code>print()</code>, <code>strata</code> is an argument of the function <code>CreateTableOne()</code>.</p>
+<p>For example, if we want to separate our data summary by Gender, we would need to write a code like so:</p>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="data-summary-with-tableone.html#cb557-1" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">data =</span> demo_translate,</span>
+<span id="cb557-2"><a href="data-summary-with-tableone.html#cb557-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Race&quot;</span>, <span class="st">&quot;Education&quot;</span>), <span class="do">## Note that Gender is not included because we already have strata = Gender</span></span>
+<span id="cb557-3"><a href="data-summary-with-tableone.html#cb557-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">&quot;Race&quot;</span>,<span class="st">&quot;Education&quot;</span>), <span class="do">## Again, Gender is not included because it is in the strata argument</span></span>
+<span id="cb557-4"><a href="data-summary-with-tableone.html#cb557-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">strata =</span> <span class="st">&quot;Gender&quot;</span></span>
+<span id="cb557-5"><a href="data-summary-with-tableone.html#cb557-5" aria-hidden="true" tabindex="-1"></a>                         )</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="data-summary-with-tableone.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(strata, </span>
+<span id="cb558-2"><a href="data-summary-with-tableone.html#cb558-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">nonnormal =</span> <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb558-3"><a href="data-summary-with-tableone.html#cb558-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">cramVars =</span> <span class="st">&quot;Gender&quot;</span>)</span></code></pre></div>
+<pre><code>##                                      Stratified by Gender
+##                                       Male                Female              
+##   n                                    5003                5172               
+##   Age (median [IQR])                  25.00 [9.00, 51.00] 28.00 [10.00, 52.00]
+##   Race (%)                                                                    
+##      Mexican American                   833 (16.7)          897 (17.3)        
+##      Other Hispanic                     449 ( 9.0)          511 ( 9.9)        
+##      Non-Hispanic White                1811 (36.2)         1863 (36.0)        
+##      Non-Hispanic Black                1152 (23.0)         1115 (21.6)        
+##      Non-Hispanic Asian                 521 (10.4)          553 (10.7)        
+##      Other Race - Including Multi-Rac   237 ( 4.7)          233 ( 4.5)        
+##   Education (%)                                                               
+##      Less than 9th grade                230 ( 8.3)          225 ( 7.5)        
+##      9-11th grade (Includes 12th grad   393 (14.2)          398 (13.2)        
+##      High school graduate/GED or equi   665 (24.1)          638 (21.2)        
+##      Some college or AA degree          754 (27.3)         1016 (33.7)        
+##      College graduate or above          713 (25.9)          730 (24.2)        
+##      Refused                              0 ( 0.0)            2 ( 0.1)        
+##      Don&#39;t Know                           3 ( 0.1)            2 ( 0.1)        
+##                                      Stratified by Gender
+##                                       p      test   
+##   n                                                 
+##   Age (median [IQR])                   0.001 nonnorm
+##   Race (%)                             0.317        
+##      Mexican American                               
+##      Other Hispanic                                 
+##      Non-Hispanic White                             
+##      Non-Hispanic Black                             
+##      Non-Hispanic Asian                             
+##      Other Race - Including Multi-Rac               
+##   Education (%)                       &lt;0.001        
+##      Less than 9th grade                            
+##      9-11th grade (Includes 12th grad               
+##      High school graduate/GED or equi               
+##      Some college or AA degree                      
+##      College graduate or above                      
+##      Refused                                        
+##      Don&#39;t Know</code></pre>
+<p>Let’s unpack this table together. Firstly, we have the usual mean and standard deviation OR median and IQR for each category of each variable. Except now, we can see that all of the variables and their categories are summarized by or stratified by Gender.</p>
+<p>Second of all, we can also see a second table below our usual table with p-values and test. This only appears when we have stratified our data into two groups for comparison. The default test for categorical variables is <code>chisq.test()</code> and the default for continuous variables is <code>oneway.test()</code> (regular ANOVA). tableone also considers nonnorm as present by the word “nonnorm” under “test” in the table above. Otherwise, we also have the option to use <code>krushal.test()</code> for nonnormal continuous variables.</p>
+</div>
+<div id="try-it-yourself-8.48.4" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-37">Try it yourself 8.4</a></h3>
+<p>Create a tableone using the demo_translate dataset. Keep all variables and stratified the data using “Age.” What do you see? Do you think this is a helpful tableone?</p>
+<div id="do-question-7-of-the-quiz-now-2" class="section level4 unnumbered">
+<h4>DO QUESTION 7 OF THE QUIZ NOW</h4>
+<ul>
+<li>Which of the following is the least appropriate to stratify our dataset by?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="export-tableone" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Export tableone</h2>
+<p>Finally, let’s export our tableone!</p>
+<p>Recall that we can use the function <code>write.csv()</code> to export data from R to a csv file. But before we can use this function, we need to save the table into an object using <code>print()</code> like so first:</p>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="data-summary-with-tableone.html#cb560-1" aria-hidden="true" tabindex="-1"></a>tab_csv <span class="ot">&lt;-</span> <span class="fu">print</span>(strata,</span>
+<span id="cb560-2"><a href="data-summary-with-tableone.html#cb560-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">nonnormal =</span> <span class="st">&quot;Age&quot;</span>,</span>
+<span id="cb560-3"><a href="data-summary-with-tableone.html#cb560-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">printToggle =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div id="do-question-8-of-the-quiz-now-3" class="section level4 unnumbered">
+<h4>DO QUESTION 8 OF THE QUIZ NOW</h4>
+<ul>
+<li>What does the argument <code>printToggle = FALSE</code> do?</li>
+</ul>
+<p>Now we can use our <code>write.csv()</code> function like normal.</p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="data-summary-with-tableone.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(tab_csv, <span class="at">file =</span> <span class="st">&quot;data/NHANES_Summary.csv&quot;</span>)</span></code></pre></div>
+<p>Tada! Now our table is saved as a csv file in our working directory!</p>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="data-summary-with-tableone.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;_book&quot;                                 
+##  [2] &quot;_bookdown.yml&quot;                         
+##  [3] &quot;_bookdown_files&quot;                       
+##  [4] &quot;_build.sh&quot;                             
+##  [5] &quot;_deploy.sh&quot;                            
+##  [6] &quot;_output.yml&quot;                           
+##  [7] &quot;0-r-and-rstudio-set-up.Rmd&quot;            
+##  [8] &quot;1-introduction-to-r.Rmd&quot;               
+##  [9] &quot;2-importing-data-into-r-with-readr.Rmd&quot;
+## [10] &quot;3-introduction-to-nhanes.Rmd&quot;          
+## [11] &quot;4-data-analysis-with-dplyr.Rmd&quot;        
+## [12] &quot;5-data-visualization-with-ggplot.Rmd&quot;  
+## [13] &quot;6-date-time-data-with-lubridate.Rmd&quot;   
+## [14] &quot;7-data-summary-with-tableone.Rmd&quot;      
+## [15] &quot;8-Exercise-Solutions.Rmd&quot;              
+## [16] &quot;9-references.Rmd&quot;                      
+## [17] &quot;book.bib&quot;                              
+## [18] &quot;data&quot;                                  
+## [19] &quot;DESCRIPTION&quot;                           
+## [20] &quot;Dockerfile&quot;                            
+## [21] &quot;docs&quot;                                  
+## [22] &quot;header.html&quot;                           
+## [23] &quot;images&quot;                                
+## [24] &quot;index.Rmd&quot;                             
+## [25] &quot;intro2R.html&quot;                          
+## [26] &quot;intro2R.log&quot;                           
+## [27] &quot;intro2R.Rmd&quot;                           
+## [28] &quot;intro2R.tex&quot;                           
+## [29] &quot;intro2R_cache&quot;                         
+## [30] &quot;intro2R_files&quot;                         
+## [31] &quot;LICENSE&quot;                               
+## [32] &quot;now.json&quot;                              
+## [33] &quot;packages.bib&quot;                          
+## [34] &quot;preamble.tex&quot;                          
+## [35] &quot;R.Rproj&quot;                               
+## [36] &quot;README.md&quot;                             
+## [37] &quot;style.css&quot;                             
+## [38] &quot;toc.css&quot;</code></pre>
+</div>
+<div id="do-questions-9-10-of-the-quiz-now-1" class="section level4 unnumbered">
+<h4>DO QUESTIONS 9 &amp; 10 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>Which of the following arguments can be nested in <code>CreateTableOne()</code>?</p></li>
+<li><p>Which of the following arguments can be nested in <code>print()</code>?</p></li>
+</ul>
+</div>
+</div>
+<div id="alternatives-to-tableone" class="section level2" number="8.8">
+<h2><span class="header-section-number">8.8</span> Alternatives to tableone</h2>
+<p>Data summary is one of the many applications that R specializes at. With this said, there are multiple other R packages that also do data summary aside from tableone. We will not go over any of these packages, but know that each package has its own strengths and so are most optimally used in different situations.</p>
+<p>Here are the other data summary packages and its main data summary function:</p>
+<div id="base-r" class="section level3" number="8.8.1">
+<h3><span class="header-section-number">8.8.1</span> base R</h3>
+<p>In base R, we have <code>summary()</code> and <code>by()</code>:</p>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="data-summary-with-tableone.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demo_translate)</span></code></pre></div>
+<pre><code>##     Gender          Age                                      Race     
+##  Male  :5003   Min.   : 0.00   Mexican American                :1730  
+##  Female:5172   1st Qu.:10.00   Other Hispanic                  : 960  
+##                Median :26.00   Non-Hispanic White              :3674  
+##                Mean   :31.48   Non-Hispanic Black              :2267  
+##                3rd Qu.:52.00   Non-Hispanic Asian              :1074  
+##                Max.   :80.00   Other Race - Including Multi-Rac: 470  
+##                                                                       
+##                             Education   
+##  Some college or AA degree       :1770  
+##  College graduate or above       :1443  
+##  High school graduate/GED or equi:1303  
+##  9-11th grade (Includes 12th grad: 791  
+##  Less than 9th grade             : 455  
+##  (Other)                         :   7  
+##  NA&#39;s                            :4406</code></pre>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="data-summary-with-tableone.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(demo_translate, demo_translate<span class="sc">$</span>Gender, summary)</span></code></pre></div>
+<pre><code>## demo_translate$Gender: Male
+##     Gender          Age                                      Race     
+##  Male  :5003   Min.   : 0.00   Mexican American                : 833  
+##  Female:   0   1st Qu.: 9.00   Other Hispanic                  : 449  
+##                Median :25.00   Non-Hispanic White              :1811  
+##                Mean   :30.69   Non-Hispanic Black              :1152  
+##                3rd Qu.:51.00   Non-Hispanic Asian              : 521  
+##                Max.   :80.00   Other Race - Including Multi-Rac: 237  
+##                                                                       
+##                             Education   
+##  Some college or AA degree       : 754  
+##  College graduate or above       : 713  
+##  High school graduate/GED or equi: 665  
+##  9-11th grade (Includes 12th grad: 393  
+##  Less than 9th grade             : 230  
+##  (Other)                         :   3  
+##  NA&#39;s                            :2245  
+## ------------------------------------------------------------ 
+## demo_translate$Gender: Female
+##     Gender          Age                                      Race     
+##  Male  :   0   Min.   : 0.00   Mexican American                : 897  
+##  Female:5172   1st Qu.:10.00   Other Hispanic                  : 511  
+##                Median :28.00   Non-Hispanic White              :1863  
+##                Mean   :32.25   Non-Hispanic Black              :1115  
+##                3rd Qu.:52.00   Non-Hispanic Asian              : 553  
+##                Max.   :80.00   Other Race - Including Multi-Rac: 233  
+##                                                                       
+##                             Education   
+##  Some college or AA degree       :1016  
+##  College graduate or above       : 730  
+##  High school graduate/GED or equi: 638  
+##  9-11th grade (Includes 12th grad: 398  
+##  Less than 9th grade             : 225  
+##  (Other)                         :   4  
+##  NA&#39;s                            :2161</code></pre>
+</div>
+<div id="hmisc" class="section level3" number="8.8.2">
+<h3><span class="header-section-number">8.8.2</span> Hmisc</h3>
+<p>In Hmisc, we have <code>describe()</code>:</p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="data-summary-with-tableone.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;Hmisc&quot;)</span></span>
+<span id="cb568-2"><a href="data-summary-with-tableone.html#cb568-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code></pre></div>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     src, summarize</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="data-summary-with-tableone.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(demo_translate)</span></code></pre></div>
+<pre><code>## demo_translate 
+## 
+##  4  Variables      10175  Observations
+## --------------------------------------------------------------------------------
+## Gender 
+##        n  missing distinct 
+##    10175        0        2 
+##                         
+## Value        Male Female
+## Frequency    5003   5172
+## Proportion  0.492  0.508
+## --------------------------------------------------------------------------------
+## Age : Age in years at screening 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##    10175        0       81        1    31.48    27.75        1        3 
+##      .25      .50      .75      .90      .95 
+##       10       26       52       68       75 
+## 
+## lowest :  0  1  2  3  4, highest: 76 77 78 79 80
+## --------------------------------------------------------------------------------
+## Race 
+##        n  missing distinct 
+##    10175        0        6 
+## 
+## lowest : Mexican American                 Other Hispanic                   Non-Hispanic White               Non-Hispanic Black               Non-Hispanic Asian              
+## highest: Other Hispanic                   Non-Hispanic White               Non-Hispanic Black               Non-Hispanic Asian               Other Race - Including Multi-Rac
+## 
+## Mexican American (1730, 0.170), Other Hispanic (960, 0.094), Non-Hispanic White
+## (3674, 0.361), Non-Hispanic Black (2267, 0.223), Non-Hispanic Asian (1074,
+## 0.106), Other Race - Including Multi-Rac (470, 0.046)
+## --------------------------------------------------------------------------------
+## Education 
+##        n  missing distinct 
+##     5769     4406        7 
+## 
+## lowest : Less than 9th grade              9-11th grade (Includes 12th grad High school graduate/GED or equi Some college or AA degree        College graduate or above       
+## highest: High school graduate/GED or equi Some college or AA degree        College graduate or above        Refused                          Don&#39;t Know                      
+## 
+## Less than 9th grade (455, 0.079), 9-11th grade (Includes 12th grad (791,
+## 0.137), High school graduate/GED or equi (1303, 0.226), Some college or AA
+## degree (1770, 0.307), College graduate or above (1443, 0.250), Refused (2,
+## 0.000), Don&#39;t Know (5, 0.001)
+## --------------------------------------------------------------------------------</code></pre>
+</div>
+<div id="psych" class="section level3" number="8.8.3">
+<h3><span class="header-section-number">8.8.3</span> psych</h3>
+<p>In psych, we have <code>describe()</code> and <code>describeBy()</code>. Note how the categorical variables are marked with an asterisk (*).</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="data-summary-with-tableone.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
+<span id="cb577-2"><a href="data-summary-with-tableone.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
+## 
+##     describe</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     logit</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="data-summary-with-tableone.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(demo_translate)</span></code></pre></div>
+<pre><code>##            vars     n  mean    sd median trimmed   mad min max range  skew
+## Gender*       1 10175  1.51  0.50      2    1.51  0.00   1   2     1 -0.03
+## Age           2 10175 31.48 24.42     26   29.82 28.17   0  80    80  0.44
+## Race*         3 10175  3.14  1.35      3    3.11  1.48   1   6     5  0.04
+## Education*    4  5769  3.52  1.23      4    3.62  1.48   1   7     6 -0.47
+##            kurtosis   se
+## Gender*       -2.00 0.00
+## Age           -1.09 0.24
+## Race*         -0.51 0.01
+## Education*    -0.69 0.02</code></pre>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="data-summary-with-tableone.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(demo_translate, demo_translate<span class="sc">$</span>Gender)</span></code></pre></div>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: Male
+##            vars    n  mean    sd median trimmed   mad min max range  skew
+## Gender*       1 5003  1.00  0.00      1    1.00  0.00   1   1     0   NaN
+## Age           2 5003 30.69 24.39     25   28.89 28.17   0  80    80  0.48
+## Race*         3 5003  3.16  1.34      3    3.14  1.48   1   6     5  0.03
+## Education*    4 2758  3.49  1.25      4    3.58  1.48   1   7     6 -0.40
+##            kurtosis   se
+## Gender*         NaN 0.00
+## Age           -1.07 0.34
+## Race*         -0.49 0.02
+## Education*    -0.78 0.02
+## ------------------------------------------------------------ 
+## group: Female
+##            vars    n  mean    sd median trimmed   mad min max range  skew
+## Gender*       1 5172  2.00  0.00      2    2.00  0.00   2   2     0   NaN
+## Age           2 5172 32.25 24.43     28   30.72 29.65   0  80    80  0.40
+## Race*         3 5172  3.12  1.35      3    3.09  1.48   1   6     5  0.06
+## Education*    4 3011  3.55  1.21      4    3.65  1.48   1   7     6 -0.53
+##            kurtosis   se
+## Gender*         NaN 0.00
+## Age           -1.12 0.34
+## Race*         -0.54 0.02
+## Education*    -0.59 0.02</code></pre>
+</div>
+<div id="desctable" class="section level3" number="8.8.4">
+<h3><span class="header-section-number">8.8.4</span> desctable</h3>
+<p>In desctable, we have <code>desctable()</code>:</p>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="data-summary-with-tableone.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;desctable&quot;)</span></span>
+<span id="cb586-2"><a href="data-summary-with-tableone.html#cb586-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(desctable)</span></code></pre></div>
+<pre><code>## Loading required package: pander</code></pre>
+<pre><code>## 
+## Attaching package: &#39;desctable&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test, IQR</code></pre>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="data-summary-with-tableone.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">desctable</span>(demo_translate)</span></code></pre></div>
+<pre><code>##                                                    N           % Median IQR
+## 1                                       Gender 10175          NA     NA  NA
+## 2                                 Gender: Male  5003 49.16953317     NA  NA
+## 3                               Gender: Female  5172 50.83046683     NA  NA
+## 4                                          Age 10175          NA     26  42
+## 5                                         Race 10175          NA     NA  NA
+## 6                       Race: Mexican American  1730 17.00245700     NA  NA
+## 7                         Race: Other Hispanic   960  9.43488943     NA  NA
+## 8                     Race: Non-Hispanic White  3674 36.10810811     NA  NA
+## 9                     Race: Non-Hispanic Black  2267 22.28009828     NA  NA
+## 10                    Race: Non-Hispanic Asian  1074 10.55528256     NA  NA
+## 11      Race: Other Race - Including Multi-Rac   470  4.61916462     NA  NA
+## 12                                   Education  5769          NA     NA  NA
+## 13              Education: Less than 9th grade   455  7.88698215     NA  NA
+## 14 Education: 9-11th grade (Includes 12th grad   791 13.71121512     NA  NA
+## 15 Education: High school graduate/GED or equi  1303 22.58623678     NA  NA
+## 16        Education: Some college or AA degree  1770 30.68122725     NA  NA
+## 17        Education: College graduate or above  1443 25.01300052     NA  NA
+## 18                          Education: Refused     2  0.03466805     NA  NA
+## 19                       Education: Don&#39;t Know     5  0.08667013     NA  NA</code></pre>
+</div>
+<div id="skimr" class="section level3" number="8.8.5">
+<h3><span class="header-section-number">8.8.5</span> skimr</h3>
+<p>In skimr, we have <code>skim()</code>:</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="data-summary-with-tableone.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;skimr&quot;)</span></span>
+<span id="cb592-2"><a href="data-summary-with-tableone.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="data-summary-with-tableone.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(demo_translate)</span></code></pre></div>
+<pre><code>## Warning: Couldn&#39;t find skimmers for class: labelled, integer, numeric; No user-
+## defined `sfl` provided. Falling back to `character`.</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-319">Table 8.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">demo_translate</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">10175</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">factor</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">81</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Gender</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Fem: 5172, Mal: 5003</td>
+</tr>
+<tr class="even">
+<td align="left">Race</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">6</td>
+<td align="left">Non: 3674, Non: 2267, Mex: 1730, Non: 1074</td>
+</tr>
+<tr class="odd">
+<td align="left">Education</td>
+<td align="right">4406</td>
+<td align="right">0.57</td>
+<td align="left">FALSE</td>
+<td align="right">7</td>
+<td align="left">Som: 1770, Col: 1443, Hig: 1303, 9-1: 791</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="summary-and-takeaways-7" class="section level2" number="8.9">
+<h2><span class="header-section-number">8.9</span> Summary and Takeaways</h2>
+<p>Congratulations on finishing tutorial 7 on Data Summary with tableone! After this tutorial, you should be familiar with the R package tableone as well as the function <code>CreateTableOne()</code>. In addition, you should also be familiar with the different arguments of <code>print()</code> to customize your own tableone.</p>
+<p>There are a lot more powerful functions in the tableone package. You are free to explore them on your own using <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.htmlhttps://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">this document</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="date-time-data-with-lubridate.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix-exercise-solutions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/7-data-summary-with-tableone.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

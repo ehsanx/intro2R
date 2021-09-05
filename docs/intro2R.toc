@@ -1,0 +1,314 @@
+\contentsline {chapter}{\numberline {1}Description}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Main references}{7}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Version history}{7}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Prerequisites}{7}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Comments}{7}{subsection.1.1.3}%
+\contentsline {chapter}{\numberline {2}R and RStudio set up}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}INSTRUCTIONS}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}LEARNING OBJECTIVES}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.3}1. What is R}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}2. What is RStudio}{10}{section.2.4}%
+\contentsline {section}{\numberline {2.5}3. Download and install R}{10}{section.2.5}%
+\contentsline {section}{\numberline {2.6}4. Download and install RStudio}{10}{section.2.6}%
+\contentsline {section}{\numberline {2.7}5. RStudio basics}{10}{section.2.7}%
+\contentsline {section}{\numberline {2.8}TAKEAWAYS}{12}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Introduction to R}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}INSTRUCTIONS}{13}{section.3.1}%
+\contentsline {section}{\numberline {3.2}LEARNING OBJECTIVES}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}1. SET UP BASICS}{14}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Working Directory}{14}{subsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.1}Functions Debunked}{16}{subsubsection.3.3.1.1}%
+\contentsline {subsection}{\numberline {3.3.2}Installing and Attaching Packages}{16}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}DO QUESTIONS 1-3 OF THE GOOGLE QUIZ NOW}{17}{subsubsection.3.3.2.1}%
+\contentsline {section}{\numberline {3.4}2. ARITHMETIC OPERATORS}{17}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}1.1 Try it yourself}{18}{subsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.1}DO QUESTION 4 OF THE QUIZ NOW}{18}{subsubsection.3.4.1.1}%
+\contentsline {section}{\numberline {3.5}3. LOGICAL OPERATORS}{18}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}1.2 Try it yourself}{19}{subsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.1.1}DO QUESTION 5 OF THE QUIZ NOW}{19}{subsubsection.3.5.1.1}%
+\contentsline {section}{\numberline {3.6}4. MOST COMMON DATA TYPES IN R}{19}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Strings}{19}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Vectors}{19}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}1.3 Try it yourself}{20}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}1.4 Try it yourself}{21}{subsection.3.6.4}%
+\contentsline {subsection}{\numberline {3.6.5}Lists}{21}{subsection.3.6.5}%
+\contentsline {subsubsection}{\numberline {3.6.5.1}Functions Debunked}{21}{subsubsection.3.6.5.1}%
+\contentsline {subsection}{\numberline {3.6.6}Dataframe}{22}{subsection.3.6.6}%
+\contentsline {subsubsection}{\numberline {3.6.6.1}Functions debunked}{22}{subsubsection.3.6.6.1}%
+\contentsline {subsubsection}{\numberline {3.6.6.2}Functions Debunked}{22}{subsubsection.3.6.6.2}%
+\contentsline {subsection}{\numberline {3.6.7}1.5 Try it yourself}{23}{subsection.3.6.7}%
+\contentsline {subsubsection}{\numberline {3.6.7.1}DO QUESTIONS 6 \& 7 OF THE QUIZ NOW}{23}{subsubsection.3.6.7.1}%
+\contentsline {subsubsection}{\numberline {3.6.7.2}Functions Debunked}{24}{subsubsection.3.6.7.2}%
+\contentsline {section}{\numberline {3.7}5. EXPLORING A DATASET}{24}{section.3.7}%
+\contentsline {subsubsection}{\numberline {3.7.0.1}Functions Debunked}{37}{subsubsection.3.7.0.1}%
+\contentsline {subsection}{\numberline {3.7.1}1.6 Try it yourself}{37}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Dimensions}{37}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Structure}{37}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}Class}{38}{subsection.3.7.4}%
+\contentsline {subsection}{\numberline {3.7.5}1.7 Try it yourself}{38}{subsection.3.7.5}%
+\contentsline {subsection}{\numberline {3.7.6}Length}{38}{subsection.3.7.6}%
+\contentsline {subsection}{\numberline {3.7.7}1.8 Try it yourself}{38}{subsection.3.7.7}%
+\contentsline {subsection}{\numberline {3.7.8}Head and Tail}{38}{subsection.3.7.8}%
+\contentsline {subsubsection}{\numberline {3.7.8.1}DO QUESTION 8 OF THE QUIZ NOW}{40}{subsubsection.3.7.8.1}%
+\contentsline {subsection}{\numberline {3.7.9}Mathematical Functions in R}{40}{subsection.3.7.9}%
+\contentsline {subsection}{\numberline {3.7.10}1.9 Try it yourself}{41}{subsection.3.7.10}%
+\contentsline {subsubsection}{\numberline {3.7.10.1}DO QUESTION 9 OF THE QUIZ NOW}{41}{subsubsection.3.7.10.1}%
+\contentsline {section}{\numberline {3.8}6. WRITING A NEW FUNCTION IN R}{41}{section.3.8}%
+\contentsline {section}{\numberline {3.9}7. FOR LOOPS}{43}{section.3.9}%
+\contentsline {section}{\numberline {3.10}8. HELP WITHIN AND OUTSIDE OF R}{45}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}Within R}{46}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {3.10.2}Outside of R}{46}{subsection.3.10.2}%
+\contentsline {subsubsection}{\numberline {3.10.2.1}DO QUESTION 10 OF THE QUIZ NOW}{46}{subsubsection.3.10.2.1}%
+\contentsline {section}{\numberline {3.11}9. SUMMARY AND TAKEWAYS}{47}{section.3.11}%
+\contentsline {chapter}{\numberline {4}Importing Data into R with readr}{49}{chapter.4}%
+\contentsline {section}{\numberline {4.1}INSTRUCTIONS}{49}{section.4.1}%
+\contentsline {section}{\numberline {4.2}LEARNING OBJECTIVES}{49}{section.4.2}%
+\contentsline {section}{\numberline {4.3}1. SET UP}{50}{section.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.0.1}DO QUESTION 1 OF THE QUIZ NOW}{51}{subsubsection.4.3.0.1}%
+\contentsline {section}{\numberline {4.4}2. BASICS OF IMPORTING A CSV FILE INTO R}{51}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Method 1: Setting a Different Working Directory}{51}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Method 2: Copying the Exact Pathway of the File}{54}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}DO QUESTIONS 2-4 OF THE QUIZ NOW}{55}{subsubsection.4.4.2.1}%
+\contentsline {subsection}{\numberline {4.4.3}2.1 Try it yourself}{55}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Key Notes About Importing Data into R}{55}{subsection.4.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.4.1}DO QUESTION 5 OF THE QUIZ NOW}{56}{subsubsection.4.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.5}2.2 Try it yourself}{56}{subsection.4.4.5}%
+\contentsline {subsubsection}{\numberline {4.4.5.1}DO QUESTION 6 OF THE QUIZ NOW}{56}{subsubsection.4.4.5.1}%
+\contentsline {subsection}{\numberline {4.4.6}Column Specification}{56}{subsection.4.4.6}%
+\contentsline {subsubsection}{\numberline {4.4.6.1}DO QUESTION 7 OF THE QUIZ NOW}{57}{subsubsection.4.4.6.1}%
+\contentsline {subsection}{\numberline {4.4.7}2.3 Try it yourself}{57}{subsection.4.4.7}%
+\contentsline {section}{\numberline {4.5}3. MORE ARGUMENTS OF READ\_CSV}{57}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Skip}{57}{subsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.1.1}DO QUESTION 8 OF THE QUIZ NOW}{59}{subsubsection.4.5.1.1}%
+\contentsline {subsection}{\numberline {4.5.2}2.4 Try it yourself}{59}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Remove Header \& Header Names}{59}{subsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.3.1}DO QUESTION 9 OF THE QUIZ NOW}{60}{subsubsection.4.5.3.1}%
+\contentsline {subsection}{\numberline {4.5.4}Missing Values}{61}{subsection.4.5.4}%
+\contentsline {subsubsection}{\numberline {4.5.4.1}DO QUESTION 10 OF THE QUIZ NOW}{62}{subsubsection.4.5.4.1}%
+\contentsline {section}{\numberline {4.6}4. IMPORTING OTHER FILE TYPES INTO R}{62}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Text file (txt)}{63}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Excel file (xlsx)}{63}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}2.5 Try it yourself}{64}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}XPT File Extension}{64}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Statistical Analysis Software (SAS)}{65}{subsection.4.6.5}%
+\contentsline {section}{\numberline {4.7}5. EXPORTING THE DATA FRAME FROM R}{65}{section.4.7}%
+\contentsline {section}{\numberline {4.8}6. SUMMARY AND TAKEWAYS}{66}{section.4.8}%
+\contentsline {chapter}{\numberline {5}Introduction to NHANES}{69}{chapter.5}%
+\contentsline {section}{\numberline {5.1}INSTRUCTIONS}{69}{section.5.1}%
+\contentsline {section}{\numberline {5.2}LEARNING OBJECTIVES}{69}{section.5.2}%
+\contentsline {section}{\numberline {5.3}1. Introduction to NHANES}{69}{section.5.3}%
+\contentsline {section}{\numberline {5.4}2. Importing NHANES dataset from website}{71}{section.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.0.1}Functions debunked}{73}{subsubsection.5.4.0.1}%
+\contentsline {section}{\numberline {5.5}3. Importing NHANES dataset from R package: nhanesA}{73}{section.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.0.1}Functions debunked}{74}{subsubsection.5.5.0.1}%
+\contentsline {subsubsection}{\numberline {5.5.0.2}Functions debunked}{76}{subsubsection.5.5.0.2}%
+\contentsline {subsubsection}{\numberline {5.5.0.3}Functions debunked}{77}{subsubsection.5.5.0.3}%
+\contentsline {subsubsection}{\numberline {5.5.0.4}Try it yourself 3.1}{78}{subsubsection.5.5.0.4}%
+\contentsline {subsubsection}{\numberline {5.5.0.5}Try it yourself 3.2}{78}{subsubsection.5.5.0.5}%
+\contentsline {subsubsection}{\numberline {5.5.0.6}Try it yourself 3.3}{78}{subsubsection.5.5.0.6}%
+\contentsline {subsection}{\numberline {5.5.1}Other packages in R}{78}{subsection.5.5.1}%
+\contentsline {section}{\numberline {5.6}TAKEAWAYS}{79}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Data Analysis with dplyr}{81}{chapter.6}%
+\contentsline {section}{\numberline {6.1}INSTRUCTIONS}{81}{section.6.1}%
+\contentsline {section}{\numberline {6.2}LEARNING OBJECTIVES}{81}{section.6.2}%
+\contentsline {section}{\numberline {6.3}1. Set up}{82}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Install and load packages}{82}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Set working directory}{82}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Import dataset}{82}{subsection.6.3.3}%
+\contentsline {subsubsection}{\numberline {6.3.3.1}Functions debunked}{83}{subsubsection.6.3.3.1}%
+\contentsline {subsection}{\numberline {6.3.4}Explore our dataset}{83}{subsection.6.3.4}%
+\contentsline {subsubsection}{\numberline {6.3.4.1}is.na()}{85}{subsubsection.6.3.4.1}%
+\contentsline {section}{\numberline {6.4}2.Dataset preparation}{87}{section.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.0.1}Functions debunked}{91}{subsubsection.6.4.0.1}%
+\contentsline {subsection}{\numberline {6.4.1}4.1 Try it yourself}{92}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}4.2 Try it yourself}{92}{subsection.6.4.2}%
+\contentsline {section}{\numberline {6.5}3. Filter}{92}{section.6.5}%
+\contentsline {subsubsection}{\numberline {6.5.0.1}Functions debunked}{93}{subsubsection.6.5.0.1}%
+\contentsline {subsubsection}{\numberline {6.5.0.2}Missing values}{93}{subsubsection.6.5.0.2}%
+\contentsline {subsection}{\numberline {6.5.1}4.3 Try it yourself}{94}{subsection.6.5.1}%
+\contentsline {section}{\numberline {6.6}4.Re-order the rows}{94}{section.6.6}%
+\contentsline {subsubsection}{\numberline {6.6.0.1}Functions debunked}{96}{subsubsection.6.6.0.1}%
+\contentsline {subsubsection}{\numberline {6.6.0.2}Missing values}{96}{subsubsection.6.6.0.2}%
+\contentsline {subsection}{\numberline {6.6.1}4.4 Try it yourself}{96}{subsection.6.6.1}%
+\contentsline {section}{\numberline {6.7}5. Add new variables}{96}{section.6.7}%
+\contentsline {subsubsection}{\numberline {6.7.0.1}Functions debunked}{98}{subsubsection.6.7.0.1}%
+\contentsline {subsection}{\numberline {6.7.1}4.5 Try it yourself}{98}{subsection.6.7.1}%
+\contentsline {section}{\numberline {6.8}6.Summary statistics and group\_by}{99}{section.6.8}%
+\contentsline {subsubsection}{\numberline {6.8.0.1}Functions debunked}{99}{subsubsection.6.8.0.1}%
+\contentsline {subsection}{\numberline {6.8.1}4.6 Try it yourself}{100}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}Group\_by() extension}{100}{subsection.6.8.2}%
+\contentsline {subsubsection}{\numberline {6.8.2.1}Functions debunked}{101}{subsubsection.6.8.2.1}%
+\contentsline {subsection}{\numberline {6.8.3}4.7 Try it yourself}{101}{subsection.6.8.3}%
+\contentsline {subsection}{\numberline {6.8.4}4.8 Try it yourself}{101}{subsection.6.8.4}%
+\contentsline {section}{\numberline {6.9}7. Pipe}{101}{section.6.9}%
+\contentsline {subsection}{\numberline {6.9.1}4.9 Try it yourself}{103}{subsection.6.9.1}%
+\contentsline {section}{\numberline {6.10}8. Summary of dealing with missing values}{103}{section.6.10}%
+\contentsline {section}{\numberline {6.11}TAKEAWAYS}{104}{section.6.11}%
+\contentsline {chapter}{\numberline {7}Data Visualization with ggplot2}{105}{chapter.7}%
+\contentsline {section}{\numberline {7.1}INSTRUCTIONS}{105}{section.7.1}%
+\contentsline {section}{\numberline {7.2}LEARNING OBJECTIVES}{105}{section.7.2}%
+\contentsline {section}{\numberline {7.3}1. SET UP}{106}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Loading required packages}{106}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Importing Data}{106}{subsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.2.1}DO QUESTION 1 OF THE QUIZ NOW}{107}{subsubsection.7.3.2.1}%
+\contentsline {section}{\numberline {7.4}2. GGPLOT AND POINT GEOMETRICS}{107}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Point Geometrics}{108}{subsection.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.1.1}Functions debunked}{108}{subsubsection.7.4.1.1}%
+\contentsline {subsubsection}{\numberline {7.4.1.2}DO QUESTIONS 2 \& 3 OF THE QUIZ NOW}{109}{subsubsection.7.4.1.2}%
+\contentsline {subsection}{\numberline {7.4.2}1.1 Try it yourself}{109}{subsection.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.2.1}DO QUESTION 4 OF THE QUIZ NOW}{109}{subsubsection.7.4.2.1}%
+\contentsline {subsection}{\numberline {7.4.3}Aesthetics}{109}{subsection.7.4.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.1}Colors}{109}{subsubsection.7.4.3.1}%
+\contentsline {paragraph}{\numberline {7.4.3.1.1}Missing Values}{109}{paragraph.7.4.3.1.1}%
+\contentsline {subsubsection}{\numberline {7.4.3.2}Shapes}{110}{subsubsection.7.4.3.2}%
+\contentsline {subsubsection}{\numberline {7.4.3.3}Size}{110}{subsubsection.7.4.3.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.4}Opacity}{111}{subsubsection.7.4.3.4}%
+\contentsline {subsubsection}{\numberline {7.4.3.5}Jitter Position}{111}{subsubsection.7.4.3.5}%
+\contentsline {subsection}{\numberline {7.4.4}1.2 Try it yourself}{112}{subsection.7.4.4}%
+\contentsline {subsubsection}{\numberline {7.4.4.1}DO QUESTION 5 OF THE QUIZ NOW}{112}{subsubsection.7.4.4.1}%
+\contentsline {section}{\numberline {7.5}3. MULTIPLE GEOMETRIC FUNCTIONS UNDER ONE GGPLOT}{112}{section.7.5}%
+\contentsline {subsubsection}{\numberline {7.5.0.1}Functions debunked}{113}{subsubsection.7.5.0.1}%
+\contentsline {subsubsection}{\numberline {7.5.0.2}DO QUESTION 6 OF THE QUIZ NOW}{113}{subsubsection.7.5.0.2}%
+\contentsline {section}{\numberline {7.6}5. OTHER GEOMETRIC FUNCTIONS}{113}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Bar graph}{114}{subsection.7.6.1}%
+\contentsline {subsubsection}{\numberline {7.6.1.1}Fill Position}{114}{subsubsection.7.6.1.1}%
+\contentsline {subsubsection}{\numberline {7.6.1.2}Dodge Position}{115}{subsubsection.7.6.1.2}%
+\contentsline {subsection}{\numberline {7.6.2}Line Graph}{115}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}Boxplot}{116}{subsection.7.6.3}%
+\contentsline {subsection}{\numberline {7.6.4}Frequency Polygon}{117}{subsection.7.6.4}%
+\contentsline {subsection}{\numberline {7.6.5}1.3 Try it yourself}{117}{subsection.7.6.5}%
+\contentsline {subsubsection}{\numberline {7.6.5.1}DO QUESTIONS 7 \& 8 OF THE QUIZ NOW}{118}{subsubsection.7.6.5.1}%
+\contentsline {section}{\numberline {7.7}6. FACET FUNCTIONS}{118}{section.7.7}%
+\contentsline {subsubsection}{\numberline {7.7.0.1}DO QUESTION 9 ON CANVAS NOW}{119}{subsubsection.7.7.0.1}%
+\contentsline {subsection}{\numberline {7.7.1}1.4 Try it yourself}{119}{subsection.7.7.1}%
+\contentsline {section}{\numberline {7.8}7. CUSTOMIZING GRAPH ELEMENTS}{119}{section.7.8}%
+\contentsline {subsubsection}{\numberline {7.8.0.1}Functions Debunked}{120}{subsubsection.7.8.0.1}%
+\contentsline {subsubsection}{\numberline {7.8.0.2}Functions Debunked}{122}{subsubsection.7.8.0.2}%
+\contentsline {subsubsection}{\numberline {7.8.0.3}DO QUESTION 10 OF THE QUIZ NOW}{122}{subsubsection.7.8.0.3}%
+\contentsline {subsection}{\numberline {7.8.1}1.5 Try it yourself}{122}{subsection.7.8.1}%
+\contentsline {section}{\numberline {7.9}8. SAVING OUR GRAPH}{122}{section.7.9}%
+\contentsline {section}{\numberline {7.10}9. SUMMARY AND TAKEAWAYS}{129}{section.7.10}%
+\contentsline {chapter}{\numberline {8}Date \& Time Data with lubridate}{131}{chapter.8}%
+\contentsline {section}{\numberline {8.1}INSTRUCTIONS}{131}{section.8.1}%
+\contentsline {section}{\numberline {8.2}LEARNING OBJECTIVES}{131}{section.8.2}%
+\contentsline {section}{\numberline {8.3}1. SET UP}{131}{section.8.3}%
+\contentsline {section}{\numberline {8.4}2. EXPLORING FRIENDS VISITS DATASET}{133}{section.8.4}%
+\contentsline {section}{\numberline {8.5}3. CREATING DATE/TIME DATA}{134}{section.8.5}%
+\contentsline {subsection}{\numberline {8.5.1}Strings}{134}{subsection.8.5.1}%
+\contentsline {subsection}{\numberline {8.5.2}6.1 Try it yourself}{136}{subsection.8.5.2}%
+\contentsline {subsubsection}{\numberline {8.5.2.1}DO QUESTIONS 1-3 OF THE QUIZ NOW}{136}{subsubsection.8.5.2.1}%
+\contentsline {subsection}{\numberline {8.5.3}Existing Date/Time Data}{136}{subsection.8.5.3}%
+\contentsline {subsection}{\numberline {8.5.4}Dataset}{136}{subsection.8.5.4}%
+\contentsline {subsubsection}{\numberline {8.5.4.1}DO QUESTION 4 OF THE QUIZ NOW}{138}{subsubsection.8.5.4.1}%
+\contentsline {subsubsection}{\numberline {8.5.4.2}DO QUESTION 5 OF THE QUIZ NOW}{138}{subsubsection.8.5.4.2}%
+\contentsline {subsection}{\numberline {8.5.5}Functions Debunked}{138}{subsection.8.5.5}%
+\contentsline {subsection}{\numberline {8.5.6}6.2 Try it yourself}{139}{subsection.8.5.6}%
+\contentsline {section}{\numberline {8.6}4. RETRIEVING INFORMATION FROM DATE/TIME DATA}{139}{section.8.6}%
+\contentsline {subsection}{\numberline {8.6.1}Year}{139}{subsection.8.6.1}%
+\contentsline {subsection}{\numberline {8.6.2}Month}{140}{subsection.8.6.2}%
+\contentsline {subsection}{\numberline {8.6.3}Week}{141}{subsection.8.6.3}%
+\contentsline {subsection}{\numberline {8.6.4}6.3 Try it yourself}{141}{subsection.8.6.4}%
+\contentsline {subsection}{\numberline {8.6.5}Plotting Retrieved Information}{141}{subsection.8.6.5}%
+\contentsline {subsubsection}{\numberline {8.6.5.1}DO QUESTION 6 OF THE QUIZ NOW}{143}{subsubsection.8.6.5.1}%
+\contentsline {subsection}{\numberline {8.6.6}6.4 Try it yourself}{143}{subsection.8.6.6}%
+\contentsline {section}{\numberline {8.7}5. UPDATING \& PLOTTING DATE/TIME DATA}{143}{section.8.7}%
+\contentsline {subsection}{\numberline {8.7.1}Update}{143}{subsection.8.7.1}%
+\contentsline {subsection}{\numberline {8.7.2}6.5 Try it yourself}{143}{subsection.8.7.2}%
+\contentsline {subsection}{\numberline {8.7.3}Plotting Date/Time}{144}{subsection.8.7.3}%
+\contentsline {subsection}{\numberline {8.7.4}6.6 Try it yourself}{146}{subsection.8.7.4}%
+\contentsline {subsubsection}{\numberline {8.7.4.1}DO QUESTION 7 OF THE QUIZ NOW}{146}{subsubsection.8.7.4.1}%
+\contentsline {subsubsection}{\numberline {8.7.4.2}hms package}{146}{subsubsection.8.7.4.2}%
+\contentsline {section}{\numberline {8.8}6. ARITHMETIC OPERATORS WITH DATE/TIME}{147}{section.8.8}%
+\contentsline {subsection}{\numberline {8.8.1}Basic Arithmetic}{147}{subsection.8.8.1}%
+\contentsline {subsubsection}{\numberline {8.8.1.1}DO QUESTION 8 OF THE QUIZ NOW}{148}{subsubsection.8.8.1.1}%
+\contentsline {subsection}{\numberline {8.8.2}Account for Leap Years and Daylight Savings}{148}{subsection.8.8.2}%
+\contentsline {subsubsection}{\numberline {8.8.2.1}Leap Year}{148}{subsubsection.8.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.8.2.2}Daylight Savings}{148}{subsubsection.8.8.2.2}%
+\contentsline {subsubsection}{\numberline {8.8.2.3}DO QUESTIONS 9-10 OF THE QUIZ NOW}{149}{subsubsection.8.8.2.3}%
+\contentsline {section}{\numberline {8.9}7. SUMMARY AND TAKEAWAYS}{149}{section.8.9}%
+\contentsline {chapter}{\numberline {9}Data Summary with tableone}{151}{chapter.9}%
+\contentsline {section}{\numberline {9.1}INSTRUCTIONS}{151}{section.9.1}%
+\contentsline {section}{\numberline {9.2}LEARNING OBJECTIVES}{151}{section.9.2}%
+\contentsline {section}{\numberline {9.3}1. SET UP}{151}{section.9.3}%
+\contentsline {section}{\numberline {9.4}2. WHAT IS TABLEONE?}{153}{section.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.0.1}DO QUESTIONS 1-2 OF THE QUIZ NOW}{154}{subsubsection.9.4.0.1}%
+\contentsline {section}{\numberline {9.5}3. CREATING A TABLEONE}{154}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}CreateTableOne}{154}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}Solution 1: nhanesTranslate \& CreateTableOne}{154}{subsection.9.5.2}%
+\contentsline {subsection}{\numberline {9.5.3}7.1 Try it yourself}{155}{subsection.9.5.3}%
+\contentsline {subsubsection}{\numberline {9.5.3.1}DO QUESTIONS 3-4 OF THE QUIZ NOW}{156}{subsubsection.9.5.3.1}%
+\contentsline {subsection}{\numberline {9.5.4}Solution 2: Identify Numerical Categorical Data}{156}{subsection.9.5.4}%
+\contentsline {subsection}{\numberline {9.5.5}7.2 Try it yourself}{158}{subsection.9.5.5}%
+\contentsline {section}{\numberline {9.6}4. OTHER ARGUMENTS TO CUSTOMIZE TABLEONE}{158}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}Show All Levels}{158}{subsection.9.6.1}%
+\contentsline {subsubsection}{\numberline {9.6.1.1}DO QUESTION 5 OF THE QUIZ NOW}{160}{subsubsection.9.6.1.1}%
+\contentsline {subsection}{\numberline {9.6.2}Nonnormal}{160}{subsection.9.6.2}%
+\contentsline {subsection}{\numberline {9.6.3}7.3 Try it yourself}{160}{subsection.9.6.3}%
+\contentsline {subsubsection}{\numberline {9.6.3.1}DO QUESTION 6 OF THE QUIZ NOW}{161}{subsubsection.9.6.3.1}%
+\contentsline {subsection}{\numberline {9.6.4}Show Categorical or Continuous Variables Only}{161}{subsection.9.6.4}%
+\contentsline {subsection}{\numberline {9.6.5}Strata}{161}{subsection.9.6.5}%
+\contentsline {subsection}{\numberline {9.6.6}7.4 Try it yourself}{163}{subsection.9.6.6}%
+\contentsline {subsubsection}{\numberline {9.6.6.1}DO QUESTION 7 OF THE QUIZ NOW}{163}{subsubsection.9.6.6.1}%
+\contentsline {section}{\numberline {9.7}5. EXPORT TABLEONE}{163}{section.9.7}%
+\contentsline {subsubsection}{\numberline {9.7.0.1}DO QUESTION 8 OF THE QUIZ NOW}{163}{subsubsection.9.7.0.1}%
+\contentsline {subsubsection}{\numberline {9.7.0.2}DO QUESTIONS 9-10 OF THE QUIZ NOW}{165}{subsubsection.9.7.0.2}%
+\contentsline {section}{\numberline {9.8}6. ALTERNATIVES TO TABLEONE}{165}{section.9.8}%
+\contentsline {subsection}{\numberline {9.8.1}base R}{165}{subsection.9.8.1}%
+\contentsline {subsection}{\numberline {9.8.2}Hmisc}{166}{subsection.9.8.2}%
+\contentsline {subsection}{\numberline {9.8.3}psych}{168}{subsection.9.8.3}%
+\contentsline {subsection}{\numberline {9.8.4}desctable}{169}{subsection.9.8.4}%
+\contentsline {subsection}{\numberline {9.8.5}skimr}{170}{subsection.9.8.5}%
+\contentsline {section}{\numberline {9.9}7. SUMMARY AND TAKEAWAYS}{170}{section.9.9}%
+\contentsline {chapter}{\numberline {10}Exercise solutions}{171}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Introduction to R}{171}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}1.1}{171}{subsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.1.2}1.2}{172}{subsection.10.1.2}%
+\contentsline {subsection}{\numberline {10.1.3}1.3}{172}{subsection.10.1.3}%
+\contentsline {subsection}{\numberline {10.1.4}1.4}{173}{subsection.10.1.4}%
+\contentsline {subsection}{\numberline {10.1.5}1.5}{173}{subsection.10.1.5}%
+\contentsline {subsection}{\numberline {10.1.6}1.6}{173}{subsection.10.1.6}%
+\contentsline {subsection}{\numberline {10.1.7}1.7}{173}{subsection.10.1.7}%
+\contentsline {subsection}{\numberline {10.1.8}1.8}{173}{subsection.10.1.8}%
+\contentsline {subsection}{\numberline {10.1.9}1.9}{174}{subsection.10.1.9}%
+\contentsline {section}{\numberline {10.2}Importing Data into R with readr}{174}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}2.1}{174}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}2.2}{174}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}2.3}{174}{subsection.10.2.3}%
+\contentsline {subsection}{\numberline {10.2.4}2.4}{175}{subsection.10.2.4}%
+\contentsline {subsection}{\numberline {10.2.5}2.5}{175}{subsection.10.2.5}%
+\contentsline {section}{\numberline {10.3}Introduction to NHANES}{175}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}3.1}{175}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}3.2}{175}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}3.3}{176}{subsection.10.3.3}%
+\contentsline {section}{\numberline {10.4}Data Analysis with dplyr}{176}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}4.1}{176}{subsection.10.4.1}%
+\contentsline {subsection}{\numberline {10.4.2}4.2}{176}{subsection.10.4.2}%
+\contentsline {subsection}{\numberline {10.4.3}4.3}{177}{subsection.10.4.3}%
+\contentsline {subsubsection}{\numberline {10.4.3.1}4.3.1 the participant who is a male}{177}{subsubsection.10.4.3.1}%
+\contentsline {subsubsection}{\numberline {10.4.3.2}4.3.2 the participant who is a male and is older tha 50 years old}{177}{subsubsection.10.4.3.2}%
+\contentsline {subsubsection}{\numberline {10.4.3.3}4.3.3 the education level is missing}{177}{subsubsection.10.4.3.3}%
+\contentsline {subsection}{\numberline {10.4.4}4.4}{177}{subsection.10.4.4}%
+\contentsline {subsection}{\numberline {10.4.5}4.5}{177}{subsection.10.4.5}%
+\contentsline {subsubsection}{\numberline {10.4.5.1}4.5.1}{177}{subsubsection.10.4.5.1}%
+\contentsline {subsubsection}{\numberline {10.4.5.2}4.5.2}{177}{subsubsection.10.4.5.2}%
+\contentsline {subsection}{\numberline {10.4.6}4.6}{177}{subsection.10.4.6}%
+\contentsline {subsection}{\numberline {10.4.7}4.7}{178}{subsection.10.4.7}%
+\contentsline {subsection}{\numberline {10.4.8}4.8}{178}{subsection.10.4.8}%
+\contentsline {subsection}{\numberline {10.4.9}4.9}{178}{subsection.10.4.9}%
+\contentsline {section}{\numberline {10.5}Data Visualization with ggplot2}{178}{section.10.5}%
+\contentsline {subsection}{\numberline {10.5.1}1.1}{178}{subsection.10.5.1}%
+\contentsline {subsection}{\numberline {10.5.2}1.2}{179}{subsection.10.5.2}%
+\contentsline {subsection}{\numberline {10.5.3}1.3}{179}{subsection.10.5.3}%
+\contentsline {subsection}{\numberline {10.5.4}1.4}{179}{subsection.10.5.4}%
+\contentsline {section}{\numberline {10.6}Date and Time Data with lubridate}{179}{section.10.6}%
+\contentsline {subsection}{\numberline {10.6.1}6.1}{179}{subsection.10.6.1}%
+\contentsline {subsection}{\numberline {10.6.2}6.2}{180}{subsection.10.6.2}%
+\contentsline {subsection}{\numberline {10.6.3}6.3}{180}{subsection.10.6.3}%
+\contentsline {subsection}{\numberline {10.6.4}6.4}{180}{subsection.10.6.4}%
+\contentsline {subsection}{\numberline {10.6.5}6.5}{180}{subsection.10.6.5}%
+\contentsline {subsection}{\numberline {10.6.6}6.6}{181}{subsection.10.6.6}%
+\contentsline {section}{\numberline {10.7}Data Summary with tableone}{181}{section.10.7}%
+\contentsline {subsection}{\numberline {10.7.1}7.1}{181}{subsection.10.7.1}%
+\contentsline {subsection}{\numberline {10.7.2}7.2}{181}{subsection.10.7.2}%
+\contentsline {subsection}{\numberline {10.7.3}7.3}{182}{subsection.10.7.3}%
+\contentsline {subsection}{\numberline {10.7.4}7.4}{182}{subsection.10.7.4}%

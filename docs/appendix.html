@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 APPENDIX | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 APPENDIX | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 APPENDIX | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-07-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-summary-with-tableone.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> 1. What is R</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> 2. What is RStudio</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> 3. Download and install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> 4. Download and install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> 5. RStudio basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#takeaways"><i class="fa fa-check"></i><b>1.8</b> TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> 1. SET UP BASICS</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> 2. ARITHMETIC OPERATORS</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself"><i class="fa fa-check"></i><b>2.4.1</b> 1.1 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> 3. LOGICAL OPERATORS</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-1"><i class="fa fa-check"></i><b>2.5.1</b> 1.2 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> 4. MOST COMMON DATA TYPES IN R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-2"><i class="fa fa-check"></i><b>2.6.3</b> 1.3 Try it yourself</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-3"><i class="fa fa-check"></i><b>2.6.4</b> 1.4 Try it yourself</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.5</b> Lists</a></li>
+<li class="chapter" data-level="2.6.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.6</b> Dataframe</a></li>
+<li class="chapter" data-level="2.6.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-4"><i class="fa fa-check"></i><b>2.6.7</b> 1.5 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> 5. EXPLORING A DATASET</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-5"><i class="fa fa-check"></i><b>2.7.1</b> 1.6 Try it yourself</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.2</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.3</b> Structure</a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.4</b> Class</a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-6"><i class="fa fa-check"></i><b>2.7.5</b> 1.7 Try it yourself</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.6</b> Length</a></li>
+<li class="chapter" data-level="2.7.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-7"><i class="fa fa-check"></i><b>2.7.7</b> 1.8 Try it yourself</a></li>
+<li class="chapter" data-level="2.7.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.8</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.9</b> Mathematical Functions in R</a></li>
+<li class="chapter" data-level="2.7.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#try-it-yourself-8"><i class="fa fa-check"></i><b>2.7.10</b> 1.9 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> 6. WRITING A NEW FUNCTION IN R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> 7. FOR LOOPS</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> 8. HELP WITHIN AND OUTSIDE OF R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeways"><i class="fa fa-check"></i><b>2.11</b> 9. SUMMARY AND TAKEWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> 1. SET UP</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> 2. BASICS OF IMPORTING A CSV FILE INTO R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#try-it-yourself-9"><i class="fa fa-check"></i><b>3.4.3</b> 2.1 Try it yourself</a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.4</b> Key Notes About Importing Data into R</a></li>
+<li class="chapter" data-level="3.4.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#try-it-yourself-10"><i class="fa fa-check"></i><b>3.4.5</b> 2.2 Try it yourself</a></li>
+<li class="chapter" data-level="3.4.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.6</b> Column Specification</a></li>
+<li class="chapter" data-level="3.4.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#try-it-yourself-11"><i class="fa fa-check"></i><b>3.4.7</b> 2.3 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> 3. MORE ARGUMENTS OF READ_CSV</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#try-it-yourself-12"><i class="fa fa-check"></i><b>3.5.2</b> 2.4 Try it yourself</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.3</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.4</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> 4. IMPORTING OTHER FILE TYPES INTO R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#try-it-yourself-13"><i class="fa fa-check"></i><b>3.6.3</b> 2.5 Try it yourself</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.4</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.5</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> 5. EXPORTING THE DATA FRAME FROM R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeways-1"><i class="fa fa-check"></i><b>3.8</b> 6. SUMMARY AND TAKEWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> 1. Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> 2. Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> 3. Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+<li class="chapter" data-level="4.5.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#function-debunked"><i class="fa fa-check"></i><b>4.5.3</b> Function debunked</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#takeaways-1"><i class="fa fa-check"></i><b>4.6</b> TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> 1. Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> 2.Dataset preparation</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-14"><i class="fa fa-check"></i><b>5.4.1</b> 4.1 Try it yourself</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-15"><i class="fa fa-check"></i><b>5.4.2</b> 4.2 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> 3. Filter</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-16"><i class="fa fa-check"></i><b>5.5.1</b> 4.3 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> 4.Re-order the rows</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-17"><i class="fa fa-check"></i><b>5.6.1</b> 4.4 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> 5. Add new variables</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-18"><i class="fa fa-check"></i><b>5.7.1</b> 4.5 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> 6.Summary statistics and group_by</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-19"><i class="fa fa-check"></i><b>5.8.1</b> 4.6 Try it yourself</a></li>
+<li class="chapter" data-level="5.8.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.2</b> Group_by() extension</a></li>
+<li class="chapter" data-level="5.8.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-20"><i class="fa fa-check"></i><b>5.8.3</b> 4.7 Try it yourself</a></li>
+<li class="chapter" data-level="5.8.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-21"><i class="fa fa-check"></i><b>5.8.4</b> 4.8 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> 7. Pipe</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#try-it-yourself-22"><i class="fa fa-check"></i><b>5.9.1</b> 4.9 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> 8. Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> ALTERNATIVES TO <code>NHANESTRANSLATE()</code></a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#functions-debunked-17"><i class="fa fa-check"></i><b>5.12.1</b> Functions debunked</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#takeaways-2"><i class="fa fa-check"></i><b>5.15</b> TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> 1. SET UP</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> 2. GGPLOT AND POINT GEOMETRICS</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-23"><i class="fa fa-check"></i><b>6.4.2</b> 1.1 Try it yourself</a></li>
+<li class="chapter" data-level="6.4.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.3</b> Aesthetics</a></li>
+<li class="chapter" data-level="6.4.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-24"><i class="fa fa-check"></i><b>6.4.4</b> 1.2 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> 3. MULTIPLE GEOMETRIC FUNCTIONS UNDER ONE GGPLOT</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> 5. OTHER GEOMETRIC FUNCTIONS</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li class="chapter" data-level="6.6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-25"><i class="fa fa-check"></i><b>6.6.5</b> 1.3 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> 6. FACET FUNCTIONS</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-26"><i class="fa fa-check"></i><b>6.7.1</b> 1.4 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> 7. CUSTOMIZING GRAPH ELEMENTS</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-27"><i class="fa fa-check"></i><b>6.8.1</b> 1.5 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graph"><i class="fa fa-check"></i><b>6.9</b> 8. SAVING OUR GRAPH</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways"><i class="fa fa-check"></i><b>6.10</b> 9. SUMMARY AND TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> 1. SET UP</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> 2. EXPLORING FRIENDS VISITS DATASET</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> 3. CREATING DATE/TIME DATA</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-28"><i class="fa fa-check"></i><b>7.5.2</b> 6.1 Try it yourself</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.3</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.4</b> Dataset</a></li>
+<li class="chapter" data-level="7.5.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-22"><i class="fa fa-check"></i><b>7.5.5</b> Functions Debunked</a></li>
+<li class="chapter" data-level="7.5.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-29"><i class="fa fa-check"></i><b>7.5.6</b> 6.2 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> 4. RETRIEVING INFORMATION FROM DATE/TIME DATA</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-30"><i class="fa fa-check"></i><b>7.6.4</b> 6.3 Try it yourself</a></li>
+<li class="chapter" data-level="7.6.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.5</b> Plotting Retrieved Information</a></li>
+<li class="chapter" data-level="7.6.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-31"><i class="fa fa-check"></i><b>7.6.6</b> 6.4 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> 5. UPDATING &amp; PLOTTING DATE/TIME DATA</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-32"><i class="fa fa-check"></i><b>7.7.2</b> 6.5 Try it yourself</a></li>
+<li class="chapter" data-level="7.7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.3</b> Plotting Date/Time</a></li>
+<li class="chapter" data-level="7.7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#try-it-yourself-33"><i class="fa fa-check"></i><b>7.7.4</b> 6.6 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> 6. ARITHMETIC OPERATORS WITH DATE/TIME</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>7.9</b> 7. SUMMARY AND TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> INSTRUCTIONS</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> LEARNING OBJECTIVES</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> 1. SET UP</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> 2. WHAT IS TABLEONE?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> 3. CREATING A TABLEONE</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#try-it-yourself-34"><i class="fa fa-check"></i><b>8.5.3</b> 7.1 Try it yourself</a></li>
+<li class="chapter" data-level="8.5.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.4</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li class="chapter" data-level="8.5.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#try-it-yourself-35"><i class="fa fa-check"></i><b>8.5.5</b> 7.2 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> 4. OTHER ARGUMENTS TO CUSTOMIZE TABLEONE</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#try-it-yourself-36"><i class="fa fa-check"></i><b>8.6.3</b> 7.3 Try it yourself</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.4</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.5</b> Strata</a></li>
+<li class="chapter" data-level="8.6.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#try-it-yourself-37"><i class="fa fa-check"></i><b>8.6.6</b> 7.4 Try it yourself</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> 5. EXPORT TABLEONE</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> 6. ALTERNATIVES TO TABLEONE</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>8.9</b> 7. SUMMARY AND TAKEAWAYS</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> APPENDIX</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#exercise-solutions"><i class="fa fa-check"></i><b>9.1</b> Exercise solutions</a></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#introduction-to-r-1"><i class="fa fa-check"></i><b>9.2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="appendix.html"><a href="appendix.html#section"><i class="fa fa-check"></i><b>9.2.1</b> 1.1</a></li>
+<li class="chapter" data-level="9.2.2" data-path="appendix.html"><a href="appendix.html#section-1"><i class="fa fa-check"></i><b>9.2.2</b> 1.2</a></li>
+<li class="chapter" data-level="9.2.3" data-path="appendix.html"><a href="appendix.html#section-2"><i class="fa fa-check"></i><b>9.2.3</b> 1.3</a></li>
+<li class="chapter" data-level="9.2.4" data-path="appendix.html"><a href="appendix.html#section-3"><i class="fa fa-check"></i><b>9.2.4</b> 1.4</a></li>
+<li class="chapter" data-level="9.2.5" data-path="appendix.html"><a href="appendix.html#section-4"><i class="fa fa-check"></i><b>9.2.5</b> 1.5</a></li>
+<li class="chapter" data-level="9.2.6" data-path="appendix.html"><a href="appendix.html#section-5"><i class="fa fa-check"></i><b>9.2.6</b> 1.6</a></li>
+<li class="chapter" data-level="9.2.7" data-path="appendix.html"><a href="appendix.html#section-6"><i class="fa fa-check"></i><b>9.2.7</b> 1.7</a></li>
+<li class="chapter" data-level="9.2.8" data-path="appendix.html"><a href="appendix.html#section-7"><i class="fa fa-check"></i><b>9.2.8</b> 1.8</a></li>
+<li class="chapter" data-level="9.2.9" data-path="appendix.html"><a href="appendix.html#section-8"><i class="fa fa-check"></i><b>9.2.9</b> 1.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix.html"><a href="appendix.html#importing-data-into-r-with-readr-1"><i class="fa fa-check"></i><b>9.3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="appendix.html"><a href="appendix.html#section-9"><i class="fa fa-check"></i><b>9.3.1</b> 2.1</a></li>
+<li class="chapter" data-level="9.3.2" data-path="appendix.html"><a href="appendix.html#section-10"><i class="fa fa-check"></i><b>9.3.2</b> 2.2</a></li>
+<li class="chapter" data-level="9.3.3" data-path="appendix.html"><a href="appendix.html#section-11"><i class="fa fa-check"></i><b>9.3.3</b> 2.3</a></li>
+<li class="chapter" data-level="9.3.4" data-path="appendix.html"><a href="appendix.html#section-12"><i class="fa fa-check"></i><b>9.3.4</b> 2.4</a></li>
+<li class="chapter" data-level="9.3.5" data-path="appendix.html"><a href="appendix.html#section-13"><i class="fa fa-check"></i><b>9.3.5</b> 2.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="appendix.html"><a href="appendix.html#introduction-to-nhanes-2"><i class="fa fa-check"></i><b>9.4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="appendix.html"><a href="appendix.html#section-14"><i class="fa fa-check"></i><b>9.4.1</b> 3.1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="appendix.html"><a href="appendix.html#section-15"><i class="fa fa-check"></i><b>9.4.2</b> 3.2</a></li>
+<li class="chapter" data-level="9.4.3" data-path="appendix.html"><a href="appendix.html#section-16"><i class="fa fa-check"></i><b>9.4.3</b> 3.3</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="appendix.html"><a href="appendix.html#data-analysis-with-dplyr-1"><i class="fa fa-check"></i><b>9.5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="appendix.html"><a href="appendix.html#section-17"><i class="fa fa-check"></i><b>9.5.1</b> 4.1</a></li>
+<li class="chapter" data-level="9.5.2" data-path="appendix.html"><a href="appendix.html#section-18"><i class="fa fa-check"></i><b>9.5.2</b> 4.2</a></li>
+<li class="chapter" data-level="9.5.3" data-path="appendix.html"><a href="appendix.html#section-19"><i class="fa fa-check"></i><b>9.5.3</b> 4.3</a></li>
+<li class="chapter" data-level="9.5.4" data-path="appendix.html"><a href="appendix.html#section-20"><i class="fa fa-check"></i><b>9.5.4</b> 4.4</a></li>
+<li class="chapter" data-level="9.5.5" data-path="appendix.html"><a href="appendix.html#section-21"><i class="fa fa-check"></i><b>9.5.5</b> 4.5</a></li>
+<li class="chapter" data-level="9.5.6" data-path="appendix.html"><a href="appendix.html#section-24"><i class="fa fa-check"></i><b>9.5.6</b> 4.6</a></li>
+<li class="chapter" data-level="9.5.7" data-path="appendix.html"><a href="appendix.html#section-25"><i class="fa fa-check"></i><b>9.5.7</b> 4.7</a></li>
+<li class="chapter" data-level="9.5.8" data-path="appendix.html"><a href="appendix.html#section-26"><i class="fa fa-check"></i><b>9.5.8</b> 4.8</a></li>
+<li class="chapter" data-level="9.5.9" data-path="appendix.html"><a href="appendix.html#section-27"><i class="fa fa-check"></i><b>9.5.9</b> 4.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="appendix.html"><a href="appendix.html#data-visualization-with-ggplot2-1"><i class="fa fa-check"></i><b>9.6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="appendix.html"><a href="appendix.html#section-28"><i class="fa fa-check"></i><b>9.6.1</b> 1.1</a></li>
+<li class="chapter" data-level="9.6.2" data-path="appendix.html"><a href="appendix.html#section-29"><i class="fa fa-check"></i><b>9.6.2</b> 1.2</a></li>
+<li class="chapter" data-level="9.6.3" data-path="appendix.html"><a href="appendix.html#section-30"><i class="fa fa-check"></i><b>9.6.3</b> 1.3</a></li>
+<li class="chapter" data-level="9.6.4" data-path="appendix.html"><a href="appendix.html#section-31"><i class="fa fa-check"></i><b>9.6.4</b> 1.4</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="appendix.html"><a href="appendix.html#date-and-time-data-with-lubridate"><i class="fa fa-check"></i><b>9.7</b> Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="appendix.html"><a href="appendix.html#section-32"><i class="fa fa-check"></i><b>9.7.1</b> 6.1</a></li>
+<li class="chapter" data-level="9.7.2" data-path="appendix.html"><a href="appendix.html#section-33"><i class="fa fa-check"></i><b>9.7.2</b> 6.2</a></li>
+<li class="chapter" data-level="9.7.3" data-path="appendix.html"><a href="appendix.html#section-34"><i class="fa fa-check"></i><b>9.7.3</b> 6.3</a></li>
+<li class="chapter" data-level="9.7.4" data-path="appendix.html"><a href="appendix.html#section-35"><i class="fa fa-check"></i><b>9.7.4</b> 6.4</a></li>
+<li class="chapter" data-level="9.7.5" data-path="appendix.html"><a href="appendix.html#section-36"><i class="fa fa-check"></i><b>9.7.5</b> 6.5</a></li>
+<li class="chapter" data-level="9.7.6" data-path="appendix.html"><a href="appendix.html#section-37"><i class="fa fa-check"></i><b>9.7.6</b> 6.6</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="appendix.html"><a href="appendix.html#data-summary-with-tableone-1"><i class="fa fa-check"></i><b>9.8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="appendix.html"><a href="appendix.html#section-38"><i class="fa fa-check"></i><b>9.8.1</b> 7.1</a></li>
+<li class="chapter" data-level="9.8.2" data-path="appendix.html"><a href="appendix.html#section-39"><i class="fa fa-check"></i><b>9.8.2</b> 7.2</a></li>
+<li class="chapter" data-level="9.8.3" data-path="appendix.html"><a href="appendix.html#section-40"><i class="fa fa-check"></i><b>9.8.3</b> 7.3</a></li>
+<li class="chapter" data-level="9.8.4" data-path="appendix.html"><a href="appendix.html#section-41"><i class="fa fa-check"></i><b>9.8.4</b> 7.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> APPENDIX</h1>
+<div id="exercise-solutions" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Exercise solutions</h2>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="appendix.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span></code></pre></div>
+</div>
+<div id="introduction-to-r-1" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Introduction to R</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>tutorial 1: Introduction to R</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> 1.1</h3>
+<ol style="list-style-type: lower-alpha">
+<li>Can you replicate and solve these problems in R?</li>
+</ol>
+<ul>
+<li>2^2</li>
+<li>2 × 2</li>
+<li>2 + 5 × (5 ÷ 4)^6</li>
+<li>what is the remainder of 52 ÷ 5</li>
+<li>what is the whole number solution to 82 ÷ 8</li>
+</ul>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="appendix.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="appendix.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="appendix.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> (<span class="dv">5</span> <span class="sc">/</span> <span class="dv">4</span>)<span class="sc">^</span><span class="dv">6</span></span></code></pre></div>
+<pre><code>## [1] 21.07349</code></pre>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="appendix.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="dv">52</span> <span class="sc">%/%</span> <span class="dv">5</span></span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="appendix.html#cb605-1" aria-hidden="true" tabindex="-1"></a><span class="dv">82</span> <span class="sc">%%</span> <span class="dv">8</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Can you solve for x using R?</li>
+</ol>
+<p>a &lt;- 9 + 3 * 6</p>
+<p>x &lt;- a ÷ 2</p>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="appendix.html#cb607-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">9</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">6</span></span>
+<span id="cb607-2"><a href="appendix.html#cb607-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> a <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb607-3"><a href="appendix.html#cb607-3" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 13.5</code></pre>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="appendix.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="do">## x is equal to 13.5!</span></span></code></pre></div>
+</div>
+<div id="section-1" class="section level3" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> 1.2</h3>
+<p>Translate the following into R and find the output:
+* 8 times 3 is greater than 8?
+* eleven divided by seven is not equal to 2?
+* 9 is less than or equal to 18?</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="appendix.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> <span class="sc">*</span> <span class="dv">3</span> <span class="sc">&gt;</span> <span class="dv">8</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="appendix.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span> <span class="sc">/</span> <span class="dv">7</span> <span class="sc">!=</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="appendix.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span> <span class="sc">&lt;=</span> <span class="dv">18</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="section-2" class="section level3" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> 1.3</h3>
+<p>Can you try storing a string? Assign the string “hello world, I am here” to the variable named start.</p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="appendix.html#cb616-1" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="st">&quot;hello world, I am here&quot;</span></span>
+<span id="cb616-2"><a href="appendix.html#cb616-2" aria-hidden="true" tabindex="-1"></a>start</span></code></pre></div>
+<pre><code>## [1] &quot;hello world, I am here&quot;</code></pre>
+<p><strong>Note how the string is in "" but the variable name is not. Why do you think this is?</strong>
+Because <code>start</code> is now a known variable that stores a string. In other words, <code>start</code> does not mean “start,” instead it means “hello world, I am here.”</p>
+</div>
+<div id="section-3" class="section level3" number="9.2.4">
+<h3><span class="header-section-number">9.2.4</span> 1.4</h3>
+<p>It is important to note that <strong>R is case-sensitive</strong>. This means that it distinguishes capitalized from non-capitalized characters, so logical and Logical are read as two separate things by R!</p>
+<p>Try typing Logical with a capitalized “L.” How does R respond to this?</p>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="appendix.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Logical</span></span>
+<span id="cb618-2"><a href="appendix.html#cb618-2" aria-hidden="true" tabindex="-1"></a>    <span class="do">### an error message that says &quot;object &#39;Logical&#39; not found&quot; pops up</span></span></code></pre></div>
+</div>
+<div id="section-4" class="section level3" number="9.2.5">
+<h3><span class="header-section-number">9.2.5</span> 1.5</h3>
+<p>Why do you think numeric, character, and logical are not in "" but Number, Text, and T/F are?</p>
+<p>Because numeric, character, and logical are known variables that hold meanings (and that we already defined), while Number, Text, and T/F are not. They are actually just texts that we use to rename our column names - they do not hold any meanings.</p>
+</div>
+<div id="section-5" class="section level3" number="9.2.6">
+<h3><span class="header-section-number">9.2.6</span> 1.6</h3>
+<ol style="list-style-type: decimal">
+<li>What are 2 ways that we can print rows 1 to 5 of the data frame faithful?</li>
+</ol>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="appendix.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. print(faithful[1:12, ])</span></span>
+<span id="cb619-2"><a href="appendix.html#cb619-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb619-3"><a href="appendix.html#cb619-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. faithful[1:12, ]</span></span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>What is the value of the cell in the fourth row and second column of the data frame faithful?</li>
+</ol>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="appendix.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="do">## faithful[4,2]</span></span></code></pre></div>
+</div>
+<div id="section-6" class="section level3" number="9.2.7">
+<h3><span class="header-section-number">9.2.7</span> 1.7</h3>
+<p>Try it yourself
+Write a code to find the structure of the variable waiting in the faithful dataset.</p>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="appendix.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="do">## str(faithful$waiting)</span></span></code></pre></div>
+</div>
+<div id="section-7" class="section level3" number="9.2.8">
+<h3><span class="header-section-number">9.2.8</span> 1.8</h3>
+<p>Remember those variables that we created earlier in the tutorial? Try finding the lengths of data frame and numeric.</p>
+<p><strong>Challenge:</strong> Psst! There are actually 2 ways for you to find the length of numeric.</p>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="appendix.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="do">## length(dataframe)</span></span>
+<span id="cb622-2"><a href="appendix.html#cb622-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb622-3"><a href="appendix.html#cb622-3" aria-hidden="true" tabindex="-1"></a><span class="do">## length(numeric) #OR</span></span>
+<span id="cb622-4"><a href="appendix.html#cb622-4" aria-hidden="true" tabindex="-1"></a><span class="do">## length(dataframe$numeric)</span></span></code></pre></div>
+</div>
+<div id="section-8" class="section level3" number="9.2.9">
+<h3><span class="header-section-number">9.2.9</span> 1.9</h3>
+<p>Recall that in order for us to refer to a variable in a dataset, we need to first type the dataset name following by a $ before we can type the variable name.</p>
+<p>A way to avoid repeating <code>faithful$</code> everytime is to attach the dataset using <code>attach(faithful)</code>.</p>
+<p>Try attaching the dataset faithful then find the mean of the variable eruptions without using $!</p>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="appendix.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="do">## attach(faithful)</span></span>
+<span id="cb623-2"><a href="appendix.html#cb623-2" aria-hidden="true" tabindex="-1"></a><span class="do">## mean(eruptions)</span></span></code></pre></div>
+</div>
+</div>
+<div id="importing-data-into-r-with-readr-1" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Importing Data into R with readr</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>tutorial 2: Importing Data into R with readr</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-9" class="section level3" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> 2.1</h3>
+<p>Can you try importing the <code>bpx.csv</code> file into R using the function <code>read_csv()</code>?</p>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="appendix.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read_csv(&quot;../input/import/bpx.csv&quot;)</span></span></code></pre></div>
+</div>
+<div id="section-10" class="section level3" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> 2.2</h3>
+<p>Can you identify the mistakes of the following codes?</p>
+<p><strong>a.</strong> The pathway is not in ""</p>
+<p><strong>b.</strong> “DEMO” should not be capitalized</p>
+<p><strong>c.</strong> “Read_csv” should not be capitalized</p>
+<p><strong>d.</strong> The entire pathway needs to be in "" instead of just the file name</p>
+</div>
+<div id="section-11" class="section level3" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> 2.3</h3>
+<p>Just by looking at the actual data frame, can you guess what type of data <code>col_double()</code> and <code>col_character()</code> are?</p>
+<p>(<strong>HINT</strong>: doubles? integers? logical? character?)</p>
+<p>Here is a list of <code>col_x()</code> and what they mean:
+* <code>col_double()</code> – Doubles
+* <code>col_integer()</code> – Integers
+* <code>col_logical()</code> – True/False
+* <code>col_date()</code> – Date
+* <code>col_time()</code> – Time
+* <code>col_datetime</code> – Date and Time
+* <code>col_character()</code> – Text, Character, and everything else</p>
+<p>This list is not extensive, so you can use <code>?cols</code> to learn more about column specification!</p>
+</div>
+<div id="section-12" class="section level3" number="9.3.4">
+<h3><span class="header-section-number">9.3.4</span> 2.4</h3>
+<p>You may also notice that the header of <em>Skip_2</em> is incorrect. This is because R recognizes the header of our data as the first row, thus omiting it when importing <code>demo.csv</code> into R.</p>
+<p>Let’s say this is not what we really want. What we actually want to do is to remove the first two rows of actual data while keeping the header. What do you think we have to do to achieve this?</p>
+<p>(<strong>HINT</strong>: Recall what we learn about extracting rows in tutorial 1)</p>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="appendix.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="co">#DEMO[3:10, ]</span></span></code></pre></div>
+</div>
+<div id="section-13" class="section level3" number="9.3.5">
+<h3><span class="header-section-number">9.3.5</span> 2.5</h3>
+<p>Import the <code>bpx.xlsx</code> into R using the <code>read_excel()</code> function.</p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="appendix.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read_excel(&quot;../input/import/bpx.xlsx&quot;)</span></span></code></pre></div>
+</div>
+</div>
+<div id="introduction-to-nhanes-2" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Introduction to NHANES</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>Tutorial 3: Introduction to NHANES</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-14" class="section level3" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> 3.1</h3>
+<p>Find all the Examination Data in survey cycle 2013-2014</p>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="appendix.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="do">## nhanesTables(&#39;EXAM&#39;, 2013)</span></span></code></pre></div>
+</div>
+<div id="section-15" class="section level3" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> 3.2</h3>
+<p>Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014</p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="appendix.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="do">## bpx &lt;- nhanes(&#39;BPX_H&#39;)</span></span></code></pre></div>
+</div>
+<div id="section-16" class="section level3" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> 3.3</h3>
+<p>Translate the following variables in the BPX dataset</p>
+<p>BPXPULS - Pulse regular or irregular?</p>
+<p>BPAARM - Arm selected</p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="appendix.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="do">## bpxtranslate &lt;- nhanesTranslate(&#39;BPX_H&#39;,  c(&#39;BPXPULS&#39;, &#39;BPAARM&#39;), data = bpx)</span></span></code></pre></div>
+</div>
+</div>
+<div id="data-analysis-with-dplyr-1" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Data Analysis with dplyr</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>Tutorial 4: Data Analysis with dplyr</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-17" class="section level3" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> 4.1</h3>
+<p>In the bpx dataframe, keep the following variables and top 5 rows only:</p>
+<ul>
+<li>SEQN</li>
+<li>PEASCST1</li>
+<li>PEASCTM1</li>
+<li>BPXSY1</li>
+<li>BPXDI1</li>
+</ul>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="appendix.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="do">## new_bpx &lt;- select(bpx,</span></span>
+<span id="cb630-2"><a href="appendix.html#cb630-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                    c(SEQN,</span></span>
+<span id="cb630-3"><a href="appendix.html#cb630-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                     PEASCST1,</span></span>
+<span id="cb630-4"><a href="appendix.html#cb630-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                     PEASCTM1,</span></span>
+<span id="cb630-5"><a href="appendix.html#cb630-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                     BPXSY1,</span></span>
+<span id="cb630-6"><a href="appendix.html#cb630-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                     BPXDI1))</span></span>
+<span id="cb630-7"><a href="appendix.html#cb630-7" aria-hidden="true" tabindex="-1"></a><span class="do">## new_bpx &lt;- head(new_bpx,5)</span></span></code></pre></div>
+</div>
+<div id="section-18" class="section level3" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> 4.2</h3>
+<ul>
+<li>SEQN -&gt; id</li>
+<li>PEASCST1 -&gt; bp_status</li>
+<li>PEASCTM1 -&gt; bpt_sec</li>
+<li>BPXSY1 -&gt; systolic</li>
+<li>BPXDI1 -&gt; diastolic</li>
+</ul>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="appendix.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="do">## new_bpx &lt;- rename(bpx,</span></span>
+<span id="cb631-2"><a href="appendix.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                    id = SEQN,</span></span>
+<span id="cb631-3"><a href="appendix.html#cb631-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                    bp_status = PEASCST1,</span></span>
+<span id="cb631-4"><a href="appendix.html#cb631-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                    bpt_sec = PEASCTM1,</span></span>
+<span id="cb631-5"><a href="appendix.html#cb631-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                    systolic = BPXSY1,</span></span>
+<span id="cb631-6"><a href="appendix.html#cb631-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                    diastolic = BPXDI1)</span></span></code></pre></div>
+</div>
+<div id="section-19" class="section level3" number="9.5.3">
+<h3><span class="header-section-number">9.5.3</span> 4.3</h3>
+<p>In the demo dataframe, find all the records that:</p>
+<div id="the-participant-who-is-a-male" class="section level4" number="9.5.3.1">
+<h4><span class="header-section-number">9.5.3.1</span> 4.3.1 the participant who is a male</h4>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="appendix.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="do">## filter(final_demo, gender == &quot;Male&quot;)</span></span></code></pre></div>
+</div>
+<div id="the-participant-who-is-a-male-and-is-older-tha-50-years-old" class="section level4" number="9.5.3.2">
+<h4><span class="header-section-number">9.5.3.2</span> 4.3.2 the participant who is a male and is older tha 50 years old</h4>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="appendix.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="do">## filter(final_demo, gender == &#39;Male&#39; &amp;&amp; age &gt; 50)</span></span></code></pre></div>
+</div>
+<div id="the-education-level-is-missing" class="section level4" number="9.5.3.3">
+<h4><span class="header-section-number">9.5.3.3</span> 4.3.3 the education level is missing</h4>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="appendix.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="do">## filter(final_demo, is.na(edu))</span></span></code></pre></div>
+</div>
+</div>
+<div id="section-20" class="section level3" number="9.5.4">
+<h3><span class="header-section-number">9.5.4</span> 4.4</h3>
+<p>Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:</p>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="appendix.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="do">## arrange(final_bpx,desc(bpt_sec))</span></span></code></pre></div>
+</div>
+<div id="section-21" class="section level3" number="9.5.5">
+<h3><span class="header-section-number">9.5.5</span> 4.5</h3>
+<div id="section-22" class="section level4" number="9.5.5.1">
+<h4><span class="header-section-number">9.5.5.1</span> 4.5.1</h4>
+<p>Create a new variable called called <strong>rescale_bpt_sec</strong> that records the Blood Pressure Time in miuntes. Keep both original and new variables.</p>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="appendix.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="do">##  mutate(final_bpx,rescale_bpt_sec = bpt_sec/60)</span></span></code></pre></div>
+</div>
+<div id="section-23" class="section level4" number="9.5.5.2">
+<h4><span class="header-section-number">9.5.5.2</span> 4.5.2</h4>
+<p>Create <strong>rescale_bpt_sec</strong> in the same way above and <strong>only keep new variables</strong>.</p>
+<p>Note: Try to avoid using select().</p>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="appendix.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="do">##  transmute(final_bpx,rescale_bpt_sec = bpt_sec/60)</span></span></code></pre></div>
+</div>
+</div>
+<div id="section-24" class="section level3" number="9.5.6">
+<h3><span class="header-section-number">9.5.6</span> 4.6</h3>
+<p>Find the average age in the demo dataframe per education level</p>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="appendix.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="do">##  by_edu &lt;- group_by(edu)</span></span>
+<span id="cb638-2"><a href="appendix.html#cb638-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb638-3"><a href="appendix.html#cb638-3" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize(by_edu, average_age = mean(age, na.rm = TRUE))</span></span></code></pre></div>
+</div>
+<div id="section-25" class="section level3" number="9.5.7">
+<h3><span class="header-section-number">9.5.7</span> 4.7</h3>
+<p>Return the observations which has more than 3 records in each gender group.</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="appendix.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="do">## by_gender &lt;-group_by(final_demo,gender)</span></span>
+<span id="cb639-2"><a href="appendix.html#cb639-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb639-3"><a href="appendix.html#cb639-3" aria-hidden="true" tabindex="-1"></a><span class="do">## filter(by_edu,n()&gt;3)</span></span></code></pre></div>
+</div>
+<div id="section-26" class="section level3" number="9.5.8">
+<h3><span class="header-section-number">9.5.8</span> 4.8</h3>
+<p>Compute the difference in each age and the average mean in each education level group</p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="appendix.html#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="do">## by_edu &lt;-group_by(final_demo,edu)</span></span>
+<span id="cb640-2"><a href="appendix.html#cb640-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb640-3"><a href="appendix.html#cb640-3" aria-hidden="true" tabindex="-1"></a><span class="do">## mutate(by_edu, diff_age = age - mean(age, na.rm = T))</span></span></code></pre></div>
+</div>
+<div id="section-27" class="section level3" number="9.5.9">
+<h3><span class="header-section-number">9.5.9</span> 4.9</h3>
+<p>Re-write the following code using pipe operator</p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="appendix.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="do">## temp &lt;- filter(final_bpx, systolic &gt; 120)</span></span>
+<span id="cb641-2"><a href="appendix.html#cb641-2" aria-hidden="true" tabindex="-1"></a><span class="do">## temp &lt;- mutate(temp, bpt_min = bpt_sec/60)</span></span>
+<span id="cb641-3"><a href="appendix.html#cb641-3" aria-hidden="true" tabindex="-1"></a><span class="do">## temp</span></span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="appendix.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="do">## final_bpx %&gt;%</span></span>
+<span id="cb642-2"><a href="appendix.html#cb642-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    filter(systolic &gt; 120) %&gt;%</span></span>
+<span id="cb642-3"><a href="appendix.html#cb642-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    mutate(bpt_min = bpt_sec/60)</span></span></code></pre></div>
+</div>
+</div>
+<div id="data-visualization-with-ggplot2-1" class="section level2" number="9.6">
+<h2><span class="header-section-number">9.6</span> Data Visualization with ggplot2</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of tutorial 5: Data Visualization with ggplot. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-28" class="section level3" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> 1.1</h3>
+<p>Plot a scatterplot to show the relationship between Diastolic Blood Pressure (x-axis) and Blood Pressure Time in Seconds (y-axis).</p>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="appendix.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ggplot(data = demo_bpx) +</span></span>
+<span id="cb643-2"><a href="appendix.html#cb643-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   geom_point(aes(x = Diastolic, </span></span>
+<span id="cb643-3"><a href="appendix.html#cb643-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                  y = BPT), </span></span>
+<span id="cb643-4"><a href="appendix.html#cb643-4" aria-hidden="true" tabindex="-1"></a><span class="do">##              na.rm = TRUE)</span></span></code></pre></div>
+</div>
+<div id="section-29" class="section level3" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> 1.2</h3>
+<p>Plot a scatterplot using the Diastolic (x-axis) and Systolic (y-axis) variables in the data frame demo_bpx where all of the data points are blue.</p>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="appendix.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ggplot(demo_bpx) +</span></span>
+<span id="cb644-2"><a href="appendix.html#cb644-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   geom_point(aes(x = Systolic, </span></span>
+<span id="cb644-3"><a href="appendix.html#cb644-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                  y = Diastolic), </span></span>
+<span id="cb644-4"><a href="appendix.html#cb644-4" aria-hidden="true" tabindex="-1"></a><span class="do">##              color = &quot;blue&quot;,</span></span>
+<span id="cb644-5"><a href="appendix.html#cb644-5" aria-hidden="true" tabindex="-1"></a><span class="do">##              na.rm = TRUE)</span></span></code></pre></div>
+</div>
+<div id="section-30" class="section level3" number="9.6.3">
+<h3><span class="header-section-number">9.6.3</span> 1.3</h3>
+<p>Try increasing and decreasing the binwidth of a frequency polygon. What differences do you see? What does binwidth actually mean?</p>
+<p>Higher binwidths give us less fluctuations than lower binwidths. When we are increasing the binwidths, we are actually increasing the length of intervals, which leads to less intervals. In other words, each data point are a bit further away from each other, so when connected, the graph looks less detailed and smoother.</p>
+</div>
+<div id="section-31" class="section level3" number="9.6.4">
+<h3><span class="header-section-number">9.6.4</span> 1.4</h3>
+<p>Try recreating the graph above but without any missing (NA) values.</p>
+<p><strong>HINT</strong>: Filter out any information we do not need using logical operators!</p>
+<p>First, we need to filter out all of the NA values:</p>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="appendix.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="do">## no_NA &lt;- filter(demo_bpx, Race != &quot;NA&quot; &amp; Gender != &quot;NA&quot;)</span></span></code></pre></div>
+<p>Then, we can graph our facets normally:</p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="appendix.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ggplot(no_NA) +</span></span>
+<span id="cb646-2"><a href="appendix.html#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   geom_point(aes(x = Diastolic, y = Systolic), na.rm = TRUE) +</span></span>
+<span id="cb646-3"><a href="appendix.html#cb646-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   facet_grid(Race ~ Gender)</span></span></code></pre></div>
+</div>
+</div>
+<div id="date-and-time-data-with-lubridate" class="section level2" number="9.7">
+<h2><span class="header-section-number">9.7</span> Date and Time Data with lubridate</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>tutorial 6: Date &amp; Time Data with lubridate</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-32" class="section level3" number="9.7.1">
+<h3><span class="header-section-number">9.7.1</span> 6.1</h3>
+<p>After running the <code>today()</code> and <code>now()</code> codes above, what do you see?</p>
+<p>Try to also change the time zone to where you are or to something else. Now what do you see when you run <code>today()</code> and <code>now()</code>?</p>
+<p>After running <code>today()</code> and <code>now()</code>, you should see that <code>today()</code> is a date data and <code>now()</code> is a datetime data.</p>
+<p>Changing the time zone means that the date and time will be different if we run <code>today()</code> and <code>now()</code> again.</p>
+</div>
+<div id="section-33" class="section level3" number="9.7.2">
+<h3><span class="header-section-number">9.7.2</span> 6.2</h3>
+<p>Try creating a new column named “Day_visit” that only contains information of the Year, Month, and Day columns using the Friends_visits dataframe that we just created.</p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="appendix.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="do">## head(</span></span>
+<span id="cb647-2"><a href="appendix.html#cb647-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   Friends_visits %&gt;% </span></span>
+<span id="cb647-3"><a href="appendix.html#cb647-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   mutate(Hour_visit = make_datetime(Year, Month, Day))</span></span>
+<span id="cb647-4"><a href="appendix.html#cb647-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    )</span></span></code></pre></div>
+</div>
+<div id="section-34" class="section level3" number="9.7.3">
+<h3><span class="header-section-number">9.7.3</span> 6.3</h3>
+<p>Using the functions introduced above, solve the following questions:
+1. What day of the week is April 2, 2014?
+2. What day of the year is 2017-09-15?
+3. What day of the month is 20190830?
+4. Find the months of the last 11 records of the column Visit_hour.</p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="appendix.html#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. wday(mdy(&quot;April 2, 2014&quot;), label = TRUE)</span></span>
+<span id="cb648-2"><a href="appendix.html#cb648-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-3"><a href="appendix.html#cb648-3" aria-hidden="true" tabindex="-1"></a><span class="co">#2. yday(ymd(&quot;2017-09-05&quot;))</span></span>
+<span id="cb648-4"><a href="appendix.html#cb648-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-5"><a href="appendix.html#cb648-5" aria-hidden="true" tabindex="-1"></a><span class="co">#3. mday(ymd(20190830))</span></span>
+<span id="cb648-6"><a href="appendix.html#cb648-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-7"><a href="appendix.html#cb648-7" aria-hidden="true" tabindex="-1"></a><span class="co">#4. tail(month(Friends_visits$Visit_time, label = TRUE), 11)</span></span></code></pre></div>
+</div>
+<div id="section-35" class="section level3" number="9.7.4">
+<h3><span class="header-section-number">9.7.4</span> 6.4</h3>
+<p>Using the same Friends_visit dataset, create a similar graph as above but the x-axis is days of the week. In other words, create a bar graph that shows how many visits there are in each day of the week.</p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="appendix.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Friends_visits %&gt;%</span></span>
+<span id="cb649-2"><a href="appendix.html#cb649-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  mutate(Week_day = wday(Visit_time, label = TRUE, abbr = FALSE)) %&gt;%</span></span>
+<span id="cb649-3"><a href="appendix.html#cb649-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  ggplot(aes(Week_day)) +</span></span>
+<span id="cb649-4"><a href="appendix.html#cb649-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  geom_bar()</span></span></code></pre></div>
+</div>
+<div id="section-36" class="section level3" number="9.7.5">
+<h3><span class="header-section-number">9.7.5</span> 6.5</h3>
+<p>Try to update our month to 13. What happened to our date/time? What is the output?</p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="appendix.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DT %&gt;%</span></span>
+<span id="cb650-2"><a href="appendix.html#cb650-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     update(month = 13)</span></span>
+<span id="cb650-3"><a href="appendix.html#cb650-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-4"><a href="appendix.html#cb650-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The year turns to 2021 because a year only has 12 months!</span></span></code></pre></div>
+</div>
+<div id="section-37" class="section level3" number="9.7.6">
+<h3><span class="header-section-number">9.7.6</span> 6.6</h3>
+<p>Recreate the frequency polygon above but change the binwidth so that all flights within each 30 minutes are clumped into one single data point. How do the graphs differ? Can you think of a few scenarios where one would be preferred?</p>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="appendix.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Friends_visits %&gt;%</span></span>
+<span id="cb651-2"><a href="appendix.html#cb651-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    mutate(Visit_hour = update(Visit_time, yday = 1)) %&gt;%</span></span>
+<span id="cb651-3"><a href="appendix.html#cb651-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    ggplot(aes(Visit_hour)) +</span></span>
+<span id="cb651-4"><a href="appendix.html#cb651-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    geom_freqpoly(binwidth = 900)</span></span></code></pre></div>
+</div>
+</div>
+<div id="data-summary-with-tableone-1" class="section level2" number="9.8">
+<h2><span class="header-section-number">9.8</span> Data Summary with tableone</h2>
+<p>This notebook contains the solutions for all of the <strong>Try it yourself</strong> sections of <strong>tutorial 7: Data Summary with tableone</strong>. Make sure that you have at least tried to solve these sections first before viewing this notebook.</p>
+<div id="section-38" class="section level3" number="9.8.1">
+<h3><span class="header-section-number">9.8.1</span> 7.1</h3>
+<p><strong>Challenge</strong>: Why do you think we need to change the names of our variables AFTER we translate them?</p>
+<p><strong>Hint</strong>: Think about the <code>data = demo</code> argument in <code>nhanesTranslate()</code></p>
+<p>Because after we use the function <code>names()</code> our data is no longer recognizable by R as being connected to the DEMO_H dataset that we downloaded from NHANES.</p>
+</div>
+<div id="section-39" class="section level3" number="9.8.2">
+<h3><span class="header-section-number">9.8.2</span> 7.2</h3>
+<p>Create a tableone without the <code>vars</code> argument. What do you see?
+Do you think the <code>vars</code> argument is necessary in our case? If not, in what situation(s) do you think it would be necessary?</p>
+<p>The <code>vars</code> argument tells R which variables you want to include in your tableone. If it is missing from <code>CreateTableOne()</code>, this means that we want R to select <strong>ALL</strong> variables of the original table in our tablone. Therefore, in our case, <code>vars</code> is not neccesary because we are selecting all variables anyway. But in cases where we only want to select some variables to include in our tableone, <code>vars</code> is an absolute must!</p>
+</div>
+<div id="section-40" class="section level3" number="9.8.3">
+<h3><span class="header-section-number">9.8.3</span> 7.3</h3>
+<p>How do you know if a variable is nonnormal? Try using the function <code>summary()</code> and look at the number under skew. How do you decide if something is normal or nonnormal? Is the decision to make “Age” nonnormal accurate?</p>
+<p>After you plug the dataset name into <code>summary()</code>, you should see a numerical value below “skew” that tells us the skewness of the data. The further it is from 0 (both negative and positive), the further it is from normal! The decision to make “Age” nonnormal is arguably not quite accurate because the skewness of “Age” is only 0.4.</p>
+</div>
+<div id="section-41" class="section level3" number="9.8.4">
+<h3><span class="header-section-number">9.8.4</span> 7.4</h3>
+<p>Create a tableone using the demo_translate dataset. Keep all variables and stratified the data using “Age.” What do you see? Do you think this is a helpful tableone?</p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="appendix.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="do">## CreateTableOne(data = demo_translate,</span></span>
+<span id="cb652-2"><a href="appendix.html#cb652-2" aria-hidden="true" tabindex="-1"></a><span class="do">##               vars = c(&quot;Race&quot;, &quot;Education&quot;, &quot;Gender&quot;),</span></span>
+<span id="cb652-3"><a href="appendix.html#cb652-3" aria-hidden="true" tabindex="-1"></a><span class="do">##               factorVars = c(&quot;Race&quot;,&quot;Education&quot;, &quot;Gender&quot;),</span></span>
+<span id="cb652-4"><a href="appendix.html#cb652-4" aria-hidden="true" tabindex="-1"></a><span class="do">##               strata = &quot;Age&quot;</span></span>
+<span id="cb652-5"><a href="appendix.html#cb652-5" aria-hidden="true" tabindex="-1"></a><span class="do">##              )</span></span></code></pre></div>
+<p>Just like how we should not use continuous variables to create facets (check ggplot tutorial), we should also not stratified our data using continuous variables. When we stratify our data using numerical continuous variables, the tableone becomes too big to handle. The information that we get is also not meaningful as there is a lot of values including lots of NA values. If we want to stratify our data by age, it may be better to use age groups instead of single age values.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-summary-with-tableone.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/8-Exercise-Solutions.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

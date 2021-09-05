@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction to R | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction to R | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction to R | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-09-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-and-rstudio-set-up.html"/>
+<link rel="next" href="importing-data-into-r-with-readr.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> Instructions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> What is R?</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> Download and Install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> Download and Install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> RStudio Basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#summary-and-takeaways"><i class="fa fa-check"></i><b>1.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> Set Up Basics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> Arithmetic Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.12.1"><span>Try it yourself 2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> Logical Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.22.2"><span>Try it yourself 2.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> Most Common Data Types In R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.32.3"><span>Try it yourself 2.3</span></a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.42.4"><span>Try it yourself 2.4</span></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.3</b> Lists</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.4</b> Dataframe</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.52.5"><span>Try it yourself 2.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> Exploring a Dataset</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.62.6"><span>Try it yourself 2.6</span></a></li>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.1</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.2</b> Structure</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.3</b> Class</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.72.7"><span>Try it yourself 2.7</span></a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.4</b> Length</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.82.8"><span>Try it yourself 2.8</span></a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.5</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.6</b> Mathematical Functions in R</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.92.9"><span>Try it yourself 2.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> Writing a New Function In R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> For Loops</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> Help Within and Outside Of R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>2.11</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> Instructions</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> Set Up</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> Basics Of Importing a CSV File Into R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.13.1"><span>Try it yourself 3.1</span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.3</b> Key Notes About Importing Data into R</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.23.2"><span>Try it yourself 3.2</span></a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.4</b> Column Specification</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.33.3"><span>Try it yourself 3.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> More Arguments Of read_csv</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.43.4"><span>Try it yourself 3.4</span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.2</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.3</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> Importing Other File Types into R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.53.5"><span>Try it yourself 3.5</span></a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.3</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.4</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> Exporting the Data Frame From R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>3.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li><a href="introduction-to-nhanes.html#try-it-yourself-4.14.1">Try it yourself 4.1]<span>4.1</span></a></li>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#summary-and-takeaways-3"><i class="fa fa-check"></i><b>4.6</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> Instructions</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> Dataset Preparation</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.15.1"><span>Try it yourself 5.1</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.25.2"><span>Try it yourself 5.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> Filter</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.35.3"><span>Try it yourself 5.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> Re-order the Rows</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.45.4"><span>Try it yourself 5.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> Add new variables</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.55.5"><span>Try it yourself 5.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> Summary Statistics and group_by</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.65.6"><span>Try it yourself 5.6</span></a></li>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.1</b> Group_by() extension</a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.75.7"><span>Try it yourself 5.7</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.85.8"><span>Try it yourself 5.8</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> Pipe</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.95.9"><span>Try it yourself 5.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> Alternatives to NHANESTranslate()</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-and-takeaways-4"><i class="fa fa-check"></i><b>5.15</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> Instructions</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> ggplot() and Point Geometrics</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.16.1"><span>Try it yourself 6.1</span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.2</b> Aesthetics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.26.2"><span>Try it yourself 6.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> Multiple Geometric Functions under one ggplot</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> Other Geometric Functions</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.36.3"><span>Try it yourself 6.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> Facet Functions</a>
+<ul>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.46.4"><span>Try it yourself 6.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> Customizing Graph Elements</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.5"><i class="fa fa-check"></i>Try it yourself 6.5</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graphs"><i class="fa fa-check"></i><b>6.9</b> Saving Our Graphs</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways-5"><i class="fa fa-check"></i><b>6.10</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> Set Up</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> Exploring Friends Visits Dataset</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> Creating Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.17.1"><span>Try it yourself 7.1</span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.2</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.3</b> Dataset</a></li>
+<li class="chapter" data-level="" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-20"><i class="fa fa-check"></i>Functions Debunked</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.27.2"><span>Try it yourself 7.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> Retrieving Information from Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.37.3"><span>Try it yourself 7.3</span></a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.4</b> Plotting Retrieved Information</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.47.4"><span>Try it yourself 7.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> Updating &amp; Plotting Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.57.5"><span>Try it yourself 7.5</span></a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.2</b> Plotting Date/Time</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.67.6"><span>Try it yourself 7.6</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> Arithmetic Operators with Date/Time</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-6"><i class="fa fa-check"></i><b>7.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> Set Up</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> What is tableone?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> Creating a tableone</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.18.1"><span>Try it yourself 8.1</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.3</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.28.2"><span>Try it yourself 8.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> Other Arguments to Customize tableone</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.38.3"><span>Try it yourself 8.3</span></a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.3</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.4</b> Strata</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.48.4"><span>Try it yourself 8.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> Export tableone</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> Alternatives to tableone</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-7"><i class="fa fa-check"></i><b>8.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html"><i class="fa fa-check"></i><b>9</b> Appendix: Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-2-introduction-to-r"><i class="fa fa-check"></i>Tutorial 2: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section"><i class="fa fa-check"></i>2.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-1"><i class="fa fa-check"></i>2.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-2"><i class="fa fa-check"></i>2.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-3"><i class="fa fa-check"></i>2.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-4"><i class="fa fa-check"></i>2.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-5"><i class="fa fa-check"></i>2.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-6"><i class="fa fa-check"></i>2.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-7"><i class="fa fa-check"></i>2.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-8"><i class="fa fa-check"></i>2.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.1" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-3-importing-data-into-r-with-readr"><i class="fa fa-check"></i><b>9.1</b> Tutorial 3: Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-9"><i class="fa fa-check"></i>3.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-10"><i class="fa fa-check"></i>3.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-11"><i class="fa fa-check"></i>3.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-12"><i class="fa fa-check"></i>3.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-13"><i class="fa fa-check"></i>3.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-4-introduction-to-nhanes"><i class="fa fa-check"></i><b>9.2</b> Tutorial 4: Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-14"><i class="fa fa-check"></i>4.1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-5-data-analysis-with-dplyr"><i class="fa fa-check"></i><b>9.3</b> Tutorial 5: Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-15"><i class="fa fa-check"></i>5.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-16"><i class="fa fa-check"></i>5.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-17"><i class="fa fa-check"></i>5.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-18"><i class="fa fa-check"></i>5.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-19"><i class="fa fa-check"></i>5.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-20"><i class="fa fa-check"></i>5.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-21"><i class="fa fa-check"></i>5.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-22"><i class="fa fa-check"></i>5.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-23"><i class="fa fa-check"></i>5.9</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-6-data-visualization-with-ggplot2"><i class="fa fa-check"></i>Tutorial 6: Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-24"><i class="fa fa-check"></i>6.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-25"><i class="fa fa-check"></i>6.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-26"><i class="fa fa-check"></i>6.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-27"><i class="fa fa-check"></i>6.4</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-7-date-and-time-data-with-lubridate"><i class="fa fa-check"></i>Tutorial 7: Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-28"><i class="fa fa-check"></i>7.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-29"><i class="fa fa-check"></i>7.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-30"><i class="fa fa-check"></i>7.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-31"><i class="fa fa-check"></i>7.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-32"><i class="fa fa-check"></i>7.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-33"><i class="fa fa-check"></i>7.6</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-8-data-summary-with-tableone"><i class="fa fa-check"></i>Tutorial 8: Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-34"><i class="fa fa-check"></i>8.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-35"><i class="fa fa-check"></i>8.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-36"><i class="fa fa-check"></i>8.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-37"><i class="fa fa-check"></i>8.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-r" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to R</h1>
+<div id="instructions-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Instructions</h2>
+<p>This tutorial will introduce you to the basics of the language of R. We will cover how to set up our working environment, mathematical and logical operators, the most common data types in R, explore a simple dataset, write an R function as well as how to seek for help within and outside of R.</p>
+<p>Accompanying this tutorial is <strong>a short <a href="https://forms.gle/P5x4pRK39xrA9EJR9">Google quiz</a></strong> for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.</p>
+</div>
+<div id="learning-objectives-1" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Learning Objectives</h2>
+<ul>
+<li>Be familiar with the basic procedures for setting up an R session with functions such as <code>getwd()</code>, <code>setwd()</code>, <code>dir()</code>, <code>install.packages()</code>, and <code>library()</code>.</li>
+<li>Understand the very basic of how and when to use arithmetic and logical operators in R.</li>
+<li>Be familiar with the most common types of data in R including string, vector, data frame, and list.</li>
+<li>Explore a dataset using basic Base R functions.</li>
+<li>Know how to write a new function in R.</li>
+<li>Be comfortable with and know how to seek for help within and outside of R.</li>
+</ul>
+</div>
+<div id="set-up-basics" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Set Up Basics</h2>
+<div id="working-directory" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Working Directory</h3>
+<p>One of the most important function in R is <code>getwd()</code>, or “get working directory.” The output of this code is the pathway of your current R file. Interestingly, <code>getwd()</code> does not have any argument. In other words, you do not have to type anything in the <code>()</code>.</p>
+<p>It is highly recommended that all of your files (the R file, any data files, images, etc) be in the same directory. This will make your project much more organized and your life a lot easier when we get into more complicated data analysis that involves more data files.</p>
+<p>By default, your working directory is whatever folder your current R file is in.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-to-r.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/ehsan/Documents/GitHub/intro2R&quot;</code></pre>
+<p>If at any point, you want to change your working directory to another folder, you can use <code>setwd()</code>. Different from <code>getwd()</code>, <code>setwd()</code> requires an argument within its brackets. To set a new working directory, you need to copy and paste the pathway within the brackets and in quotation marks ("").</p>
+<p>This code is helpful when you need to pull files outside of the default working directory. However, you should be mindful when using this function because it gets very confusing very quickly.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-r.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd(&quot;&quot;)</span></span></code></pre></div>
+<p>Another important function is <code>dir()</code>. This function lets you check all of the files that exist in your working directory.</p>
+<p>This function is a good option if you want to check if there are any extra or missing files from your working directory.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;_book&quot;                                 
+##  [2] &quot;_bookdown.yml&quot;                         
+##  [3] &quot;_bookdown_files&quot;                       
+##  [4] &quot;_build.sh&quot;                             
+##  [5] &quot;_deploy.sh&quot;                            
+##  [6] &quot;_output.yml&quot;                           
+##  [7] &quot;0-r-and-rstudio-set-up.Rmd&quot;            
+##  [8] &quot;1-introduction-to-r.Rmd&quot;               
+##  [9] &quot;2-importing-data-into-r-with-readr.Rmd&quot;
+## [10] &quot;3-introduction-to-nhanes.Rmd&quot;          
+## [11] &quot;4-data-analysis-with-dplyr.Rmd&quot;        
+## [12] &quot;5-data-visualization-with-ggplot.Rmd&quot;  
+## [13] &quot;6-date-time-data-with-lubridate.Rmd&quot;   
+## [14] &quot;7-data-summary-with-tableone.Rmd&quot;      
+## [15] &quot;8-Exercise-Solutions.Rmd&quot;              
+## [16] &quot;9-references.Rmd&quot;                      
+## [17] &quot;book.bib&quot;                              
+## [18] &quot;data&quot;                                  
+## [19] &quot;DESCRIPTION&quot;                           
+## [20] &quot;Dockerfile&quot;                            
+## [21] &quot;docs&quot;                                  
+## [22] &quot;header.html&quot;                           
+## [23] &quot;images&quot;                                
+## [24] &quot;index.Rmd&quot;                             
+## [25] &quot;intro2R.html&quot;                          
+## [26] &quot;intro2R.log&quot;                           
+## [27] &quot;intro2R.Rmd&quot;                           
+## [28] &quot;intro2R.tex&quot;                           
+## [29] &quot;intro2R_cache&quot;                         
+## [30] &quot;intro2R_files&quot;                         
+## [31] &quot;LICENSE&quot;                               
+## [32] &quot;now.json&quot;                              
+## [33] &quot;packages.bib&quot;                          
+## [34] &quot;preamble.tex&quot;                          
+## [35] &quot;R.Rproj&quot;                               
+## [36] &quot;README.md&quot;                             
+## [37] &quot;style.css&quot;                             
+## [38] &quot;toc.css&quot;</code></pre>
+<p>You will see that there are 2 CSV files in our working directory: last_15_bpx.csv and last_15_demo.csv. Do not worry about what they are right now (we will cover this in later tutorials). All you have to know for now is that these two files are currently residing in our input/tutorial-demo folder, AKA our working directory.</p>
+<p>The example above is only to demonstrate how we would change our working directory. But since we want to remain in our default working directory for the rest of this tutorial, we will set our working directory back to the original directory.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-r.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;..&quot;</span>) <span class="co"># this &quot;..&quot; argument allows us to move back 1 folder</span></span>
+<span id="cb6-2"><a href="introduction-to-r.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="introduction-to-r.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd(&quot;&quot;) # and then we can set our working directory back to the original by copying and pasting its pathway</span></span></code></pre></div>
+<p>After setting a new working directory, it is in our best interest to check the working directory again to see if we are in the right place.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check to see if we&#39;re back to our original directory</span></span>
+<span id="cb7-2"><a href="introduction-to-r.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/ehsan/Documents/GitHub/intro2R&quot;</code></pre>
+<div id="functions-debunked" class="section level4 unnumbered">
+<h4>Functions Debunked</h4>
+<p>Throughout our tutorials, you will see a recurring section named <strong>Functions Debunked</strong>. These sections aim to break down the function that you were just introduced to. Each of these section will include a link for you to find more information about the function, the different arguments that can be nested within each function, and an example.</p>
+<p>For this first section, we will debunk <code>#</code>. When you see a <code>#</code> in a code chunk, this means that the following information is a note or comment. In other words, it doesn’t code for anything - it is just notes explaining what we are doing. You can try adding a <code>#</code> in front of our <code>getwd()</code> code above to see what happens!</p>
+<p>If this doesn’t make any sense to you right now, do not worry! It will make more sense as we move along the tutorials.</p>
+</div>
+</div>
+<div id="installing-and-attaching-packages" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Installing and Attaching Packages</h3>
+<p>Now that we understand what working directories are, we can move onto installing and attaching packages.</p>
+<p>There are a lot of packages on R, each has its own set of functions for different purposes. To access each set of function, we need to install the respective package. To install a package, we use <code>install.packages()</code>. Within the brackets, the only argument you need is the name of the package in quotation marks ("").</p>
+<p>The most basic package on R is Base R. We do not actually need to install this package as it should be built into R by default. Therefore, by default, we should already have access to a range of basic R functions without having to install any packages. In this tutorial, we will only be using functions in this Base R package. However, in future tutorials, we will need to install pacakages such as dplyr and ggplot, which will give you access to even more and more advanced functions.</p>
+<p>For the sake of demonstration, the ggplot2 package is installed below, but note that we will not be using any ggplot functions in this tutorial.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;ggplot2&quot;)</span></span></code></pre></div>
+<p>A related function is <code>library()</code>. This function is used to attach installed packages to your R session. Unlike <code>install.packages()</code> where you only need to use once, <code>library()</code> needs to be run every R session. In other words, you need to attach whatever package you need everytime to you and then reopen R.</p>
+<p>In future tutorials, if the <code>library()</code> function does not work for you, it is most likely because you have not installed the package, and therefore need to use <code>install.packages()</code> first before <code>library()</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># another difference from install.packages() is that we do not need &quot;&quot; in library()</span></span>
+<span id="cb10-2"><a href="introduction-to-r.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>To make sure the package is successfully attached, we can try running a function in that package. After running the code below, you should only see a blank square. This is correct! We will go over why this is in tutorial 5.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()</span></code></pre></div>
+<p><img src="intro2R_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div id="do-questions-1-3-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 1-3 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>What is a “Working Directory?”</p></li>
+<li><p>What is the main difference between <code>setwd()</code> and <code>getwd()</code>?</p></li>
+<li><p>We need to install the packages first before we can load them using <code>library()</code>. (True or False)</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="arithmetic-operators" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Arithmetic Operators</h2>
+<p>As expected from a data analysis software, you can use R like a calcultor using arithmetic operators! Here is a list of a few basic and common arithmetic operators in R:</p>
+<div class="figure">
+<img src="images/arithmetic.png" alt="" />
+<p class="caption">Figure 1. Arithmetic Operators in R</p>
+</div>
+<p>These operators will prove themselves to be more useful in data analysis when we get to later tutorials, especially our Tutorial 4 on the dplyr package.</p>
+<div id="try-it-yourself-2.12.1" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section">Try it yourself 2.1</a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>Can you replicate and solve these problems in R?</li>
+</ol>
+<ul>
+<li>2^2</li>
+<li>2 × 2</li>
+<li>2 + 5 × (5 ÷ 4)^6</li>
+<li>what is the remainder of 52 ÷ 5</li>
+<li>what is the whole number solution to 82 ÷ 8</li>
+</ul>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Can you solve for x using R?</li>
+</ol>
+<p>a &lt;- 9 + 3 * 6</p>
+<p>x &lt;- a ÷ 2</p>
+<div id="do-question-4-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTION 4 OF THE QUIZ NOW</h4>
+<ul>
+<li>The output of <code>10 %% 2</code> is equal to which of the following?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="logical-operators" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Logical Operators</h2>
+<p>In addition, logical operators are also available on R. The main difference between arithmetic operators and logical operators is that logical operators will yield a logical (or TRUE/FALSE) output. This is a list of some common logical operators that can be used on R:</p>
+<div class="figure">
+<img src="images/logical.png" alt="" />
+<p class="caption">Figure 2. Logical Operators in R</p>
+</div>
+<p>Similarly, these operators will be more useful when we learn about filtering data in future tutorials and you will also be provided with more examples then.</p>
+<p>Here are a few example codes that you can try running:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="sc">&gt;</span> <span class="dv">4</span> </span>
+<span id="cb12-2"><a href="introduction-to-r.html#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the &lt;- indicates that the information 5 &gt; 4 is stored in the variable a - we will cover this in more detail in Section 4 of this tutorial</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction-to-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb13-2"><a href="introduction-to-r.html#cb13-2" aria-hidden="true" tabindex="-1"></a>b <span class="sc">!=</span> <span class="dv">8</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-r.html#cb15-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">==</span> b</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introduction-to-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">15</span> <span class="sc">-</span> <span class="dv">8</span> <span class="sc">&lt;=</span> <span class="dv">103</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introduction-to-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span><span class="sc">+</span> <span class="dv">3</span><span class="sc">^</span><span class="dv">9</span> <span class="sc">==</span> <span class="dv">19694</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># note that in R, &quot;equal to&quot; is coded by ==, = has another meaning that you will see in section 4</span></span></code></pre></div>
+<div id="try-it-yourself-2.22.2" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-1">Try it yourself 2.2</a></h3>
+<p>Translate the following into R and find the output:
+* 8 times 3 is greater than 8?
+* eleven divided by seven is not equal to 2?
+* 9 is less than or equal to 18?</p>
+<div id="do-question-5-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTION 5 OF THE QUIZ NOW</h4>
+<ul>
+<li>Which of the following operators code for “equal to?”</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="most-common-data-types-in-r" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Most Common Data Types In R</h2>
+<div id="strings" class="section level3" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Strings</h3>
+<p>Strings are either single character or a collection of characters. Note that all strings are in <code>""</code>. For example:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction-to-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;hello, my name is Alex&quot;</span></span></code></pre></div>
+<pre><code>## [1] &quot;hello, my name is Alex&quot;</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Where are you?&quot;</span></span></code></pre></div>
+<pre><code>## [1] &quot;Where are you?&quot;</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;I like to eat 6 apples&quot;</span></span></code></pre></div>
+<pre><code>## [1] &quot;I like to eat 6 apples&quot;</code></pre>
+</div>
+<div id="vectors" class="section level3" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Vectors</h3>
+<p>Vector is the simplest data type in R. It is basically a list of components stored in the same place (or variable). To write a vector, starts with <code>c()</code> and input the appropriate components within the brackets. For example:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-to-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="co"># numeric</span></span></code></pre></div>
+<pre><code>## [1] 1 2 3</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction-to-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;bonjour&quot;</span>, <span class="st">&quot;ciao&quot;</span>) <span class="co"># character – note that text needs to be in “”</span></span></code></pre></div>
+<pre><code>## [1] &quot;hello&quot;   &quot;bonjour&quot; &quot;ciao&quot;</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="introduction-to-r.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>) <span class="co"># logical – we will cover this in more detail later</span></span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introduction-to-r.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="st">&quot;hello&quot;</span>, <span class="cn">TRUE</span>) <span class="co"># mixed</span></span></code></pre></div>
+<pre><code>## [1] &quot;1&quot;     &quot;hello&quot; &quot;TRUE&quot;</code></pre>
+<p>We can also store these vectors using the symbol <code>&lt;-</code>.</p>
+<p><strong>Note:</strong> If you are using RStudio, they will be stored in our environment located in the top right window.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-to-r.html#cb36-1" aria-hidden="true" tabindex="-1"></a>numeric <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>) <span class="co"># 10:12 means 10, 11, 12!</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="introduction-to-r.html#cb37-1" aria-hidden="true" tabindex="-1"></a>character <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;bonjour&quot;</span>, <span class="st">&quot;ciao&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="introduction-to-r.html#cb38-1" aria-hidden="true" tabindex="-1"></a>logical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>What we just did was assigning values to variables where numeric, character, and logical are all variables!</p>
+</div>
+<div id="try-it-yourself-2.32.3" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-2">Try it yourself 2.3</a></h3>
+<p>Can you try storing a string? Assign the string “hello world, I am here” to the variable named start.</p>
+<p><strong>Note how the string is in "" but the variable name is not. Why do you think this is?</strong></p>
+<p>After assigning values to our variables, we can tell R to retrieve them by typing any of these variable names. R will give us the components of data that we assigned to each variable as the output.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="introduction-to-r.html#cb39-1" aria-hidden="true" tabindex="-1"></a>numeric</span></code></pre></div>
+<pre><code>## [1]  1  2  3 10 11 12</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="introduction-to-r.html#cb41-1" aria-hidden="true" tabindex="-1"></a>character</span></code></pre></div>
+<pre><code>## [1] &quot;hello&quot;   &quot;bonjour&quot; &quot;ciao&quot;</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="introduction-to-r.html#cb43-1" aria-hidden="true" tabindex="-1"></a>logical</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE  TRUE</code></pre>
+<p>If you want to extract a particular component from a variable, you can use <code>[]</code>. For example:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="introduction-to-r.html#cb45-1" aria-hidden="true" tabindex="-1"></a>numeric[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># the first 4 components</span></span></code></pre></div>
+<pre><code>## [1]  1  2  3 10</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="introduction-to-r.html#cb47-1" aria-hidden="true" tabindex="-1"></a>character[<span class="dv">2</span>] <span class="co"># only the 2nd component</span></span></code></pre></div>
+<pre><code>## [1] &quot;bonjour&quot;</code></pre>
+</div>
+<div id="try-it-yourself-2.42.4" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-3">Try it yourself 2.4</a></h3>
+<p>It is important to note that <strong>R is case-sensitive</strong>. This means that it distinguishes capitalized from non-capitalized characters, so logical and Logical are read as two separate things by R!</p>
+<p>Try typing Logical with a capitalized “L.” How does R respond to this?</p>
+<p>We can also replace <code>&lt;-</code> with <code>=</code> when assigning values to variables. But <code>=</code> has other uses as well - you will be introduced to their slight differences in future tutorials. Also, note that in R, <code>=</code> does not mean “equal to.” As you have see in the previous section, “equal to” is coded by <code>==</code>.</p>
+</div>
+<div id="lists" class="section level3" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> Lists</h3>
+<p>A list is a collection of possibly unrelated components. It allows you to gather different types of data into one place. In the code below, we have numbers, characters, and data frame all in one place.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introduction-to-r.html#cb49-1" aria-hidden="true" tabindex="-1"></a>list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">numeric =</span> <span class="dv">1</span>, <span class="at">character =</span> <span class="fu">c</span>(<span class="st">&quot;bonjour&quot;</span>, <span class="st">&quot;hello&quot;</span>), <span class="st">&quot;I like to eat 6 apples&quot;</span>)</span></code></pre></div>
+<p>Similarly, you can also extract specific information from this list using <code>[]</code>. Note that in the code below, the output is “bonjour” AND “hello,” this is because the second component of our list is a vector that houses both of these words.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="introduction-to-r.html#cb50-1" aria-hidden="true" tabindex="-1"></a>list[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## $character
+## [1] &quot;bonjour&quot; &quot;hello&quot;</code></pre>
+<div id="functions-debunked-1" class="section level4 unnumbered">
+<h4>Functions Debunked</h4>
+<p>The arguments for <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list">list()</a> are as follows:</p>
+<p>list(<strong>Variable name of any data type</strong> = <strong>Any data stored within that variable</strong> OR <strong>Any string</strong>)</p>
+<p><strong>For example:</strong> <code>list(numeric = 1, character = c("bonjour", "hello"), dataframe = logical)</code></p>
+</div>
+</div>
+<div id="dataframe" class="section level3" number="2.6.4">
+<h3><span class="header-section-number">2.6.4</span> Dataframe</h3>
+<p>Dataframe, you guessed it, stores your data in the form of a dataframe or a table! Dataframe allows you to store multiple vectors into one single table.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introduction-to-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(numeric, character, logical)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introduction-to-r.html#cb53-1" aria-hidden="true" tabindex="-1"></a>dataframe</span></code></pre></div>
+<pre><code>##   numeric character logical
+## 1       1     hello    TRUE
+## 2       2   bonjour   FALSE
+## 3       3      ciao    TRUE
+## 4      10     hello    TRUE
+## 5      11   bonjour   FALSE
+## 6      12      ciao    TRUE</code></pre>
+<div id="functions-debunked-2" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p>The arguments for <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame">data.frame()</a> are as follows:</p>
+<p>data.frame(<strong>Vector 1</strong>, <strong>Vector 2</strong>, <strong>Vector n</strong>)</p>
+<p><strong>For example:</strong> <code>dataframe &lt;- data.frame(numeric, character, logical)</code></p>
+<p>If you want to change the column names of your data frame, you can use the function <code>names()</code>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introduction-to-r.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dataframe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Number&quot;</span>, <span class="st">&quot;Text&quot;</span>, <span class="st">&quot;T/F&quot;</span>)</span></code></pre></div>
+<p>Now if we check our data frame again, the new column names should appear.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="introduction-to-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a>dataframe</span></code></pre></div>
+<pre><code>##   Number    Text   T/F
+## 1      1   hello  TRUE
+## 2      2 bonjour FALSE
+## 3      3    ciao  TRUE
+## 4     10   hello  TRUE
+## 5     11 bonjour FALSE
+## 6     12    ciao  TRUE</code></pre>
+</div>
+<div id="functions-debunked-3" class="section level4 unnumbered">
+<h4>Functions Debunked</h4>
+<p>The arguments for <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/names">names()</a> are as follows:</p>
+<p>names(<strong>Name of Dataset</strong>) &lt;- <strong>A vector of components which length matches with that of the dataset</strong> (we will go over length in section 5 of this tutorial)</p>
+<p><strong>For example:</strong> <code>names(dataframe) &lt;- c("Number", "Text", "T/F")</code></p>
+</div>
+</div>
+<div id="try-it-yourself-2.52.5" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-4">Try it yourself 2.5</a></h3>
+<p>Why do you think numeric, character, and logical are not in "" but Number, Text, and T/F are?</p>
+<p>Similar to how we extracted information from vectors and lists, we can also use <code>[]</code> to extract certain rows, columns, or cells in a data frame.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="introduction-to-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a>dataframe[<span class="dv">1</span>, ] <span class="co"># only fhe first row</span></span></code></pre></div>
+<pre><code>##   Number  Text  T/F
+## 1      1 hello TRUE</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="introduction-to-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a>dataframe[, <span class="dv">2</span>] <span class="co"># only the second column</span></span></code></pre></div>
+<pre><code>## [1] &quot;hello&quot;   &quot;bonjour&quot; &quot;ciao&quot;    &quot;hello&quot;   &quot;bonjour&quot; &quot;ciao&quot;</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="introduction-to-r.html#cb62-1" aria-hidden="true" tabindex="-1"></a>dataframe[<span class="dv">3</span>, <span class="dv">2</span>] <span class="co"># only cell (3,2) - the third row and second column</span></span></code></pre></div>
+<pre><code>## [1] &quot;ciao&quot;</code></pre>
+<div id="do-questions-6-7-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTIONS 6 &amp; 7 OF THE QUIZ NOW</h4>
+<ul>
+<li><p>Which of the following codes would extract only rows 1, 3, 6 and only column 1 from our data frame?</p></li>
+<li><p>What is the value of the cell in the first row and third column of our data frame?</p></li>
+</ul>
+<p>We can also add a new column to our data frame using the function <code>cbind()</code> like below. Note how the column name is in <code>""</code>. It is also important that the new column has the same number of values as the rest of the columns. If the new column contains less values than the other columns, you can use <code>NA</code>, or “not available” values, to fill up the rest of the places!</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introduction-to-r.html#cb64-1" aria-hidden="true" tabindex="-1"></a>new_column <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dataframe, <span class="st">&quot;new column&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="cn">NA</span>))</span>
+<span id="cb64-2"><a href="introduction-to-r.html#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we will learn more about NA values in tutorial 4</span></span></code></pre></div>
+<p>Similarly, the function to add a new row is <code>rbind()</code>. The two functions work almost identical, but <code>rbind()</code> does not require a row name.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="introduction-to-r.html#cb65-1" aria-hidden="true" tabindex="-1"></a>(new_row <span class="ot">&lt;-</span> <span class="fu">rbind</span>(new_column, <span class="fu">c</span>(<span class="dv">13</span>, <span class="st">&quot;hello&quot;</span>, <span class="cn">FALSE</span>, <span class="cn">NA</span>)))</span></code></pre></div>
+<pre><code>##   Number    Text   T/F new column
+## 1      1   hello  TRUE          2
+## 2      2 bonjour FALSE          3
+## 3      3    ciao  TRUE          4
+## 4     10   hello  TRUE          5
+## 5     11 bonjour FALSE          1
+## 6     12    ciao  TRUE       &lt;NA&gt;
+## 7     13   hello FALSE       &lt;NA&gt;</code></pre>
+<p>You may have noticed that the code above has an extra <code>()</code> that encompasses the whole code. This <code>()</code> is another way for us to print the output of our function - it is equivalent to if we just run the name of data frame new_row. Try removing the extra <code>()</code> and see what happens!</p>
+</div>
+<div id="functions-debunked-4" class="section level4 unnumbered">
+<h4>Functions Debunked</h4>
+<p><strong><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cbind">cbind()</a></strong> is used to create new columns in a data frame. The arguments are as follows:</p>
+<p>cbind(<strong>the Current Data Frame</strong>, “<strong>Name of the New Column</strong>” = <strong>Value(s) in the New Column</strong>)</p>
+<p><strong><a href="https://www.rdocumentation.org/packages/SparkR/versions/2.4.6/topics/rbind">rbind</a></strong> is used to create new rows in a data frame. The arguments are as follows:</p>
+<p>rbind(<strong>the Current Data Frame</strong>, <strong>Values in the New Row</strong>)</p>
+<p>There exists many other types of <a href="https://www.statmethods.net/input/datatypes.html">data types</a> on R, you are free to explore them on your own time. But what we have been introduced to are the most basic ones.</p>
+</div>
+</div>
+</div>
+<div id="exploring-a-dataset" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Exploring a Dataset</h2>
+<p>Now that you are familiar with the different data types and operators of R, we can move on to the fun parts of this tutorial: exploring a dataset!</p>
+<p>To introduce you to the concept of exploring data on R, we will be using a dataset already available on R - in other words, we will not be importing data into R yet, we will cover this in another tutorial. Conveniently, R has a set of built-in datasets that we can use to practice using basic R functions. In this tutorial, we will use the dataset named “faithful” which contains information on the Old Faithful Geyser in Yellowstone National Park. Run the codes below to explore the dataset.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introduction-to-r.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># information on the data</span></span>
+<span id="cb67-2"><a href="introduction-to-r.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?faithful</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introduction-to-r.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the actual data</span></span>
+<span id="cb68-2"><a href="introduction-to-r.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co"># faithful</span></span>
+<span id="cb68-3"><a href="introduction-to-r.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(faithful)</span></span></code></pre></div>
+<div id="functions-debunked-5" class="section level4" number="2.7.0.1">
+<h4><span class="header-section-number">2.7.0.1</span> Functions Debunked</h4>
+<p><strong><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print">print()</a></strong> is another option for you to use if you want to see a variable, dataset, or any other type of output.</p>
+<p>print(<strong>Any Object</strong>)</p>
+<p><strong>For example:</strong> <code>print(faithful)</code>, <code>print(faithful$eruptions)</code>, <code>print(1:12)</code></p>
+</div>
+<div id="try-it-yourself-2.62.6" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-5">Try it yourself 2.6</a></h3>
+<ol style="list-style-type: decimal">
+<li>What are 2 ways that we can print rows 1 to 5 of the data frame faithful?</li>
+<li>What is the value of the cell in the fourth row and second column of the data frame faithful?</li>
+</ol>
+</div>
+<div id="dimensions" class="section level3" number="2.7.1">
+<h3><span class="header-section-number">2.7.1</span> Dimensions</h3>
+<p>Usually, the first thing we want to do when exploring a dataset is to check its dimensions. To do this, we use the function <code>dim()</code> with the dataset name between the <code>()</code>.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introduction-to-r.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(faithful)</span></code></pre></div>
+<pre><code>## [1] 272   2</code></pre>
+<p>You should see two numbers as the output: 272 and 2. This tells us that the dataset faithful has 272 rows (AKA observations) and 2 columns (AKA variables). Checking the dimensions of our datasets may be helpful when we want to check how large our dataset is after a certain data manipulation method. This may also be helpful to check if our manipulated or original data is abnormally large or small.</p>
+</div>
+<div id="structure" class="section level3" number="2.7.2">
+<h3><span class="header-section-number">2.7.2</span> Structure</h3>
+<p>We can also check the structure of our data using the function <code>str()</code> with the dataset name between the <code>()</code>.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introduction-to-r.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(faithful)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    272 obs. of  2 variables:
+##  $ eruptions: num  3.6 1.8 3.33 2.28 4.53 ...
+##  $ waiting  : num  79 54 74 62 85 55 88 85 51 85 ...</code></pre>
+<p>In this case, we are provided with several pieces of information:
+1. the dataset faithful is a data frame
+2. there are two columns, or variables, in this dataset: eruptions and waiting
+3. both eruptions and waiting contain numerical data</p>
+<p>As you can see, <code>str()</code> can be very helpful if we want to check what kind of data we are working with and how large the data is.</p>
+</div>
+<div id="class" class="section level3" number="2.7.3">
+<h3><span class="header-section-number">2.7.3</span> Class</h3>
+<p>The class of our data can also be checked using the function <code>class()</code>. Similarly, the dataset name or the variable name can go between the <code>()</code>.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introduction-to-r.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(faithful)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introduction-to-r.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(faithful<span class="sc">$</span>eruptions)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p>Note how if we are checking the class of the variable eruption, we need to have the dataset name followed by a $ first before we can write the variable name.</p>
+</div>
+<div id="try-it-yourself-2.72.7" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-6">Try it yourself 2.7</a></h3>
+<p>Write a code to find the structure of the variable waiting in the faithful dataset.</p>
+</div>
+<div id="length" class="section level3" number="2.7.4">
+<h3><span class="header-section-number">2.7.4</span> Length</h3>
+<p>We can also check the length of our dataset or variable using <code>length()</code>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introduction-to-r.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(faithful)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="introduction-to-r.html#cb79-1" aria-hidden="true" tabindex="-1"></a>    <span class="do">## the output should be 2 - the number of variables in our dataset!</span></span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="introduction-to-r.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(faithful<span class="sc">$</span>eruption)</span></code></pre></div>
+<pre><code>## [1] 272</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="introduction-to-r.html#cb82-1" aria-hidden="true" tabindex="-1"></a>    <span class="do">## the output should be 272 - the number of observations in this variable!</span></span></code></pre></div>
+</div>
+<div id="try-it-yourself-2.82.8" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-7">Try it yourself 2.8</a></h3>
+<p>Remember those variables that we created earlier in the tutorial? Try finding the lengths of data frame and numeric.</p>
+<p><strong>Challenge:</strong> Psst! There are actually 2 ways for you to find the length of numeric.</p>
+</div>
+<div id="head-and-tail" class="section level3" number="2.7.5">
+<h3><span class="header-section-number">2.7.5</span> Head and Tail</h3>
+<p>So we are now somewhat familiar with the basic functions to explore the general information about our dataset, YAY! If you want to check the actual dataset (AKA see the actual table), but do not want to see the whole data frame with 272 rows, <code>head()</code> and <code>tail()</code> are good options.</p>
+<p><code>head()</code> shows you the first few rows of your dataset.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="introduction-to-r.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(faithful)</span></code></pre></div>
+<pre><code>##   eruptions waiting
+## 1     3.600      79
+## 2     1.800      54
+## 3     3.333      74
+## 4     2.283      62
+## 5     4.533      85
+## 6     2.883      55</code></pre>
+<p><code>tail()</code> shows you the last few rows of your dataset.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="introduction-to-r.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(faithful)</span></code></pre></div>
+<pre><code>##     eruptions waiting
+## 267     4.750      75
+## 268     4.117      81
+## 269     2.150      46
+## 270     4.417      90
+## 271     1.817      46
+## 272     4.467      74</code></pre>
+<p>You can also choose how many rows you want to see</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction-to-r.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(faithful, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    eruptions waiting
+## 1      3.600      79
+## 2      1.800      54
+## 3      3.333      74
+## 4      2.283      62
+## 5      4.533      85
+## 6      2.883      55
+## 7      4.700      88
+## 8      3.600      85
+## 9      1.950      51
+## 10     4.350      85</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction-to-r.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(faithful, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##     eruptions waiting
+## 271     1.817      46
+## 272     4.467      74</code></pre>
+<p>As you can see, <code>head()</code> and <code>tail()</code> allow you to check just a portion of the dataset. This is especially useful when you’re working with large datasets and you only want to see part of it to make sure everything is okay!</p>
+<div id="do-question-8-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTION 8 OF THE QUIZ NOW</h4>
+<ul>
+<li>Which of the following codes is best to find how large our dataset is?</li>
+</ul>
+</div>
+</div>
+<div id="mathematical-functions-in-r" class="section level3" number="2.7.6">
+<h3><span class="header-section-number">2.7.6</span> Mathematical Functions in R</h3>
+<p>R has a range of mathemtical functions for us to use. Below are only a few basic ones, we will cover much more as we move through our tutorials. Note that these functions only work if the data class is numeric.</p>
+<p>We can find the <strong>mean</strong> of waiting:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="introduction-to-r.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(faithful<span class="sc">$</span>waiting)</span></code></pre></div>
+<pre><code>## [1] 70.89706</code></pre>
+<p>We can also find the <strong>maximum</strong> and <strong>minimum</strong> values of waiting:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction-to-r.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(faithful<span class="sc">$</span>waiting)</span></code></pre></div>
+<pre><code>## [1] 96</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="introduction-to-r.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(faithful<span class="sc">$</span>waiting)</span></code></pre></div>
+<pre><code>## [1] 43</code></pre>
+<p>And the <strong>1st, 2nd, 3rd, and 4th quantile</strong> of waiting:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="introduction-to-r.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(faithful<span class="sc">$</span>waiting, <span class="fl">0.25</span>)</span></code></pre></div>
+<pre><code>## 25% 
+##  58</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introduction-to-r.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(faithful<span class="sc">$</span>waiting, <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## 50% 
+##  76</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction-to-r.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(faithful<span class="sc">$</span>waiting, <span class="fl">0.75</span>)</span></code></pre></div>
+<pre><code>## 75% 
+##  82</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction-to-r.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(faithful<span class="sc">$</span>waiting, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## 100% 
+##   96</code></pre>
+<p>As well as the <strong>median</strong> of waiting:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-to-r.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(faithful<span class="sc">$</span>waiting)</span></code></pre></div>
+<pre><code>## [1] 76</code></pre>
+<p>Another powerful function in R is <code>summary()</code>. It literally summarizes everything that we have just covered in this subsection in one single table. Not only that, if you place the dataset name within the <code>()</code>, it actually runs all of the functions above for all variables in the dataset.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introduction-to-r.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(faithful)</span></code></pre></div>
+<pre><code>##    eruptions        waiting    
+##  Min.   :1.600   Min.   :43.0  
+##  1st Qu.:2.163   1st Qu.:58.0  
+##  Median :4.000   Median :76.0  
+##  Mean   :3.488   Mean   :70.9  
+##  3rd Qu.:4.454   3rd Qu.:82.0  
+##  Max.   :5.100   Max.   :96.0</code></pre>
+</div>
+<div id="try-it-yourself-2.92.9" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-8">Try it yourself 2.9</a></h3>
+<p>Recall that in order for us to refer to a variable in a dataset, we need to first type the dataset name following by a $ before we can type the variable name.</p>
+<p>A way to avoid repeating <code>faithful$</code> everytime is to attach the dataset using <code>attach(faithful)</code>.</p>
+<p>Try attaching the dataset faithful then find the mean of the variable eruptions without using $!</p>
+<div id="do-question-9-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTION 9 OF THE QUIZ NOW</h4>
+<ul>
+<li>What information does the function <code>summary()</code> provide us with? (select all that apply)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="writing-a-new-function-in-r" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Writing a New Function In R</h2>
+<p>While R and its existing packages has a lot to offer, there may be times when the function that we want to use does not really exist. In situations like this, we may want to just write our own function! A function in R is a script and it aims to help you to write reproducible code.</p>
+<p>For example, we want to write a function that helps us convert temperature from Celsius to Farenheit. To do this, we would need this shell first:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introduction-to-r.html#cb109-1" aria-hidden="true" tabindex="-1"></a>F_to_C <span class="ot">&lt;-</span> <span class="cf">function</span>(F) {}</span></code></pre></div>
+<p>F_to_C is our function name, and <code>function(F)</code> tells R that we want to write a new function. The actual function that we write will be placed between the brackets <code>{}</code>.</p>
+<p>Let’s think of the math really quickly. To convert °F to °C, we would need to subtract 32 then times that by 5/9. So that should look like this: <code>(F - 32) * 5 / 9</code>. And we want the function to print the results, so our final function should look like this:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="introduction-to-r.html#cb110-1" aria-hidden="true" tabindex="-1"></a>F_to_C <span class="ot">&lt;-</span> <span class="cf">function</span>(F) {</span>
+<span id="cb110-2"><a href="introduction-to-r.html#cb110-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>((F <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span>)</span>
+<span id="cb110-3"><a href="introduction-to-r.html#cb110-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Each function has its own name and it is meant to be different from any other function names. To run it, you need to call the function name.</p>
+<p>Now let’s see if your function works. We can test it using a known value. Since we know that 32°F is equal to 0°C:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="introduction-to-r.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">F_to_C</span>(<span class="dv">32</span>)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>Awesome! It works!</p>
+<p>Here are a few other ways that we can create new functions! Note that we can also nest existing functions inside new functions to make our own functions! For example, knowing that <code>sprintf()</code> is an existing function, we can write the following:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction-to-r.html#cb113-1" aria-hidden="true" tabindex="-1"></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
+<span id="cb113-2"><a href="introduction-to-r.html#cb113-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;Hello %s&quot;</span>, name)</span>
+<span id="cb113-3"><a href="introduction-to-r.html#cb113-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="introduction-to-r.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hello</span>(<span class="st">&quot;Tim&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Hello Tim&quot;</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="introduction-to-r.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hello</span>(<span class="st">&quot;Elisa&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Hello Elisa&quot;</code></pre>
+<p>We can also write new functions that will give us a return statement. A return statement means you want some output or result after running the script to be returned. For example, the following function will always plus 1 to whatever number we nest between the <code>()</code>.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="introduction-to-r.html#cb118-1" aria-hidden="true" tabindex="-1"></a>plus_1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb118-2"><a href="introduction-to-r.html#cb118-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb118-3"><a href="introduction-to-r.html#cb118-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction-to-r.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plus_1</span>(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="introduction-to-r.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plus_1</span>(<span class="fl">20.93</span>)</span></code></pre></div>
+<pre><code>## [1] 21.93</code></pre>
+<p>Note also that there can be more than one argument in a function! For example, the following function requires the arguments x and y, of which x will be multiplied by 10 and y will be added to the new x.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="introduction-to-r.html#cb123-1" aria-hidden="true" tabindex="-1"></a>math_work <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb123-2"><a href="introduction-to-r.html#cb123-2" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> x <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb123-3"><a href="introduction-to-r.html#cb123-3" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">=</span> y <span class="sc">+</span> x</span>
+<span id="cb123-4"><a href="introduction-to-r.html#cb123-4" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">list</span>(x, y)</span>
+<span id="cb123-5"><a href="introduction-to-r.html#cb123-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb123-6"><a href="introduction-to-r.html#cb123-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="introduction-to-r.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">math_work</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 30
+## 
+## [[2]]
+## [1] 35</code></pre>
+<p>Once we have written a new function, it will saved in your Global Environment and we can continue to use it as long as the Environment is not wiped. Note that the new functions will not work if you open a new R session that does not store them as functions. But we can also run the code chunks above again to remind R of the new functions.</p>
+</div>
+<div id="for-loops" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> For Loops</h2>
+<p>In R, we can also write for loops that iterate a particular action/code that we want. For example, we can write a loop that adds 1 to every number of a vector. To do this, we first need to create a vector and assign it to a variable. Let’s say we want the vector 1:10 to be assigned to k.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introduction-to-r.html#cb126-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<p>After that, the for loop is written like so:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction-to-r.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> k){</span>
+<span id="cb127-2"><a href="introduction-to-r.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(k[i] <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb127-3"><a href="introduction-to-r.html#cb127-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11</code></pre>
+<p>Another way for us to yield the same output is to define the vector 1:10 within the for loop directly, like so:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="introduction-to-r.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb129-2"><a href="introduction-to-r.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb129-3"><a href="introduction-to-r.html#cb129-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11</code></pre>
+<p>We can write more complicated for loops by adding more functions, arithmetic operators, or even vectors! For example, if we want to create a different for loop that calculates for the <code>k^2</code>, we should first create a new vector, k.sq, with the the same length as vector k.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="introduction-to-r.html#cb131-1" aria-hidden="true" tabindex="-1"></a>k.sq <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<p>After that, we can write our for loop like so:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="introduction-to-r.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> k){    </span>
+<span id="cb132-2"><a href="introduction-to-r.html#cb132-2" aria-hidden="true" tabindex="-1"></a>  k.sq[i] <span class="ot">&lt;-</span> k[i]<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb132-3"><a href="introduction-to-r.html#cb132-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(k.sq[i])</span>
+<span id="cb132-4"><a href="introduction-to-r.html#cb132-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25
+## [1] 36
+## [1] 49
+## [1] 64
+## [1] 81
+## [1] 100</code></pre>
+<p>Now, everytime we call for <code>k.sq</code>, the new vector should be the output!</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="introduction-to-r.html#cb134-1" aria-hidden="true" tabindex="-1"></a>k.sq</span></code></pre></div>
+<pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+<p>We can also write for loops for data frames. Let’s take a look at our data frame, dataframe, again.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="introduction-to-r.html#cb136-1" aria-hidden="true" tabindex="-1"></a>dataframe</span></code></pre></div>
+<pre><code>##   Number    Text   T/F
+## 1      1   hello  TRUE
+## 2      2 bonjour FALSE
+## 3      3    ciao  TRUE
+## 4     10   hello  TRUE
+## 5     11 bonjour FALSE
+## 6     12    ciao  TRUE</code></pre>
+<p>Now, let’s say we want to loop through the entire data frame to find only the values under the “Number” column. To do that, we first need to know the number of rows our data frame has - we can use <code>nrow()</code> for this. But as we have learned before, we can just define this value directly in our for loop instead of having to do an extra step of finding the number of rows outside of the for loop.</p>
+<p>In other words, our code would look like so:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="introduction-to-r.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dataframe)){</span>
+<span id="cb138-2"><a href="introduction-to-r.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(dataframe[i,<span class="st">&quot;Number&quot;</span>])</span>
+<span id="cb138-3"><a href="introduction-to-r.html#cb138-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 10
+## [1] 11
+## [1] 12</code></pre>
+<p>We can also add conditions to our for loops by using <code>if</code>. For instance, we only want to print values under the “T/F” column where <code>i &gt; 3</code>. To do that, we would need to write the following codes:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction-to-r.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dataframe)){</span>
+<span id="cb140-2"><a href="introduction-to-r.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">3</span>) <span class="fu">print</span>(dataframe[i,<span class="st">&quot;T/F&quot;</span>])</span>
+<span id="cb140-3"><a href="introduction-to-r.html#cb140-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] TRUE
+## [1] FALSE
+## [1] TRUE</code></pre>
+</div>
+<div id="help-within-and-outside-of-r" class="section level2" number="2.10">
+<h2><span class="header-section-number">2.10</span> Help Within and Outside Of R</h2>
+<p>It gets a while to get used to the language of R and no tutorials can fully explain the complexities and nuances of this language. Therefore, it is important to know how to and where to get help about R! There are so many ways for you to search for help on R, here are only a few methods:</p>
+<div id="within-r" class="section level3" number="2.10.1">
+<h3><span class="header-section-number">2.10.1</span> Within R</h3>
+<p>If you have questions about a function or dataset in R, the easiest way to get help is to type ? before that particular function or dataset - as we have previously seen. Try running the codes below, what do you see?</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction-to-r.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="introduction-to-r.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?faithful</span></span></code></pre></div>
+<p>If you want to know whether there is a function for a particular action, you can use ?? before the action. If your action is more than one word long (e.g. geometric functions), you can put the entire phrase in quotation marks ("").</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction-to-r.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ??&quot;geometic functions&quot;</span></span></code></pre></div>
+<p>After running the code above, you should see a list of functions, the package that it belongs to, as well as what it does. For example, the function <code>phil()</code> in the R package named BAS can be usedd to compound confluent hypergeometric function of two variables.</p>
+<p>If you are using RStudio, you can also use the search box in the help window at the bottom right corner of our screen.</p>
+<div class="figure">
+<img src="images/help.png" alt="" />
+<p class="caption">Figure 3. Help window in RStudio</p>
+</div>
+</div>
+<div id="outside-of-r" class="section level3" number="2.10.2">
+<h3><span class="header-section-number">2.10.2</span> Outside of R</h3>
+<p>Outside of R, there are also plenty of resources for you to tap into <a href="https://www.rdocumentation.org/">R Documentation</a> is a good starting point.</p>
+<p>Another resource is <a href="https://stackoverflow.com/">Stack Overflow</a>, an online forum where you can ask and answer questions relating to coding!</p>
+<div id="do-question-10-of-the-quiz-now" class="section level4 unnumbered">
+<h4>DO QUESTION 10 OF THE QUIZ NOW</h4>
+<ul>
+<li>What are some of the ways that we can find help about R? (select all that apply)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="summary-and-takeaways-1" class="section level2" number="2.11">
+<h2><span class="header-section-number">2.11</span> Summary and Takeaways</h2>
+<p>In this tutorial, we learned a few basic steps of using R as a data analysis language. Completing this tutorial will prepare you more advanced tutorials in the future. Learning R is like learning another language, so the biggest tip is to practice practice practice!</p>
+<p>After this tutorial, you should be familiar with setting up for an R session using basic working directory functions. Additionally, you should also be comfortable with using arithmetic and logical operators and a few common data types of R. You are also introduced with a few basic functions for exploring a dataset as well as several common methods on how to seek help within and outside of R.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-and-rstudio-set-up.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="importing-data-into-r-with-readr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/1-introduction-to-r.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

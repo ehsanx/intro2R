@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Data Analysis with dplyr | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Data Analysis with dplyr | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Data Analysis with dplyr | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-09-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-nhanes.html"/>
+<link rel="next" href="data-visualization-with-ggplot2.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> Instructions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> What is R?</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> Download and Install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> Download and Install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> RStudio Basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#summary-and-takeaways"><i class="fa fa-check"></i><b>1.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> Set Up Basics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> Arithmetic Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.12.1"><span>Try it yourself 2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> Logical Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.22.2"><span>Try it yourself 2.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> Most Common Data Types In R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.32.3"><span>Try it yourself 2.3</span></a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.42.4"><span>Try it yourself 2.4</span></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.3</b> Lists</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.4</b> Dataframe</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.52.5"><span>Try it yourself 2.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> Exploring a Dataset</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.62.6"><span>Try it yourself 2.6</span></a></li>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.1</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.2</b> Structure</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.3</b> Class</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.72.7"><span>Try it yourself 2.7</span></a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.4</b> Length</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.82.8"><span>Try it yourself 2.8</span></a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.5</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.6</b> Mathematical Functions in R</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.92.9"><span>Try it yourself 2.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> Writing a New Function In R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> For Loops</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> Help Within and Outside Of R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>2.11</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> Instructions</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> Set Up</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> Basics Of Importing a CSV File Into R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.13.1"><span>Try it yourself 3.1</span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.3</b> Key Notes About Importing Data into R</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.23.2"><span>Try it yourself 3.2</span></a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.4</b> Column Specification</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.33.3"><span>Try it yourself 3.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> More Arguments Of read_csv</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.43.4"><span>Try it yourself 3.4</span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.2</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.3</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> Importing Other File Types into R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.53.5"><span>Try it yourself 3.5</span></a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.3</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.4</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> Exporting the Data Frame From R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>3.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li><a href="introduction-to-nhanes.html#try-it-yourself-4.14.1">Try it yourself 4.1]<span>4.1</span></a></li>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#summary-and-takeaways-3"><i class="fa fa-check"></i><b>4.6</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> Instructions</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> Dataset Preparation</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.15.1"><span>Try it yourself 5.1</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.25.2"><span>Try it yourself 5.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> Filter</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.35.3"><span>Try it yourself 5.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> Re-order the Rows</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.45.4"><span>Try it yourself 5.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> Add new variables</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.55.5"><span>Try it yourself 5.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> Summary Statistics and group_by</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.65.6"><span>Try it yourself 5.6</span></a></li>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.1</b> Group_by() extension</a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.75.7"><span>Try it yourself 5.7</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.85.8"><span>Try it yourself 5.8</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> Pipe</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.95.9"><span>Try it yourself 5.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> Alternatives to NHANESTranslate()</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-and-takeaways-4"><i class="fa fa-check"></i><b>5.15</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> Instructions</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> ggplot() and Point Geometrics</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.16.1"><span>Try it yourself 6.1</span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.2</b> Aesthetics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.26.2"><span>Try it yourself 6.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> Multiple Geometric Functions under one ggplot</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> Other Geometric Functions</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.36.3"><span>Try it yourself 6.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> Facet Functions</a>
+<ul>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.46.4"><span>Try it yourself 6.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> Customizing Graph Elements</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.5"><i class="fa fa-check"></i>Try it yourself 6.5</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graphs"><i class="fa fa-check"></i><b>6.9</b> Saving Our Graphs</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways-5"><i class="fa fa-check"></i><b>6.10</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> Set Up</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> Exploring Friends Visits Dataset</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> Creating Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.17.1"><span>Try it yourself 7.1</span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.2</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.3</b> Dataset</a></li>
+<li class="chapter" data-level="" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-20"><i class="fa fa-check"></i>Functions Debunked</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.27.2"><span>Try it yourself 7.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> Retrieving Information from Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.37.3"><span>Try it yourself 7.3</span></a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.4</b> Plotting Retrieved Information</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.47.4"><span>Try it yourself 7.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> Updating &amp; Plotting Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.57.5"><span>Try it yourself 7.5</span></a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.2</b> Plotting Date/Time</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.67.6"><span>Try it yourself 7.6</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> Arithmetic Operators with Date/Time</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-6"><i class="fa fa-check"></i><b>7.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> Set Up</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> What is tableone?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> Creating a tableone</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.18.1"><span>Try it yourself 8.1</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.3</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.28.2"><span>Try it yourself 8.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> Other Arguments to Customize tableone</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.38.3"><span>Try it yourself 8.3</span></a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.3</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.4</b> Strata</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.48.4"><span>Try it yourself 8.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> Export tableone</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> Alternatives to tableone</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-7"><i class="fa fa-check"></i><b>8.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html"><i class="fa fa-check"></i><b>9</b> Appendix: Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-2-introduction-to-r"><i class="fa fa-check"></i>Tutorial 2: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section"><i class="fa fa-check"></i>2.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-1"><i class="fa fa-check"></i>2.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-2"><i class="fa fa-check"></i>2.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-3"><i class="fa fa-check"></i>2.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-4"><i class="fa fa-check"></i>2.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-5"><i class="fa fa-check"></i>2.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-6"><i class="fa fa-check"></i>2.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-7"><i class="fa fa-check"></i>2.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-8"><i class="fa fa-check"></i>2.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.1" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-3-importing-data-into-r-with-readr"><i class="fa fa-check"></i><b>9.1</b> Tutorial 3: Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-9"><i class="fa fa-check"></i>3.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-10"><i class="fa fa-check"></i>3.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-11"><i class="fa fa-check"></i>3.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-12"><i class="fa fa-check"></i>3.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-13"><i class="fa fa-check"></i>3.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-4-introduction-to-nhanes"><i class="fa fa-check"></i><b>9.2</b> Tutorial 4: Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-14"><i class="fa fa-check"></i>4.1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-5-data-analysis-with-dplyr"><i class="fa fa-check"></i><b>9.3</b> Tutorial 5: Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-15"><i class="fa fa-check"></i>5.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-16"><i class="fa fa-check"></i>5.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-17"><i class="fa fa-check"></i>5.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-18"><i class="fa fa-check"></i>5.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-19"><i class="fa fa-check"></i>5.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-20"><i class="fa fa-check"></i>5.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-21"><i class="fa fa-check"></i>5.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-22"><i class="fa fa-check"></i>5.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-23"><i class="fa fa-check"></i>5.9</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-6-data-visualization-with-ggplot2"><i class="fa fa-check"></i>Tutorial 6: Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-24"><i class="fa fa-check"></i>6.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-25"><i class="fa fa-check"></i>6.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-26"><i class="fa fa-check"></i>6.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-27"><i class="fa fa-check"></i>6.4</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-7-date-and-time-data-with-lubridate"><i class="fa fa-check"></i>Tutorial 7: Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-28"><i class="fa fa-check"></i>7.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-29"><i class="fa fa-check"></i>7.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-30"><i class="fa fa-check"></i>7.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-31"><i class="fa fa-check"></i>7.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-32"><i class="fa fa-check"></i>7.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-33"><i class="fa fa-check"></i>7.6</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-8-data-summary-with-tableone"><i class="fa fa-check"></i>Tutorial 8: Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-34"><i class="fa fa-check"></i>8.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-35"><i class="fa fa-check"></i>8.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-36"><i class="fa fa-check"></i>8.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-37"><i class="fa fa-check"></i>8.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-analysis-with-dplyr" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Data Analysis with dplyr</h1>
+<div id="instructions-4" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Instructions</h2>
+<p>This tutorial is aiming to introduce you to how to manipulate data and transfer the raw data into ready-to-analysis form in R. It will guide you to learn and practice the basic and useful functions in the dplyr package. In this tutorial, follow the step-by-step instruction as well as the examples which demonstrating how the functions work.</p>
+<p>Accompanying this tutorial is <strong>a short <a href="https://forms.gle/17WnX6paHx5U14jx6">Google quiz</a></strong> for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.</p>
+</div>
+<div id="learning-objectives-4" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Learning Objectives</h2>
+<ul>
+<li>Be able to import nhanesA and dplyr package. Be able to understand dataframe.</li>
+<li>Be able to use rename() and select() to rename and select variables (columns) in a dataframe.</li>
+<li>Be able to use filter() to subset a dataframe based on conditions.</li>
+<li>Be able to use arrange() to re-order the rows in a dataframe.</li>
+<li>Be able to use mutate() and transmute() to add new variables that are computed from existing variables in a dataframe.</li>
+<li>Be able to use summarize() to get summary statistics from a dataframe; Be able to perform grouping with summarize(), filter(), and mutate().</li>
+<li>Be able to use pipe to re-write mutilpe operations in a more readable way.</li>
+<li>Be able to check missing values existence and deal with missing values while using the above functions.</li>
+</ul>
+</div>
+<div id="set-up-1" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Set up</h2>
+<div id="install-and-load-packages" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Install and load packages</h3>
+<p>First, we need to install and load the dplyr package as well as bring in our National Health and Nutrition Examination Survey (NHANES) dataset. This particular tutorial uses data from 2013-2014.</p>
+<p>For more information about NHANES, you can visit this website. It is recommended that you explore this website to familiar yourself with the data that we will be using throughout this tutorial.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="data-analysis-with-dplyr.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;dplyr&quot;)</span></span>
+<span id="cb255-2"><a href="data-analysis-with-dplyr.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="data-analysis-with-dplyr.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;nhanesA&quot;)</span></span>
+<span id="cb256-2"><a href="data-analysis-with-dplyr.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nhanesA)</span></code></pre></div>
+</div>
+<div id="set-working-directory" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Set working directory</h3>
+<p>We want to set the working directory using <code>setwd()</code> - you may need to change the working directory to match your hard drive set-up.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="data-analysis-with-dplyr.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setwd(&#39;/kaggle/working&#39;)</span></span></code></pre></div>
+</div>
+<div id="import-dataset" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Import dataset</h3>
+<p>This particular tutorial uses the Demographics dataset and Blood pressure dataset from NHANES dataset (2013-2014).</p>
+<p>The Demographics dataset contains a huge records of demographics information such as gender, race, annual income for each participant. The Blood pressure dataset is in the Examination data and contains a hugh records of measurements that related to blood pressure measurement.</p>
+<p>More information on the imported dataset can be found here:</p>
+<ul>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=2013">Demographics data</a></li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&amp;CycleBeginYear=2013">Examination data</a></li>
+<li><a href="https://wwwn.cdc.gov/Nchs/Nhanes/Search/variablelist.aspx?Component=Demographics&amp;CycleBeginYear=2013">Complete variable dictionary</a></li>
+<li><a href="https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/DEMO_H.htm#Codebook">DEMO_H Code book</a> (Demographic Variables)</li>
+<li><a href="https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/BPX_H.htm#Codebook">BPX_H Code book</a> (Blood Pressure)</li>
+</ul>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="data-analysis-with-dplyr.html#cb258-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">nhanes</span>(<span class="st">&#39;DEMO_H&#39;</span>)</span></code></pre></div>
+<pre><code>## Processing SAS dataset DEMO_H     ..</code></pre>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-analysis-with-dplyr.html#cb260-1" aria-hidden="true" tabindex="-1"></a>bpx <span class="ot">&lt;-</span> <span class="fu">nhanes</span>(<span class="st">&#39;BPX_H&#39;</span>)</span></code></pre></div>
+<pre><code>## Processing SAS dataset BPX_H      ..</code></pre>
+<div id="functions-debunked-10" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><code>nhanes()</code> is the function we use to import our NHANES data and save it in a dataframe. What is a dataframe? We’ll introduce it below. The arguments are as follows:</p>
+<p>nhanes(‘Name of Dataset’)</p>
+<p><strong>For example:</strong> <code>nhanes('DEMO_H')</code></p>
+</div>
+</div>
+<div id="explore-our-dataset" class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Explore our dataset</h3>
+<p>Recall the basic functions that we learned in tutorial 1, it is good practice for us to explore our datasets before doing any analysis.</p>
+<p>We can check the dimension of the datasets:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-analysis-with-dplyr.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(demo)</span></code></pre></div>
+<pre><code>## [1] 10175    47</code></pre>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-analysis-with-dplyr.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(bpx)</span></code></pre></div>
+<pre><code>## [1] 9813   23</code></pre>
+<p>We can also check their first few rows:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-analysis-with-dplyr.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51</code></pre>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-analysis-with-dplyr.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bpx, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##    SEQN PEASCST1 PEASCTM1 PEASCCT1 BPXCHR BPAARM BPACSZ BPXPLS BPXPULS BPXPTY
+## 1 73557        1      620       NA     NA      1      4     86       1      1
+## 2 73558        1      766       NA     NA      1      4     74       1      1
+## 3 73559        1      665       NA     NA      1      4     68       1      1
+##   BPXML1 BPXSY1 BPXDI1 BPAEN1 BPXSY2 BPXDI2 BPAEN2 BPXSY3 BPXDI3 BPAEN3 BPXSY4
+## 1    140    122     72      2    114     76      2    102     74      2     NA
+## 2    170    156     62      2    160     80      2    156     42      2     NA
+## 3    160    140     90      2    140     76      2    146     80      2     NA
+##   BPXDI4 BPAEN4
+## 1     NA     NA
+## 2     NA     NA
+## 3     NA     NA</code></pre>
+<p>It does not hurt to also check the last few rows of the datasets:</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-analysis-with-dplyr.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(demo, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##        SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3
+## 10173 83729        8        2        2       42       NA        4        4
+## 10174 83730        8        2        1        7       NA        2        2
+## 10175 83731        8        2        1       11       NA        5        6
+##       RIDEXMON RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3
+## 10173        2       NA        2      NA        2        1        6       NA
+## 10174        1       84       NA      NA        1        1       NA        0
+## 10175        1      140       NA      NA        1        1       NA        5
+##       DMDEDUC2 DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY
+## 10173        5        3        2       1        2        2       1        2
+## 10174       NA       NA       NA       1        1        2       1        2
+## 10175       NA       NA       NA       1        1        2       1        2
+##       FIAINTRP MIALANG MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA
+## 10173        2      NA       NA       NA       NA        1        1        0
+## 10174        2      NA       NA       NA       NA        4        4        1
+## 10175        2       1        2        2       NA        4        4        0
+##       DMDHHSZB DMDHHSZE DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU
+## 10173        0        0        2       42        2        5        3       NA
+## 10174        1        0        2       30        2        4        1        3
+## 10175        2        0        1       43        2        5        1        5
+##       WTINT2YR  WTMEC2YR SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 10173 24122.25 26902.344       1      104        7        7     3.66
+## 10174 25521.88 26686.026       2      109        6        6     1.05
+## 10175  8930.18  9700.873       2      106       15       15     5.00</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="data-analysis-with-dplyr.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(bpx, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##       SEQN PEASCST1 PEASCTM1 PEASCCT1 BPXCHR BPAARM BPACSZ BPXPLS BPXPULS
+## 9811 83729        1      679       NA     NA      1      4     80       1
+## 9812 83730        1      381       NA     72     NA     NA     NA       1
+## 9813 83731        1      498       NA     NA      1      3     90       1
+##      BPXPTY BPXML1 BPXSY1 BPXDI1 BPAEN1 BPXSY2 BPXDI2 BPAEN2 BPXSY3 BPXDI3
+## 9811      1    150    136     82      2    130     82      2    138     80
+## 9812     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 9813      1    120     94     68      2     94     56      2     90     62
+##      BPAEN3 BPXSY4 BPXDI4 BPAEN4
+## 9811      2     NA     NA     NA
+## 9812     NA     NA     NA     NA
+## 9813      2     NA     NA     NA</code></pre>
+<div id="is.na" class="section level4" number="5.3.4.1">
+<h4><span class="header-section-number">5.3.4.1</span> is.na()</h4>
+<p>In real world, missing values are unavoidable. There are many reasons for missing values - may be a result from nonresponse or incorrect data collection and it happens all the time. It is always a good idea to check if there is any missing value before proceeding.</p>
+<p>In a dataframe, you will see NAs if there’re missing values and <em>NA</em> indicates missing values in R.</p>
+<p>Note: Be careful when doing manipulation on real dataset!!!Missing values may be recorded in other ways, for example, <em>infinity</em> or other numbers. To deal with missing values in this case, one way is to convert these values into NAs and then treat them as regular NAs. Details will not be discussed in this tutorial but will likely be included in later tutorials.</p>
+<p>To check if there is any missing values (NAs) in a dataframe, use <code>is.na()</code>:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="data-analysis-with-dplyr.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">is.na</span>(demo),<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##       SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3
+## [1,] FALSE    FALSE    FALSE    FALSE    FALSE     TRUE    FALSE    FALSE
+## [2,] FALSE    FALSE    FALSE    FALSE    FALSE     TRUE    FALSE    FALSE
+## [3,] FALSE    FALSE    FALSE    FALSE    FALSE     TRUE    FALSE    FALSE
+## [4,] FALSE    FALSE    FALSE    FALSE    FALSE     TRUE    FALSE    FALSE
+## [5,] FALSE    FALSE    FALSE    FALSE    FALSE     TRUE    FALSE    FALSE
+##      RIDEXMON RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3
+## [1,]    FALSE     TRUE    FALSE   FALSE    FALSE    FALSE     TRUE     TRUE
+## [2,]    FALSE     TRUE    FALSE    TRUE    FALSE    FALSE     TRUE     TRUE
+## [3,]    FALSE     TRUE    FALSE   FALSE    FALSE    FALSE     TRUE     TRUE
+## [4,]    FALSE    FALSE     TRUE    TRUE    FALSE    FALSE     TRUE    FALSE
+## [5,]    FALSE     TRUE    FALSE    TRUE    FALSE    FALSE     TRUE     TRUE
+##      DMDEDUC2 DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY
+## [1,]    FALSE    FALSE     TRUE   FALSE    FALSE    FALSE   FALSE    FALSE
+## [2,]    FALSE    FALSE     TRUE   FALSE    FALSE    FALSE   FALSE    FALSE
+## [3,]    FALSE    FALSE     TRUE   FALSE    FALSE    FALSE   FALSE    FALSE
+## [4,]     TRUE     TRUE     TRUE   FALSE    FALSE    FALSE   FALSE    FALSE
+## [5,]    FALSE    FALSE     TRUE   FALSE    FALSE    FALSE   FALSE    FALSE
+##      FIAINTRP MIALANG MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA
+## [1,]    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [2,]    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [3,]    FALSE   FALSE    FALSE    FALSE     TRUE    FALSE    FALSE    FALSE
+## [4,]    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [5,]    FALSE   FALSE    FALSE    FALSE     TRUE    FALSE    FALSE    FALSE
+##      DMDHHSZB DMDHHSZE DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU
+## [1,]    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE
+## [2,]    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [3,]    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [4,]    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+## [5,]    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
+##      WTINT2YR WTMEC2YR SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## [1,]    FALSE    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE
+## [2,]    FALSE    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE
+## [3,]    FALSE    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE
+## [4,]    FALSE    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE
+## [5,]    FALSE    FALSE   FALSE    FALSE    FALSE    FALSE    FALSE</code></pre>
+<p>To find the total number of missing values in a dataframe:</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="data-analysis-with-dplyr.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(demo))</span></code></pre></div>
+<pre><code>## [1] 82092</code></pre>
+<p>To check if there is any missing values (NAs) in a column,for example, gender:</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="data-analysis-with-dplyr.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">is.na</span>(demo[<span class="st">&#39;RIAGENDR&#39;</span>]),<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##      RIAGENDR
+## [1,]    FALSE
+## [2,]    FALSE
+## [3,]    FALSE
+## [4,]    FALSE
+## [5,]    FALSE</code></pre>
+<p>To find the total number of missing values in a column:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="data-analysis-with-dplyr.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(demo[<span class="st">&#39;RIAGENDR&#39;</span>]))</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>To find the number of missing values for each column, use the summary() function:</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="data-analysis-with-dplyr.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demo)</span></code></pre></div>
+<p>If there is a missing value in one cell, is.na() will return <strong>TRUE</strong>; if there is no missing value in one cell, it will return <strong>FALSE</strong></p>
+<p>For example, (1,1) (1st row 1st column) is FALSE - it means that (1,1) is not a missing value; (1,6) (1st row 6th column) is TRUE - it means that (1,6) is NA.</p>
+<p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/NA"><strong>is.na()</strong></a> is the function we use to inspect any missing values in a dataframe - it is housed in the base package.</p>
+<p>The arguments are as follows:</p>
+<p>is.na(
+&gt; NAME OF DATAFRAME</p>
+<p>)</p>
+<p><strong>For example:</strong> <code>is.na(demo)</code></p>
+</div>
+<div id="do-questions-1-3-of-the-quiz-now-1" class="section level4 unnumbered">
+<h4><strong>DO QUESTIONS 1-3 OF THE QUIZ NOW</strong></h4>
+<ul>
+<li><p>What package does the function <code>nhanes()</code> belong to?</p></li>
+<li><p>Which code below is the correct one to print the last 10 rows of a dataframe called temp?</p></li>
+<li><p>Suppose a cell contains NA. What is the output after perform is.na() on it?</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="dataset-preparation" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Dataset Preparation</h2>
+<p>Now that we’ve successfully imported the two datasets and we’re ready to do further data manipulations. But before we proceed, there are three issues in the datasets:</p>
+<ul>
+<li><p>The two datasets are <strong>Huge</strong>. Recall the dimensions of the two datasets in section 1, there are 10175 rows and 47 columns in the demo dataset and 9813 rows and 23 columns in the bpx dataset.</p>
+<ul>
+<li><p>For demostration purpose, this tutorial will only focus on parts of the two datasets.</p>
+<ul>
+<li><p>For the demo dataset, we want to keep the following variables as our primary interests only:</p>
+<ul>
+<li><em>SEQN</em> (Respondent sequence number)</li>
+<li><em>RIAGENDR</em> (Gender)</li>
+<li><em>RIDAGEYR</em> (Age in years at screening)</li>
+<li><em>RIDRETH3</em> (Race)</li>
+<li><em>DMDEDUC2</em> (Education level - Adults 20+)</li>
+</ul></li>
+<li><p>For the bpx dataset, we want to keep the following variables as our primary interests only:</p>
+<ul>
+<li><em>SEQN</em> (Respondent sequence number)</li>
+<li><em>PEASCST1</em> (Blood Pressure Status)</li>
+<li><em>PEASCTM1</em> (Blood Pressure Time in Seconds)</li>
+<li><em>BPXSY1</em> (Systolic: Blood pres (1st rdg) mm Hg)</li>
+<li><em>BPXDI1</em> (Diastolic: Blood pres (1st rdg) mm Hg)</li>
+</ul></li>
+<li><p>For both datasets, we want to keep the top 5 rows only.</p></li>
+</ul></li>
+</ul></li>
+<li><p>There is something odd about the demo dataset. For example,if you run demo alone, you will see that <em>RIAGENDR</em> (gender) is coded as 1 and 2. For ease of future use, we want to translate this 1 and 2 into male and female.</p></li>
+<li><p>The variable names are long are ambiguous. For ease of further use, we want to rename the variables so that they can be easily understand.</p>
+<ul>
+<li><p>For the demo dataframe, we want to rename the variables in this way:</p>
+<ul>
+<li>SEQN -&gt; id</li>
+<li>RIAGENDR -&gt; gender</li>
+<li>RIDAGEYR -&gt; age</li>
+<li>RIDRETH3 -&gt; race</li>
+<li>DMDEDUC2 -&gt; race</li>
+</ul></li>
+<li><p>For the bpx dataframe, we want to rename the variables in this way:</p>
+<ul>
+<li>SEQN -&gt; id</li>
+<li>PEASCST1 -&gt; bp_status</li>
+<li>PEASCTM1 -&gt; bpt_sec</li>
+<li>BPXSY1 -&gt; systolic</li>
+<li>BPXDI1 -&gt; diastolic</li>
+</ul></li>
+<li><p><strong>Note</strong>, there are many different ways of renaming as long as the new names are straight-forward. We will use the above rename strategy in this tutorial for the sake of consistency.</p></li>
+</ul></li>
+</ul>
+<p>With the three issues listed above, here’s an example of how to resolve them in the demo dataset:</p>
+<p>First, we need to translate the way of variable encoding using the <code>nhanesTranslate()</code> function:</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="data-analysis-with-dplyr.html#cb283-1" aria-hidden="true" tabindex="-1"></a>demo_translate <span class="ot">&lt;-</span> <span class="fu">nhanesTranslate</span>(<span class="st">&#39;DEMO_H&#39;</span>,</span>
+<span id="cb283-2"><a href="data-analysis-with-dplyr.html#cb283-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&#39;SEQN&#39;</span>, <span class="co"># Respondent sequence number</span></span>
+<span id="cb283-3"><a href="data-analysis-with-dplyr.html#cb283-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;RIAGENDR&#39;</span>, <span class="co"># Gender</span></span>
+<span id="cb283-4"><a href="data-analysis-with-dplyr.html#cb283-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;RIDAGEYR&#39;</span>, <span class="co"># Age in years at screening</span></span>
+<span id="cb283-5"><a href="data-analysis-with-dplyr.html#cb283-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;RIDRETH3&#39;</span>, <span class="co"># Race</span></span>
+<span id="cb283-6"><a href="data-analysis-with-dplyr.html#cb283-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;DMDEDUC2&#39;</span>), <span class="co"># Education level - Adults 20+</span></span>
+<span id="cb283-7"><a href="data-analysis-with-dplyr.html#cb283-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">data =</span> demo)</span></code></pre></div>
+<pre><code>## Warning in FUN(X[[i]], ...): No translation table is available for SEQN</code></pre>
+<pre><code>## Translated columns: RIAGENDR RIDRETH3 DMDEDUC2</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="data-analysis-with-dplyr.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_translate,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1
+## 1 73557        8        2     Male       69       NA        4
+## 2 73558        8        2     Male       54       NA        3
+## 3 73559        8        2     Male       72       NA        3
+## 4 73560        8        2     Male        9       NA        3
+## 5 73561        8        2   Female       73       NA        3
+##             RIDRETH3 RIDEXMON RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN
+## 1 Non-Hispanic Black        1       NA        1       1        1        1
+## 2 Non-Hispanic White        1       NA        2      NA        1        1
+## 3 Non-Hispanic White        2       NA        1       1        1        1
+## 4 Non-Hispanic White        1      119       NA      NA        1        1
+## 5 Non-Hispanic White        1       NA        2      NA        1        1
+##   DMDYRSUS DMDEDUC3                         DMDEDUC2 DMDMARTL RIDEXPRG SIALANG
+## 1       NA       NA High school graduate/GED or equi        4       NA       1
+## 2       NA       NA High school graduate/GED or equi        1       NA       1
+## 3       NA       NA        Some college or AA degree        1       NA       1
+## 4       NA        3                             &lt;NA&gt;       NA       NA       1
+## 5       NA       NA        College graduate or above        1       NA       1
+##   SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG MIAPROXY MIAINTRP
+## 1        2        2       1        2        2       1        2        2
+## 2        2        2       1        2        2       1        2        2
+## 3        2        2       1        2        2       1        2        2
+## 4        1        2       1        2        2       1        2        2
+## 5        2        2       1        2        2       1        2        2
+##   AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE DMDHRGND DMDHRAGE
+## 1        1        3        3        0        0        2        1       69
+## 2        1        4        4        0        2        0        1       54
+## 3       NA        2        2        0        0        2        1       72
+## 4        1        4        4        0        2        0        1       33
+## 5       NA        2        2        0        0        2        1       78
+##   DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR SDMVPSU SDMVSTRA
+## 1        1        3        4       NA 13281.24 13481.04       1      112
+## 2        1        3        1        1 23682.06 24471.77       1      108
+## 3        1        4        1        3 57214.80 57193.29       1      109
+## 4        1        3        1        4 55201.18 55766.51       2      109
+## 5        1        5        1        5 63709.67 65541.87       2      116
+##   INDHHIN2 INDFMIN2 INDFMPIR
+## 1        4        4     0.84
+## 2        7        7     1.78
+## 3       10       10     4.51
+## 4        9        9     2.52
+## 5       15       15     5.00</code></pre>
+<p>Second, we want to keep the variabls which we’re interested in only:</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="data-analysis-with-dplyr.html#cb288-1" aria-hidden="true" tabindex="-1"></a>new_demo <span class="ot">&lt;-</span> <span class="fu">select</span>(demo_translate,</span>
+<span id="cb288-2"><a href="data-analysis-with-dplyr.html#cb288-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">c</span>(SEQN,</span>
+<span id="cb288-3"><a href="data-analysis-with-dplyr.html#cb288-3" aria-hidden="true" tabindex="-1"></a>                    RIAGENDR,</span>
+<span id="cb288-4"><a href="data-analysis-with-dplyr.html#cb288-4" aria-hidden="true" tabindex="-1"></a>                    RIDAGEYR,</span>
+<span id="cb288-5"><a href="data-analysis-with-dplyr.html#cb288-5" aria-hidden="true" tabindex="-1"></a>                    RIDRETH3,</span>
+<span id="cb288-6"><a href="data-analysis-with-dplyr.html#cb288-6" aria-hidden="true" tabindex="-1"></a>                    DMDEDUC2))</span>
+<span id="cb288-7"><a href="data-analysis-with-dplyr.html#cb288-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_demo,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##    SEQN RIAGENDR RIDAGEYR           RIDRETH3                         DMDEDUC2
+## 1 73557     Male       69 Non-Hispanic Black High school graduate/GED or equi
+## 2 73558     Male       54 Non-Hispanic White High school graduate/GED or equi
+## 3 73559     Male       72 Non-Hispanic White        Some college or AA degree
+## 4 73560     Male        9 Non-Hispanic White                             &lt;NA&gt;
+## 5 73561   Female       73 Non-Hispanic White        College graduate or above</code></pre>
+<p>Third, we want to rename the variables using the <code>rename()</code> function:</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="data-analysis-with-dplyr.html#cb290-1" aria-hidden="true" tabindex="-1"></a>new_demo <span class="ot">&lt;-</span> <span class="fu">rename</span>(new_demo,</span>
+<span id="cb290-2"><a href="data-analysis-with-dplyr.html#cb290-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">id =</span> SEQN, <span class="co"># Respondent sequence number</span></span>
+<span id="cb290-3"><a href="data-analysis-with-dplyr.html#cb290-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">gender =</span> RIAGENDR, <span class="co"># Gender</span></span>
+<span id="cb290-4"><a href="data-analysis-with-dplyr.html#cb290-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">age =</span> RIDAGEYR, <span class="co"># Age in years at screening</span></span>
+<span id="cb290-5"><a href="data-analysis-with-dplyr.html#cb290-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">race =</span> RIDRETH3, <span class="co"># Race/Hispanic origin</span></span>
+<span id="cb290-6"><a href="data-analysis-with-dplyr.html#cb290-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">edu =</span> DMDEDUC2, <span class="co"># Education level - Adults 20+</span></span>
+<span id="cb290-7"><a href="data-analysis-with-dplyr.html#cb290-7" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb290-8"><a href="data-analysis-with-dplyr.html#cb290-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_demo,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##      id gender age               race                              edu
+## 1 73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2 73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3 73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4 73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 5 73561 Female  73 Non-Hispanic White        College graduate or above</code></pre>
+<p>Last, we want to keep the top 10 rows using the <code>head()</code> function and save the dataframe as <code>final_demo</code>:</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="data-analysis-with-dplyr.html#cb292-1" aria-hidden="true" tabindex="-1"></a>final_demo <span class="ot">&lt;-</span> <span class="fu">head</span>(new_demo,<span class="dv">10</span>)</span>
+<span id="cb292-2"><a href="data-analysis-with-dplyr.html#cb292-2" aria-hidden="true" tabindex="-1"></a>final_demo</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 5  73561 Female  73 Non-Hispanic White        College graduate or above
+## 6  73562   Male  56   Mexican American        Some college or AA degree
+## 7  73563   Male   0 Non-Hispanic White                             &lt;NA&gt;
+## 8  73564 Female  61 Non-Hispanic White        College graduate or above
+## 9  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 10 73566 Female  56 Non-Hispanic White High school graduate/GED or equi</code></pre>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select"><strong>rename()</strong></a> is the function we use to rename the variables and return all variables - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>rename(<strong>Name of Data Frame</strong>, <strong>New Variable Name</strong> = <strong>Old Variable Name</strong>)</p>
+<p><strong>For example:</strong> <code>rename(demo, id = SEQN)</code></p>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select"><strong>select()</strong></a> is the function we use to only return the varibles we want - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>select(<strong>Name of Data Frame</strong>, <strong>Variables (can be written as a vector)</strong>)</p>
+<p><strong>For example:</strong> <code>select(demo, c(id,gender,age))</code></p>
+<p><strong>For example:</strong> <code>select(demo, id:age))</code></p>
+<div id="try-it-yourself-5.15.1" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-15">Try it yourself 5.1</a></h3>
+<p>In the bpx dataframe, keep the following variables and top 5 rows only:</p>
+<ul>
+<li>SEQN</li>
+<li>PEASCST1</li>
+<li>PEASCTM1</li>
+<li>BPXSY1</li>
+<li>BPXDI1</li>
+</ul>
+</div>
+<div id="try-it-yourself-5.25.2" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-16">Try it yourself 5.2</a></h3>
+<p>rename the variables in the following way:</p>
+<ul>
+<li>SEQN -&gt; id</li>
+<li>PEASCST1 -&gt; bp_status</li>
+<li>PEASCTM1 -&gt; bpt_sec</li>
+<li>BPXSY1 -&gt; systolic</li>
+<li>BPXDI1 -&gt; diastolic</li>
+</ul>
+<div id="do-questions-4-5-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTIONS 4 &amp; 5 OF THE QUIZ NOW</strong></h4>
+<ul>
+<li><p>Given the following code: <code>select(dataset, A, B)</code>. What is the purpose of the code?</p></li>
+<li><p>Which code below is the correct one to rename column A to B in a dataframe called dataset?</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="filter" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Filter</h2>
+<p>Sometimes, we want to focus on a subset of the dataset that satisifying some conditions for further analysis. In this case, we need to filter the dataset based on variables’ values and conditions.</p>
+<p>For example, we use the following code to filter the observations that patients are 40 years old at screening.</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="data-analysis-with-dplyr.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(final_demo, age <span class="sc">==</span> <span class="dv">40</span>)</span></code></pre></div>
+<pre><code>## [1] id     gender age    race   edu   
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<p>We may also interested in the observations that patients are 40 <strong>or</strong> 41 years old at screening:</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-analysis-with-dplyr.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(final_demo, age <span class="sc">==</span> <span class="dv">40</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">41</span>)</span></code></pre></div>
+<pre><code>## [1] id     gender age    race   edu   
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<p>Another way of writing the code above is to use the <code>%in%</code> operator:</p>
+<p><code>x %in% y</code> is equivalent to the condition that <strong>the value of x is in one of the values of y</strong></p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-analysis-with-dplyr.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(final_demo, age <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">41</span>))</span></code></pre></div>
+<pre><code>## [1] id     gender age    race   edu   
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div id="functions-debunked-11" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/filter"><strong>filter()</strong></a> is the function we use to subset the dataset based on their values and conditions - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>filter(<strong>Name of Dataset</strong>, <strong>Condition 1</strong>, <strong>Condition 2</strong>, <strong>…</strong>, <strong>Condition n</strong>)</p>
+<p><strong>For example:</strong> <code>filter(new_demo, gender == 1)</code></p>
+<p><strong>Note:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Pay attention to the difference between <code>=</code> and <code>==</code>
+&gt; <code>=</code> is assignment operator</li>
+</ol>
+<blockquote>
+<p><code>==</code> is comparison operator</p>
+</blockquote>
+<p>More comparison operators are <code>&lt;</code>, <code>&lt;=</code>,<code>&gt;</code>, <code>&gt;=</code>,<code>!=</code>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Logical operators</li>
+</ol>
+<p>Mutiple conditions can be combined using logical operators. Common logical operators are:</p>
+<blockquote>
+<p><code>and</code> is <code>&amp;</code></p>
+</blockquote>
+<blockquote>
+<p><code>or</code> is <code>|</code></p>
+</blockquote>
+<blockquote>
+<p><code>not</code> is <code>!</code></p>
+</blockquote>
+<p><strong>For example:</strong> <code>filter(new_demo, age == 40 | age == 41)</code></p>
+</div>
+<div id="missing-values-1" class="section level4" number="5.5.0.1">
+<h4><span class="header-section-number">5.5.0.1</span> Missing values</h4>
+<p>Note, we don’t have any missing values in the age column (can be checked using <code>is.na(new_demo['age'])</code>).</p>
+<p>What if we have missing values and how does filter() treat missing values?</p>
+<p>filter() only keeps the rows where the condition is <strong>TRUE</strong> and remove the rows where the condition is failed due to <strong>FALSE OR NA</strong>.</p>
+<p>If you want to keep the NAs, you need to add the condition explicitly: <code>is.na(VARIABLE_NAME)</code> and use <code>|</code> to combine with other conditions.</p>
+<p><strong>For example:</strong> <code>filter(new_demo, is.na(income) | income &lt;= 50)</code></p>
+</div>
+<div id="try-it-yourself-5.35.3" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-17">Try it yourself 5.3</a></h3>
+<p>In the demo dataframe, find all the records that:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The participant who is a male</p></li>
+<li><p>The participant who is a male and is older tha 50 years old</p></li>
+<li><p>The education level is missing</p></li>
+</ol>
+<div id="do-questions-6-8-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTIONS 6-8 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blank to answer the ‘Try it yourself’ sections:</p>
+<ul>
+<li><p>filter(final_demo, gender <code>___</code>)</p></li>
+<li><p>filter(final_demo, gender == ‘Male’ <code>___</code> age &gt; 50)</p></li>
+<li><p>filter(final_demo, <code>___</code>)</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="re-order-the-rows" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Re-order the Rows</h2>
+<p>Suppose we want to re-order the observations by certain variables, we can use the arrange() function in R.</p>
+<p>First, let’s look at the top 5 rows in the demo dataframe:</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-analysis-with-dplyr.html#cb300-1" aria-hidden="true" tabindex="-1"></a>final_demo</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 5  73561 Female  73 Non-Hispanic White        College graduate or above
+## 6  73562   Male  56   Mexican American        Some college or AA degree
+## 7  73563   Male   0 Non-Hispanic White                             &lt;NA&gt;
+## 8  73564 Female  61 Non-Hispanic White        College graduate or above
+## 9  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 10 73566 Female  56 Non-Hispanic White High school graduate/GED or equi</code></pre>
+<p>We notice that the column “age” doesn’t follow any order. We use the following code to re-order the dataframe by age:</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-analysis-with-dplyr.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(final_demo, age)</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73563   Male   0 Non-Hispanic White                             &lt;NA&gt;
+## 2  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 3  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 4  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 5  73562   Male  56   Mexican American        Some college or AA degree
+## 6  73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+## 7  73564 Female  61 Non-Hispanic White        College graduate or above
+## 8  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 9  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 10 73561 Female  73 Non-Hispanic White        College graduate or above</code></pre>
+<p>If we want to change it to descending order, use desc():</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-analysis-with-dplyr.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(final_demo, <span class="fu">desc</span>(age))</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73561 Female  73 Non-Hispanic White        College graduate or above
+## 2  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 3  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 4  73564 Female  61 Non-Hispanic White        College graduate or above
+## 5  73562   Male  56   Mexican American        Some college or AA degree
+## 6  73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+## 7  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 8  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 9  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 10 73563   Male   0 Non-Hispanic White                             &lt;NA&gt;</code></pre>
+<p>What if we want to change the order by multiple columns?</p>
+<p>We can simply add multiple columns in the arguments! It’s also useful when there are ties in the values of one column and the subsquent columns are used to break the ties.</p>
+<p>For example, re-order the observations by age,id:</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-analysis-with-dplyr.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(final_demo,age,id)</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73563   Male   0 Non-Hispanic White                             &lt;NA&gt;
+## 2  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 3  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 4  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 5  73562   Male  56   Mexican American        Some college or AA degree
+## 6  73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+## 7  73564 Female  61 Non-Hispanic White        College graduate or above
+## 8  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 9  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 10 73561 Female  73 Non-Hispanic White        College graduate or above</code></pre>
+<div id="functions-debunked-12" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/arrange"><strong>arrange()</strong></a> is the function we use to change the order of the observations by columns - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>arrange(
+&gt; NAME OF DATAFRAME,</p>
+<blockquote>
+<p>COLUMN 1</p>
+</blockquote>
+<blockquote>
+<p>COLUMN 2</p>
+</blockquote>
+<blockquote>
+<p>…</p>
+</blockquote>
+<blockquote>
+<p>COLUMN n</p>
+</blockquote>
+<p>)</p>
+<p><strong>For example:</strong> <code>arrange(new_demo, gender)</code></p>
+<p>Use <code>desc(COLUMN_NAME)</code> to reorder the dataframe by <em>COLUMN_NAME</em> in descending order.</p>
+</div>
+<div id="missing-values-2" class="section level4" number="5.6.0.1">
+<h4><span class="header-section-number">5.6.0.1</span> Missing values</h4>
+<p>In the last example, we notice that there are missing values in column ‘income’ and ‘income_ratio.’</p>
+<p>How does arrange() deal with missing value? <strong>All NAs will be retained at the end.</strong> Check the output above!</p>
+</div>
+<div id="try-it-yourself-5.45.4" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-18">Try it yourself 5.4</a></h3>
+<p>Re-order the rows in the bpx dataset by Blood Pressure Time in Seconds (bpt_sec) in descending order:</p>
+<div id="do-question-9-of-the-quiz-now-2" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 9 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blank to answer the ‘Try it yourself’ section:</p>
+<ul>
+<li><code>___</code>(final_bpx,<code>___</code>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="add-new-variables" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Add new variables</h2>
+<p>Suppose we want to gain more information about our observations and we want to constrcut a new variable based on the variables we have. The mutate() and transmute() in R helps us to add new variables into a dataframe.</p>
+<p>For example, we want to add a new variable called born_year in the demo dataframe and born_year is calculated in this way: born_year = 2021- age:</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="data-analysis-with-dplyr.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(final_demo,</span>
+<span id="cb308-2"><a href="data-analysis-with-dplyr.html#cb308-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">born_year =</span> <span class="dv">2021</span> <span class="sc">-</span> age </span>
+<span id="cb308-3"><a href="data-analysis-with-dplyr.html#cb308-3" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
+<pre><code>##       id gender age               race                              edu
+## 1  73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2  73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3  73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4  73560   Male   9 Non-Hispanic White                             &lt;NA&gt;
+## 5  73561 Female  73 Non-Hispanic White        College graduate or above
+## 6  73562   Male  56   Mexican American        Some college or AA degree
+## 7  73563   Male   0 Non-Hispanic White                             &lt;NA&gt;
+## 8  73564 Female  61 Non-Hispanic White        College graduate or above
+## 9  73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 10 73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+##    born_year
+## 1       1952
+## 2       1967
+## 3       1949
+## 4       2012
+## 5       1948
+## 6       1965
+## 7       2021
+## 8       1960
+## 9       1979
+## 10      1965</code></pre>
+<p>If we want to keep the added variables only, use transmute() instead:</p>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="data-analysis-with-dplyr.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(final_demo,</span>
+<span id="cb310-2"><a href="data-analysis-with-dplyr.html#cb310-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">born_year =</span> <span class="dv">2021</span> <span class="sc">-</span> age</span>
+<span id="cb310-3"><a href="data-analysis-with-dplyr.html#cb310-3" aria-hidden="true" tabindex="-1"></a>     )</span></code></pre></div>
+<pre><code>##    born_year
+## 1       1952
+## 2       1967
+## 3       1949
+## 4       2012
+## 5       1948
+## 6       1965
+## 7       2021
+## 8       1960
+## 9       1979
+## 10      1965</code></pre>
+<div id="functions-debunked-13" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate"><strong>mutate()</strong></a> is the function we use to create new variables based on variables we have and add them to the original dataframe - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>mutate(
+&gt; NAME OF DATAFRAME,</p>
+<blockquote>
+<p>NEW_VARIABLE = FUNCTION OF EXISTING VARIBALES</p>
+</blockquote>
+<blockquote>
+<p>…
+)</p>
+</blockquote>
+<p><strong>For example:</strong> <code>mutate(new_demo, rescale_income = income/2)</code></p>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate"><strong>transmute()</strong></a> is the function we use to create new variables based on variables we have and only keep the added variables - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>transmute(
+&gt; NAME OF DATAFRAME,</p>
+<blockquote>
+<p>NEW_VARIABLE = FUNCTION OF EXISTING VARIBALES</p>
+</blockquote>
+<blockquote>
+<p>…</p>
+</blockquote>
+<p>)</p>
+<p><strong>For example:</strong> <code>transmute(new_demo, rescale_income = income/2)</code></p>
+<p>You can find more details in how to use creation functions to create new variables in <a href="https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform">Chapter I. Explore Chapter 3</a>.</p>
+</div>
+<div id="try-it-yourself-5.55.5" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-19">Try it yourself 5.5</a></h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a new variable called called <strong>rescale_bpt_sec</strong> that records the Blood Pressure Time in miuntes. Keep both original and new variables.</p></li>
+<li><p>Create <strong>rescale_bpt_sec</strong> in the same way above and <strong>only keep new variables</strong>.</p></li>
+</ol>
+<p>Note: Try to avoid using select().</p>
+<div id="do-question-10-of-the-quiz-now-2" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 10 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blank to answer both parts of the ‘Try it yourself’ sections.</p>
+<ul>
+<li><code>___</code>(final_bpx, rescale_bpt_sec = bpt_sec/60)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="summary-statistics-and-group_by" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Summary Statistics and group_by</h2>
+<p>Information about the whole dataframe such as mean is very useful for data analysis. However, things could be very complex when aggregating multiple functions. We’ll start with the simple one: find a summary statistic from the whole dataset.</p>
+<p>For example, find the average age in the whole demo dataframe:</p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-analysis-with-dplyr.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(final_demo,<span class="at">average_age =</span> <span class="fu">mean</span>(age,<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>##   average_age
+## 1        49.2</code></pre>
+<p>It gets more complex when we change the unit of analysis into groups, i.e, find summary statistics grouping by variables. To do so, we first convert the dataframe into a grouped dataframe using group_by() and then apply the summarize() to the grouped dataframe.</p>
+<p>For example, find the average age in the demo dataframe per gender:</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-analysis-with-dplyr.html#cb314-1" aria-hidden="true" tabindex="-1"></a>by_gender <span class="ot">&lt;-</span> <span class="fu">group_by</span>(final_demo,gender)</span>
+<span id="cb314-2"><a href="data-analysis-with-dplyr.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(by_gender, <span class="at">average_age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   gender average_age
+##   &lt;fct&gt;        &lt;dbl&gt;
+## 1 Male          43.1
+## 2 Female        63.3</code></pre>
+<div id="functions-debunked-14" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/summarise"><strong>summarize()</strong></a> is the function we use to compute the summary statistics for the whole dataframe - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>summarize(<strong>Name of Data Frame</strong>, <strong>Name of Summary Statistic</strong> = <strong>Function()</strong>)</p>
+<p><strong>For example:</strong> <code>summarize(new_demo, mean(age,na.rm = TRUE))</code></p>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by"><strong>group_by()</strong></a> is the function we use to create a grouped dataframe grouping by one or more variables - it is housed in the dplyr package. The arguments are as follows:</p>
+<p>group_by(<strong>Name of Data Frame</strong>, <strong>Name of Variable</strong>)</p>
+<p><strong>For example:</strong> <code>group_by(new_demo,age)</code></p>
+<p><strong>Note:</strong> if there is missing value in the variable, group_by() treats it as a new group</p>
+</div>
+<div id="try-it-yourself-5.65.6" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-20">Try it yourself 5.6</a></h3>
+<p>Find the average age in the demo dataframe per education level</p>
+<div id="do-question-11-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 11 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blanks to answer the ‘Try it yourself’ section:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>by_edu &lt;- group_by(<code>___</code>)</p></li>
+<li><p>summarize(<code>___</code>, average_age = <code>___</code>(age, na.rm = TRUE))</p></li>
+</ol>
+</div>
+</div>
+<div id="group_by-extension" class="section level3" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> Group_by() extension</h3>
+<p>group_by() is also useful when conjuncting with filter() and mutate().</p>
+<p>For example, return the observations which has more than 2 records in each education group.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-analysis-with-dplyr.html#cb316-1" aria-hidden="true" tabindex="-1"></a>by_edu <span class="ot">&lt;-</span><span class="fu">group_by</span>(final_demo,edu)</span>
+<span id="cb316-2"><a href="data-analysis-with-dplyr.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(by_edu,<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+## # Groups:   edu [1]
+##   id         gender age        race               edu                           
+##   &lt;labelled&gt; &lt;fct&gt;  &lt;labelled&gt; &lt;fct&gt;              &lt;fct&gt;                         
+## 1 73557      Male   69         Non-Hispanic Black High school graduate/GED or e~
+## 2 73558      Male   54         Non-Hispanic White High school graduate/GED or e~
+## 3 73565      Male   42         Other Hispanic     High school graduate/GED or e~
+## 4 73566      Female 56         Non-Hispanic White High school graduate/GED or e~</code></pre>
+<p>Here’s another example: using group_by() with mutate() to compute the difference in each age and the average mean in each gender group</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-analysis-with-dplyr.html#cb318-1" aria-hidden="true" tabindex="-1"></a>by_gender <span class="ot">&lt;-</span><span class="fu">group_by</span>(final_demo,gender)</span>
+<span id="cb318-2"><a href="data-analysis-with-dplyr.html#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(by_gender,</span>
+<span id="cb318-3"><a href="data-analysis-with-dplyr.html#cb318-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">diff_age =</span> age <span class="sc">-</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> T))</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 6
+## # Groups:   gender [2]
+##    id        gender age       race           edu                      diff_age  
+##    &lt;labelle&gt; &lt;fct&gt;  &lt;labelle&gt; &lt;fct&gt;          &lt;fct&gt;                    &lt;labelled&gt;
+##  1 73557     Male   69        Non-Hispanic ~ High school graduate/GE~  25.857143
+##  2 73558     Male   54        Non-Hispanic ~ High school graduate/GE~  10.857143
+##  3 73559     Male   72        Non-Hispanic ~ Some college or AA degr~  28.857143
+##  4 73560     Male    9        Non-Hispanic ~ &lt;NA&gt;                     -34.142857
+##  5 73561     Female 73        Non-Hispanic ~ College graduate or abo~   9.666667
+##  6 73562     Male   56        Mexican Ameri~ Some college or AA degr~  12.857143
+##  7 73563     Male    0        Non-Hispanic ~ &lt;NA&gt;                     -43.142857
+##  8 73564     Female 61        Non-Hispanic ~ College graduate or abo~  -2.333333
+##  9 73565     Male   42        Other Hispanic High school graduate/GE~  -1.142857
+## 10 73566     Female 56        Non-Hispanic ~ High school graduate/GE~  -7.333333</code></pre>
+<div id="functions-debunked-15" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n"><strong>n()</strong></a> is the function we use to count the number of observations in each group - it is housed in the dplyr package. It can only be used with the existence of summarize(), filter(), and mutate() and there is <strong>no</strong> argument in it.</p>
+</div>
+</div>
+<div id="try-it-yourself-5.75.7" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-21">Try it yourself 5.7</a></h3>
+<p>Return the observations which has more than 3 records in each gender group.</p>
+</div>
+<div id="try-it-yourself-5.85.8" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-22">Try it yourself 5.8</a></h3>
+<p>Compute the difference in each age and the average mean in each education level group</p>
+<div id="do-questions-12-13-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTIONS 12 &amp; 13 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blanks to answer the ‘Try it yourself’ sections:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>by_gender &lt;-group_by(final_demo,gender)</p>
+<ul>
+<li>filter(by_edu,<code>___</code>)</li>
+</ul></li>
+<li><p>by_edu &lt;-group_by(final_demo,edu)</p>
+<ul>
+<li>mutate(by_edu, <code>___</code>)</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="pipe" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Pipe</h2>
+<p>You may have noticed that when doing multiple-step operations, we need to assign the output to a new variable every time when a step is done. It becomes more annoying when there are more steps to do. The pipe operator <a href="https://www.rdocumentation.org/packages/magrittr/versions/2.0.1/topics/magrittr-package"><strong>%&gt;%</strong></a> - which is housed in the magrittr package - saves us from create many unnecessary variables: it takes the output from one function as an input to the following function.</p>
+<p>Here’s example without using pipe: we want to first keep the observations in the demo dataframe with an age greater than 40 and then create a new variable called born_year calculated by 2021 - age.</p>
+<p>We need to do this in two steps.The first step is to filter the dataframe and save the output as a new variable <em>temp</em>:</p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-analysis-with-dplyr.html#cb320-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">filter</span>(final_demo, age <span class="sc">&gt;</span> <span class="dv">40</span>)</span>
+<span id="cb320-2"><a href="data-analysis-with-dplyr.html#cb320-2" aria-hidden="true" tabindex="-1"></a>temp</span></code></pre></div>
+<pre><code>##      id gender age               race                              edu
+## 1 73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2 73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3 73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4 73561 Female  73 Non-Hispanic White        College graduate or above
+## 5 73562   Male  56   Mexican American        Some college or AA degree
+## 6 73564 Female  61 Non-Hispanic White        College graduate or above
+## 7 73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 8 73566 Female  56 Non-Hispanic White High school graduate/GED or equi</code></pre>
+<p>The second step is to create the new variable:</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-analysis-with-dplyr.html#cb322-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">mutate</span>(temp, <span class="at">born_year =</span> <span class="dv">2021</span> <span class="sc">-</span> age)</span>
+<span id="cb322-2"><a href="data-analysis-with-dplyr.html#cb322-2" aria-hidden="true" tabindex="-1"></a>temp</span></code></pre></div>
+<pre><code>##      id gender age               race                              edu
+## 1 73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2 73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3 73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4 73561 Female  73 Non-Hispanic White        College graduate or above
+## 5 73562   Male  56   Mexican American        Some college or AA degree
+## 6 73564 Female  61 Non-Hispanic White        College graduate or above
+## 7 73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 8 73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+##   born_year
+## 1      1952
+## 2      1967
+## 3      1949
+## 4      1948
+## 5      1965
+## 6      1960
+## 7      1979
+## 8      1965</code></pre>
+<p>The intermediate variable <em>temp</em> can be avoided by using the pipe operatore:</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-analysis-with-dplyr.html#cb324-1" aria-hidden="true" tabindex="-1"></a>final_demo <span class="sc">%&gt;%</span></span>
+<span id="cb324-2"><a href="data-analysis-with-dplyr.html#cb324-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb324-3"><a href="data-analysis-with-dplyr.html#cb324-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">born_year =</span> <span class="dv">2021</span> <span class="sc">-</span> age)</span></code></pre></div>
+<pre><code>##      id gender age               race                              edu
+## 1 73557   Male  69 Non-Hispanic Black High school graduate/GED or equi
+## 2 73558   Male  54 Non-Hispanic White High school graduate/GED or equi
+## 3 73559   Male  72 Non-Hispanic White        Some college or AA degree
+## 4 73561 Female  73 Non-Hispanic White        College graduate or above
+## 5 73562   Male  56   Mexican American        Some college or AA degree
+## 6 73564 Female  61 Non-Hispanic White        College graduate or above
+## 7 73565   Male  42     Other Hispanic High school graduate/GED or equi
+## 8 73566 Female  56 Non-Hispanic White High school graduate/GED or equi
+##   born_year
+## 1      1952
+## 2      1967
+## 3      1949
+## 4      1948
+## 5      1965
+## 6      1960
+## 7      1979
+## 8      1965</code></pre>
+<div id="try-it-yourself-5.95.9" class="section level3 unnumbered">
+<h3><a href="appendix-exercise-solutions.html#section-23">Try it yourself 5.9</a></h3>
+<p>Re-write the following code using pipe operator</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-analysis-with-dplyr.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># temp &lt;- filter(final_bpx, systolic &gt; 120)</span></span>
+<span id="cb326-2"><a href="data-analysis-with-dplyr.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="co"># temp &lt;- mutate(temp, bpt_min = bpt_sec/60)</span></span>
+<span id="cb326-3"><a href="data-analysis-with-dplyr.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="co"># temp</span></span></code></pre></div>
+<div id="do-question-14-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 14 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blanks to answer the’Try it yourself’ section:</p>
+<ul>
+<li><code>___</code> %&gt;%</li>
+<li>filter(<code>___</code>,systolic &gt; 120) %&gt;%</li>
+<li>mutate(<code>___</code>,bpt_min = bpt_sec/60)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="summary-of-dealing-with-missing-values" class="section level2" number="5.10">
+<h2><span class="header-section-number">5.10</span> Summary of dealing with missing values</h2>
+<p>Dealing with missing values can be complex. You need to be careful when using functions since different functions have different ways in dealing with missing values.</p>
+<p>filter(): excludes missing values. If you do want to retain missing values, use <strong>is.na()</strong> explicitly.</p>
+<p>arrange(): retains missing values and sorts them at the end</p>
+<p>select(): retains missing values</p>
+<p>mutate(): retains missing values</p>
+<p>summarize(): retains missing values. If you want to remove missing values, set <strong>na.rm = TRUE</strong> in aggregation functions.</p>
+<p>group_by(): treats missing values as a group</p>
+</div>
+<div id="alternatives-to-nhanestranslate" class="section level2" number="5.11">
+<h2><span class="header-section-number">5.11</span> Alternatives to NHANESTranslate()</h2>
+<div id="case_when" class="section level3" number="5.11.1">
+<h3><span class="header-section-number">5.11.1</span> <code>case_when()</code></h3>
+<p><code>case_when()</code> is another useful function that we can use that will aid our data analysis. This function acts like <code>mutate()</code>, except it changes the actual values of the variable. Here is an example of how we can use <code>case_when()</code> and <code>mutate()</code> together to change values within a variable:</p>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="data-analysis-with-dplyr.html#cb327-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">97</span>, <span class="dv">36</span>, <span class="dv">55</span>, <span class="dv">50</span>, <span class="dv">49</span>, <span class="dv">65</span>, <span class="dv">46</span>, <span class="dv">87</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="data-analysis-with-dplyr.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">case_when</span>(x <span class="sc">&lt;</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">&quot;Fail&quot;</span>, </span>
+<span id="cb328-2"><a href="data-analysis-with-dplyr.html#cb328-2" aria-hidden="true" tabindex="-1"></a>          x <span class="sc">&gt;</span> <span class="dv">65</span> <span class="sc">~</span> <span class="st">&quot;Pass&quot;</span>, </span>
+<span id="cb328-3"><a href="data-analysis-with-dplyr.html#cb328-3" aria-hidden="true" tabindex="-1"></a>          <span class="cn">TRUE</span>  <span class="sc">~</span> <span class="st">&quot;Retake recommended&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Pass&quot;               &quot;Fail&quot;               &quot;Retake recommended&quot;
+## [4] &quot;Retake recommended&quot; &quot;Fail&quot;               &quot;Retake recommended&quot;
+## [7] &quot;Fail&quot;               &quot;Pass&quot;               &quot;Pass&quot;</code></pre>
+<p>In the example above, we have a vector of student grades. Using <code>case_when()</code>, we have translated the grades to “Fail,” “Pass,” and “Retake recommended” depending on the student grades.
+* <strong>Fail</strong> if students receive a grade of less than 50,
+* <strong>Pass</strong> if students receive a grade of greater than 65,
+* <strong>Retake recommended</strong> if students receive a grade between 50 and 65.</p>
+</div>
+</div>
+<div id="translating-nhanes-using-case_when" class="section level2" number="5.12">
+<h2><span class="header-section-number">5.12</span> Translating NHANES using <code>case_when()</code></h2>
+<p>Another general method for us to translate our NHANES data into conventional language is to use <code>mutate()</code> and <code>case_when()</code>! However, this method requires us to know what each numerical value of each variable means. For example, if we want to translate the RIDRETH3 values, then we need to check the <a href="https://wwwn.cdc.gov/Nchs/Nhanes/2013-2014/DEMO_H.htm">Codebook and Frequencies</a> for the following translations:</p>
+<ul>
+<li>1: “Mexican American”</li>
+<li>2: “Other Hispanic”</li>
+<li>3: “Non-Hispanic White”</li>
+<li>4: “Non-Hispanic Black”</li>
+<li>6: “Non-Hispanic Asian”</li>
+<li>7: “Other Race - Including Multi-Racial”</li>
+<li>.: “Missing”</li>
+</ul>
+<p>Knowing this, we can use <code>mutate()</code> and <code>case_when()</code> like so:</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-analysis-with-dplyr.html#cb330-1" aria-hidden="true" tabindex="-1"></a>translated_demo <span class="ot">&lt;-</span> demo <span class="sc">%&gt;%</span> </span>
+<span id="cb330-2"><a href="data-analysis-with-dplyr.html#cb330-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Race =</span> <span class="fu">case_when</span>(</span>
+<span id="cb330-3"><a href="data-analysis-with-dplyr.html#cb330-3" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;Mexican American&quot;</span>,</span>
+<span id="cb330-4"><a href="data-analysis-with-dplyr.html#cb330-4" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Other Hispanic&quot;</span>,</span>
+<span id="cb330-5"><a href="data-analysis-with-dplyr.html#cb330-5" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;Non-Hispanic White&quot;</span>,</span>
+<span id="cb330-6"><a href="data-analysis-with-dplyr.html#cb330-6" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Non-Hispanic Black&quot;</span>,</span>
+<span id="cb330-7"><a href="data-analysis-with-dplyr.html#cb330-7" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;Non-Hispanic Asian&quot;</span>,</span>
+<span id="cb330-8"><a href="data-analysis-with-dplyr.html#cb330-8" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;Other Race - Including Multi-Racial&quot;</span>,</span>
+<span id="cb330-9"><a href="data-analysis-with-dplyr.html#cb330-9" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="st">&quot;.&quot;</span> <span class="sc">~</span> <span class="st">&quot;Missing&quot;</span></span>
+<span id="cb330-10"><a href="data-analysis-with-dplyr.html#cb330-10" aria-hidden="true" tabindex="-1"></a>      )) <span class="sc">%&gt;%</span></span>
+<span id="cb330-11"><a href="data-analysis-with-dplyr.html#cb330-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="at">ID =</span> SEQN, Race)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="data-analysis-with-dplyr.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(translated_demo, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##       ID               Race
+## 1  73557 Non-Hispanic Black
+## 2  73558 Non-Hispanic White
+## 3  73559 Non-Hispanic White
+## 4  73560 Non-Hispanic White
+## 5  73561 Non-Hispanic White
+## 6  73562   Mexican American
+## 7  73563 Non-Hispanic White
+## 8  73564 Non-Hispanic White
+## 9  73565     Other Hispanic
+## 10 73566 Non-Hispanic White</code></pre>
+<p>But what if we want to have less categories or want to combine some of the categories? What do we do then?</p>
+<p><code>case_when()</code> is still the way to go! In this case, our codes should look like this:</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="data-analysis-with-dplyr.html#cb333-1" aria-hidden="true" tabindex="-1"></a>less_categories <span class="ot">&lt;-</span> demo <span class="sc">%&gt;%</span> </span>
+<span id="cb333-2"><a href="data-analysis-with-dplyr.html#cb333-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Race =</span> <span class="fu">case_when</span>(</span>
+<span id="cb333-3"><a href="data-analysis-with-dplyr.html#cb333-3" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;Hispanic&quot;</span>,</span>
+<span id="cb333-4"><a href="data-analysis-with-dplyr.html#cb333-4" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Hispanic&quot;</span>,</span>
+<span id="cb333-5"><a href="data-analysis-with-dplyr.html#cb333-5" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;White&quot;</span>,</span>
+<span id="cb333-6"><a href="data-analysis-with-dplyr.html#cb333-6" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;Black&quot;</span>,</span>
+<span id="cb333-7"><a href="data-analysis-with-dplyr.html#cb333-7" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;Asian&quot;</span>,</span>
+<span id="cb333-8"><a href="data-analysis-with-dplyr.html#cb333-8" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;Other&quot;</span>,</span>
+<span id="cb333-9"><a href="data-analysis-with-dplyr.html#cb333-9" aria-hidden="true" tabindex="-1"></a>          RIDRETH3 <span class="sc">==</span> <span class="st">&quot;.&quot;</span> <span class="sc">~</span> <span class="st">&quot;Missing&quot;</span></span>
+<span id="cb333-10"><a href="data-analysis-with-dplyr.html#cb333-10" aria-hidden="true" tabindex="-1"></a>      )) <span class="sc">%&gt;%</span></span>
+<span id="cb333-11"><a href="data-analysis-with-dplyr.html#cb333-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="at">ID =</span> SEQN, Race)</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-analysis-with-dplyr.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(less_categories, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##       ID     Race
+## 1  73557    Black
+## 2  73558    White
+## 3  73559    White
+## 4  73560    White
+## 5  73561    White
+## 6  73562 Hispanic
+## 7  73563    White
+## 8  73564    White
+## 9  73565 Hispanic
+## 10 73566    White</code></pre>
+<div id="functions-debunked-16" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><strong><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></strong> is a function that we use to change or translate the values of our variables into something else that is still meaningful. The arguments are as follows:</p>
+<p>case_when(<strong>A Variable</strong> == <strong>Value as it is written in the original dataset</strong> ~ <strong>“New/Translated Value”</strong>
+)</p>
+<p>Note that if none of the cases match, then R will automatically regard it as a missing (NA) value.</p>
+<p><strong>For example:</strong> <code>case_when(x &lt; 50 ~ "Fail", x &gt; 65 ~ "Pass", TRUE  ~ "Retake recommended")</code></p>
+</div>
+</div>
+<div id="recode-from-dplyr" class="section level2" number="5.13">
+<h2><span class="header-section-number">5.13</span> <code>recode()</code> from dplyr</h2>
+<p>Another alternative is <code>recode()</code>. This function works the same way as <code>case_when()</code>, except you only need to identify the variable once like so:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-analysis-with-dplyr.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="co"># demo_translate2 &lt;- demo %&gt;%</span></span>
+<span id="cb336-2"><a href="data-analysis-with-dplyr.html#cb336-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(Race = dplyr::recode(RIDRETH3,</span></span>
+<span id="cb336-3"><a href="data-analysis-with-dplyr.html#cb336-3" aria-hidden="true" tabindex="-1"></a><span class="co">#            `1` = &quot;Hispanic&quot;,</span></span>
+<span id="cb336-4"><a href="data-analysis-with-dplyr.html#cb336-4" aria-hidden="true" tabindex="-1"></a><span class="co">#            `2` = &quot;Hispanic&quot;,</span></span>
+<span id="cb336-5"><a href="data-analysis-with-dplyr.html#cb336-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            `3` = &quot;White&quot;,</span></span>
+<span id="cb336-6"><a href="data-analysis-with-dplyr.html#cb336-6" aria-hidden="true" tabindex="-1"></a><span class="co">#            `4` = &quot;Black&quot;,</span></span>
+<span id="cb336-7"><a href="data-analysis-with-dplyr.html#cb336-7" aria-hidden="true" tabindex="-1"></a><span class="co">#            `6` = &quot;Asian&quot;,</span></span>
+<span id="cb336-8"><a href="data-analysis-with-dplyr.html#cb336-8" aria-hidden="true" tabindex="-1"></a><span class="co">#            `7` = &quot;Other&quot;,</span></span>
+<span id="cb336-9"><a href="data-analysis-with-dplyr.html#cb336-9" aria-hidden="true" tabindex="-1"></a><span class="co">#           .default = &quot;Missing&quot;</span></span>
+<span id="cb336-10"><a href="data-analysis-with-dplyr.html#cb336-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     )) %&gt;%</span></span>
+<span id="cb336-11"><a href="data-analysis-with-dplyr.html#cb336-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     select(ID = SEQN, Race)</span></span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="data-analysis-with-dplyr.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="co"># head(demo_translate2, 10)</span></span></code></pre></div>
+</div>
+<div id="recode-from-car" class="section level2" number="5.14">
+<h2><span class="header-section-number">5.14</span> <code>recode()</code> from car</h2>
+<p>Another option is to use <code>recode()</code> from the car package. This function is mostly used for translating numerical data into more meaningful character data or strings.</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="data-analysis-with-dplyr.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<p>While looking at the codes below, take note of the different types of quotation marks: single (’’) or double ("") and the semi-colon (;) as the argument separator. Note also how we can use <code>1:2</code> instead of separating them into 1 and 2 like what we did with earlier functions.</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="data-analysis-with-dplyr.html#cb339-1" aria-hidden="true" tabindex="-1"></a>demo_translate3 <span class="ot">&lt;-</span> demo <span class="sc">%&gt;%</span></span>
+<span id="cb339-2"><a href="data-analysis-with-dplyr.html#cb339-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Race =</span> car<span class="sc">::</span><span class="fu">recode</span>(RIDRETH3,</span>
+<span id="cb339-3"><a href="data-analysis-with-dplyr.html#cb339-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;1:2 = &#39;Hispanic&#39;;</span></span>
+<span id="cb339-4"><a href="data-analysis-with-dplyr.html#cb339-4" aria-hidden="true" tabindex="-1"></a><span class="st">         3 = &#39;White&#39;;</span></span>
+<span id="cb339-5"><a href="data-analysis-with-dplyr.html#cb339-5" aria-hidden="true" tabindex="-1"></a><span class="st">         4 = &#39;Black&#39;;</span></span>
+<span id="cb339-6"><a href="data-analysis-with-dplyr.html#cb339-6" aria-hidden="true" tabindex="-1"></a><span class="st">         6 = &#39;Asian&#39;;</span></span>
+<span id="cb339-7"><a href="data-analysis-with-dplyr.html#cb339-7" aria-hidden="true" tabindex="-1"></a><span class="st">         7 = &#39;Other&#39;;</span></span>
+<span id="cb339-8"><a href="data-analysis-with-dplyr.html#cb339-8" aria-hidden="true" tabindex="-1"></a><span class="st">         else = &#39;Missing&#39;&quot;</span></span>
+<span id="cb339-9"><a href="data-analysis-with-dplyr.html#cb339-9" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span></span>
+<span id="cb339-10"><a href="data-analysis-with-dplyr.html#cb339-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="at">ID =</span> SEQN, Race)</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="data-analysis-with-dplyr.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_translate3, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##       ID     Race
+## 1  73557    Black
+## 2  73558    White
+## 3  73559    White
+## 4  73560    White
+## 5  73561    White
+## 6  73562 Hispanic
+## 7  73563    White
+## 8  73564    White
+## 9  73565 Hispanic
+## 10 73566    White</code></pre>
+</div>
+<div id="summary-and-takeaways-4" class="section level2" number="5.15">
+<h2><span class="header-section-number">5.15</span> Summary and Takeaways</h2>
+<p>By the end of this tutorial, you should be familiar with the dplyr package and be able to do basic data wrangling by yourself.</p>
+<p>For more study materials on the dplyr package, check out this <a href="https://learning.oreilly.com/library/view/r-for-data/9781491910382/ch03.html#transform">textbook</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-nhanes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-visualization-with-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/4-data-analysis-with-dplyr.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,16 +1,16 @@
-﻿id,gender,age,race,edu
-83717,Female,80,Mexican American,Less than 9th grade
-83718,Female,60,Non-Hispanic Black,High school graduate/GED or equi
-83719,Male,3,Mexican American,"NA"
-83720,Male,36,Non-Hispanic Black,NA
-83721,Male,52,Non-Hispanic White,College graduate or above
-83722,Male,0,Other Race - Including Multi-Rac,"NA"
-83723,Male,61,Mexican American,9-11th grade (Includes 12th grad
-83724,Male,80,Non-Hispanic White,High school graduate/GED or equi
-83725,Male,7,Mexican American,"NA"
-83726,Male,40,Mexican American,Less than 9th grade
-83727,Male,26,Other Hispanic,College graduate or above
-83728,Female,2,Mexican American,"NA"
-83729,Female,42,Non-Hispanic Black,College graduate or above
-83730,Male,7,Other Hispanic,"NA"
-83731,Male,11,Non-Hispanic Asian,"NA"
+﻿"id","gender","age","race","edu"
+83717,"Female",80,"Mexican American","Less than 9th grade"
+83718,"Female",60,"Non-Hispanic Black","High school graduate/GED or equi"
+83719,"Male",3,"Mexican American","NA"
+83720,"Male",36,"Non-Hispanic Black",NA
+83721,"Male",52,"Non-Hispanic White","College graduate or above"
+83722,"Male",0,"Other Race - Including Multi-Rac","NA"
+83723,"Male",61,"Mexican American","9-11th grade (Includes 12th grad"
+83724,"Male",80,"Non-Hispanic White","High school graduate/GED or equi"
+83725,"Male",7,"Mexican American","NA"
+83726,"Male",40,"Mexican American","Less than 9th grade"
+83727,"Male",26,"Other Hispanic","College graduate or above"
+83728,"Female",2,"Mexican American","NA"
+83729,"Female",42,"Non-Hispanic Black","College graduate or above"
+83730,"Male",7,"Other Hispanic","NA"
+83731,"Male",11,"Non-Hispanic Asian","NA"

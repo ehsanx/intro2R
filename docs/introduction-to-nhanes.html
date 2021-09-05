@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Introduction to NHANES | Introduction to R for health data analysis</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Introduction to NHANES | Introduction to R for health data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Introduction to NHANES | Introduction to R for health data analysis" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim, An Hoang and Yang Qu" />
+
+
+<meta name="date" content="2021-09-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="importing-data-into-r-with-readr.html"/>
+<link rel="next" href="data-analysis-with-dplyr.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Intro to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-references"><i class="fa fa-check"></i>Main references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html"><i class="fa fa-check"></i><b>1</b> R and RStudio set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#instructions"><i class="fa fa-check"></i><b>1.1</b> Instructions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-r"><i class="fa fa-check"></i><b>1.3</b> What is R?</a></li>
+<li class="chapter" data-level="1.4" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.5" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-r"><i class="fa fa-check"></i><b>1.5</b> Download and Install R</a></li>
+<li class="chapter" data-level="1.6" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#download-and-install-rstudio"><i class="fa fa-check"></i><b>1.6</b> Download and Install RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#rstudio-basics"><i class="fa fa-check"></i><b>1.7</b> RStudio Basics</a></li>
+<li class="chapter" data-level="1.8" data-path="r-and-rstudio-set-up.html"><a href="r-and-rstudio-set-up.html#summary-and-takeaways"><i class="fa fa-check"></i><b>1.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#instructions-1"><i class="fa fa-check"></i><b>2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#set-up-basics"><i class="fa fa-check"></i><b>2.3</b> Set Up Basics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#working-directory"><i class="fa fa-check"></i><b>2.3.1</b> Working Directory</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-and-attaching-packages"><i class="fa fa-check"></i><b>2.3.2</b> Installing and Attaching Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#arithmetic-operators"><i class="fa fa-check"></i><b>2.4</b> Arithmetic Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.12.1"><span>Try it yourself 2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.5</b> Logical Operators</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.22.2"><span>Try it yourself 2.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#most-common-data-types-in-r"><i class="fa fa-check"></i><b>2.6</b> Most Common Data Types In R</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#strings"><i class="fa fa-check"></i><b>2.6.1</b> Strings</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.6.2</b> Vectors</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.32.3"><span>Try it yourself 2.3</span></a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.42.4"><span>Try it yourself 2.4</span></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>2.6.3</b> Lists</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dataframe"><i class="fa fa-check"></i><b>2.6.4</b> Dataframe</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.52.5"><span>Try it yourself 2.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#exploring-a-dataset"><i class="fa fa-check"></i><b>2.7</b> Exploring a Dataset</a>
+<ul>
+<li><a href="introduction-to-r.html#try-it-yourself-2.62.6"><span>Try it yourself 2.6</span></a></li>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#dimensions"><i class="fa fa-check"></i><b>2.7.1</b> Dimensions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#structure"><i class="fa fa-check"></i><b>2.7.2</b> Structure</a></li>
+<li class="chapter" data-level="2.7.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#class"><i class="fa fa-check"></i><b>2.7.3</b> Class</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.72.7"><span>Try it yourself 2.7</span></a></li>
+<li class="chapter" data-level="2.7.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#length"><i class="fa fa-check"></i><b>2.7.4</b> Length</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.82.8"><span>Try it yourself 2.8</span></a></li>
+<li class="chapter" data-level="2.7.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#head-and-tail"><i class="fa fa-check"></i><b>2.7.5</b> Head and Tail</a></li>
+<li class="chapter" data-level="2.7.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#mathematical-functions-in-r"><i class="fa fa-check"></i><b>2.7.6</b> Mathematical Functions in R</a></li>
+<li><a href="introduction-to-r.html#try-it-yourself-2.92.9"><span>Try it yourself 2.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-a-new-function-in-r"><i class="fa fa-check"></i><b>2.8</b> Writing a New Function In R</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#for-loops"><i class="fa fa-check"></i><b>2.9</b> For Loops</a></li>
+<li class="chapter" data-level="2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#help-within-and-outside-of-r"><i class="fa fa-check"></i><b>2.10</b> Help Within and Outside Of R</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#within-r"><i class="fa fa-check"></i><b>2.10.1</b> Within R</a></li>
+<li class="chapter" data-level="2.10.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#outside-of-r"><i class="fa fa-check"></i><b>2.10.2</b> Outside of R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-and-takeaways-1"><i class="fa fa-check"></i><b>2.11</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html"><i class="fa fa-check"></i><b>3</b> Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#instructions-2"><i class="fa fa-check"></i><b>3.1</b> Instructions</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#set-up"><i class="fa fa-check"></i><b>3.3</b> Set Up</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#basics-of-importing-a-csv-file-into-r"><i class="fa fa-check"></i><b>3.4</b> Basics Of Importing a CSV File Into R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-1-setting-a-different-working-directory"><i class="fa fa-check"></i><b>3.4.1</b> Method 1: Setting a Different Working Directory</a></li>
+<li class="chapter" data-level="3.4.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#method-2-copying-the-exact-pathway-of-the-file"><i class="fa fa-check"></i><b>3.4.2</b> Method 2: Copying the Exact Pathway of the File</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.13.1"><span>Try it yourself 3.1</span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#key-notes-about-importing-data-into-r"><i class="fa fa-check"></i><b>3.4.3</b> Key Notes About Importing Data into R</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.23.2"><span>Try it yourself 3.2</span></a></li>
+<li class="chapter" data-level="3.4.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#column-specification"><i class="fa fa-check"></i><b>3.4.4</b> Column Specification</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.33.3"><span>Try it yourself 3.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#more-arguments-of-read_csv"><i class="fa fa-check"></i><b>3.5</b> More Arguments Of read_csv</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#skip"><i class="fa fa-check"></i><b>3.5.1</b> Skip</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.43.4"><span>Try it yourself 3.4</span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#remove-header-header-names"><i class="fa fa-check"></i><b>3.5.2</b> Remove Header &amp; Header Names</a></li>
+<li class="chapter" data-level="3.5.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#missing-values"><i class="fa fa-check"></i><b>3.5.3</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#importing-other-file-types-into-r"><i class="fa fa-check"></i><b>3.6</b> Importing Other File Types into R</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#text-file-txt"><i class="fa fa-check"></i><b>3.6.1</b> Text file (txt)</a></li>
+<li class="chapter" data-level="3.6.2" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#excel-file-xlsx"><i class="fa fa-check"></i><b>3.6.2</b> Excel file (xlsx)</a></li>
+<li><a href="importing-data-into-r-with-readr.html#try-it-yourself-3.53.5"><span>Try it yourself 3.5</span></a></li>
+<li class="chapter" data-level="3.6.3" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#xpt-file-extension"><i class="fa fa-check"></i><b>3.6.3</b> XPT File Extension</a></li>
+<li class="chapter" data-level="3.6.4" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#statistical-analysis-software-sas"><i class="fa fa-check"></i><b>3.6.4</b> Statistical Analysis Software (SAS)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#exporting-the-data-frame-from-r"><i class="fa fa-check"></i><b>3.7</b> Exporting the Data Frame From R</a></li>
+<li class="chapter" data-level="3.8" data-path="importing-data-into-r-with-readr.html"><a href="importing-data-into-r-with-readr.html#summary-and-takeaways-2"><i class="fa fa-check"></i><b>3.8</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html"><i class="fa fa-check"></i><b>4</b> Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#instructions-3"><i class="fa fa-check"></i><b>4.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#introduction-to-nhanes-1"><i class="fa fa-check"></i><b>4.3</b> Introduction to NHANES</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-website"><i class="fa fa-check"></i><b>4.4</b> Importing NHANES dataset from website</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#importing-nhanes-dataset-from-r-package-nhanesa"><i class="fa fa-check"></i><b>4.5</b> Importing NHANES dataset from R package: nhanesA</a>
+<ul>
+<li><a href="introduction-to-nhanes.html#try-it-yourself-4.14.1">Try it yourself 4.1]<span>4.1</span></a></li>
+<li class="chapter" data-level="4.5.1" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#other-packages-in-r"><i class="fa fa-check"></i><b>4.5.1</b> Other packages in R</a></li>
+<li class="chapter" data-level="4.5.2" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#alternative-ways-to-download-nhanes"><i class="fa fa-check"></i><b>4.5.2</b> Alternative ways to download NHANES</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="introduction-to-nhanes.html"><a href="introduction-to-nhanes.html#summary-and-takeaways-3"><i class="fa fa-check"></i><b>4.6</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#instructions-4"><i class="fa fa-check"></i><b>5.1</b> Instructions</a></li>
+<li class="chapter" data-level="5.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-up-1"><i class="fa fa-check"></i><b>5.3</b> Set up</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#install-and-load-packages"><i class="fa fa-check"></i><b>5.3.1</b> Install and load packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#set-working-directory"><i class="fa fa-check"></i><b>5.3.2</b> Set working directory</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#import-dataset"><i class="fa fa-check"></i><b>5.3.3</b> Import dataset</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#explore-our-dataset"><i class="fa fa-check"></i><b>5.3.4</b> Explore our dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#dataset-preparation"><i class="fa fa-check"></i><b>5.4</b> Dataset Preparation</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.15.1"><span>Try it yourself 5.1</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.25.2"><span>Try it yourself 5.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.5</b> Filter</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.35.3"><span>Try it yourself 5.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#re-order-the-rows"><i class="fa fa-check"></i><b>5.6</b> Re-order the Rows</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.45.4"><span>Try it yourself 5.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#add-new-variables"><i class="fa fa-check"></i><b>5.7</b> Add new variables</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.55.5"><span>Try it yourself 5.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-statistics-and-group_by"><i class="fa fa-check"></i><b>5.8</b> Summary Statistics and group_by</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.65.6"><span>Try it yourself 5.6</span></a></li>
+<li class="chapter" data-level="5.8.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#group_by-extension"><i class="fa fa-check"></i><b>5.8.1</b> Group_by() extension</a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.75.7"><span>Try it yourself 5.7</span></a></li>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.85.8"><span>Try it yourself 5.8</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#pipe"><i class="fa fa-check"></i><b>5.9</b> Pipe</a>
+<ul>
+<li><a href="data-analysis-with-dplyr.html#try-it-yourself-5.95.9"><span>Try it yourself 5.9</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-of-dealing-with-missing-values"><i class="fa fa-check"></i><b>5.10</b> Summary of dealing with missing values</a></li>
+<li class="chapter" data-level="5.11" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#alternatives-to-nhanestranslate"><i class="fa fa-check"></i><b>5.11</b> Alternatives to NHANESTranslate()</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#case_when"><i class="fa fa-check"></i><b>5.11.1</b> <code>case_when()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#translating-nhanes-using-case_when"><i class="fa fa-check"></i><b>5.12</b> Translating NHANES using <code>case_when()</code></a></li>
+<li class="chapter" data-level="5.13" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-dplyr"><i class="fa fa-check"></i><b>5.13</b> <code>recode()</code> from dplyr</a></li>
+<li class="chapter" data-level="5.14" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#recode-from-car"><i class="fa fa-check"></i><b>5.14</b> <code>recode()</code> from car</a></li>
+<li class="chapter" data-level="5.15" data-path="data-analysis-with-dplyr.html"><a href="data-analysis-with-dplyr.html#summary-and-takeaways-4"><i class="fa fa-check"></i><b>5.15</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#instructions-5"><i class="fa fa-check"></i><b>6.1</b> Instructions</a></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#set-up-2"><i class="fa fa-check"></i><b>6.3</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#loading-required-packages"><i class="fa fa-check"></i><b>6.3.1</b> Loading required packages</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#importing-data"><i class="fa fa-check"></i><b>6.3.2</b> Importing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#ggplot-and-point-geometrics"><i class="fa fa-check"></i><b>6.4</b> ggplot() and Point Geometrics</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#point-geometrics"><i class="fa fa-check"></i><b>6.4.1</b> Point Geometrics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.16.1"><span>Try it yourself 6.1</span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>6.4.2</b> Aesthetics</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.26.2"><span>Try it yourself 6.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#multiple-geometric-functions-under-one-ggplot"><i class="fa fa-check"></i><b>6.5</b> Multiple Geometric Functions under one ggplot</a></li>
+<li class="chapter" data-level="6.6" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#other-geometric-functions"><i class="fa fa-check"></i><b>6.6</b> Other Geometric Functions</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#bar-graph"><i class="fa fa-check"></i><b>6.6.1</b> Bar graph</a></li>
+<li class="chapter" data-level="6.6.2" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#line-graph"><i class="fa fa-check"></i><b>6.6.2</b> Line Graph</a></li>
+<li class="chapter" data-level="6.6.3" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#boxplot"><i class="fa fa-check"></i><b>6.6.3</b> Boxplot</a></li>
+<li class="chapter" data-level="6.6.4" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#frequency-polygon"><i class="fa fa-check"></i><b>6.6.4</b> Frequency Polygon</a></li>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.36.3"><span>Try it yourself 6.3</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#facet-functions"><i class="fa fa-check"></i><b>6.7</b> Facet Functions</a>
+<ul>
+<li><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.46.4"><span>Try it yourself 6.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#customizing-graph-elements"><i class="fa fa-check"></i><b>6.8</b> Customizing Graph Elements</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#try-it-yourself-6.5"><i class="fa fa-check"></i>Try it yourself 6.5</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#saving-our-graphs"><i class="fa fa-check"></i><b>6.9</b> Saving Our Graphs</a></li>
+<li class="chapter" data-level="6.10" data-path="data-visualization-with-ggplot2.html"><a href="data-visualization-with-ggplot2.html#summary-and-takeaways-5"><i class="fa fa-check"></i><b>6.10</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html"><i class="fa fa-check"></i><b>7</b> Date &amp; Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#instructions-6"><i class="fa fa-check"></i><b>7.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#set-up-3"><i class="fa fa-check"></i><b>7.3</b> Set Up</a></li>
+<li class="chapter" data-level="7.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#exploring-friends-visits-dataset"><i class="fa fa-check"></i><b>7.4</b> Exploring Friends Visits Dataset</a></li>
+<li class="chapter" data-level="7.5" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#creating-datetime-data"><i class="fa fa-check"></i><b>7.5</b> Creating Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#strings-1"><i class="fa fa-check"></i><b>7.5.1</b> Strings</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.17.1"><span>Try it yourself 7.1</span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#existing-datetime-data"><i class="fa fa-check"></i><b>7.5.2</b> Existing Date/Time Data</a></li>
+<li class="chapter" data-level="7.5.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#dataset"><i class="fa fa-check"></i><b>7.5.3</b> Dataset</a></li>
+<li class="chapter" data-level="" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#functions-debunked-20"><i class="fa fa-check"></i>Functions Debunked</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.27.2"><span>Try it yourself 7.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#retrieving-information-from-datetime-data"><i class="fa fa-check"></i><b>7.6</b> Retrieving Information from Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#year"><i class="fa fa-check"></i><b>7.6.1</b> Year</a></li>
+<li class="chapter" data-level="7.6.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#month"><i class="fa fa-check"></i><b>7.6.2</b> Month</a></li>
+<li class="chapter" data-level="7.6.3" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#week"><i class="fa fa-check"></i><b>7.6.3</b> Week</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.37.3"><span>Try it yourself 7.3</span></a></li>
+<li class="chapter" data-level="7.6.4" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-retrieved-information"><i class="fa fa-check"></i><b>7.6.4</b> Plotting Retrieved Information</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.47.4"><span>Try it yourself 7.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#updating-plotting-datetime-data"><i class="fa fa-check"></i><b>7.7</b> Updating &amp; Plotting Date/Time Data</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#update"><i class="fa fa-check"></i><b>7.7.1</b> Update</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.57.5"><span>Try it yourself 7.5</span></a></li>
+<li class="chapter" data-level="7.7.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#plotting-datetime"><i class="fa fa-check"></i><b>7.7.2</b> Plotting Date/Time</a></li>
+<li><a href="date-time-data-with-lubridate.html#try-it-yourself-7.67.6"><span>Try it yourself 7.6</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#arithmetic-operators-with-datetime"><i class="fa fa-check"></i><b>7.8</b> Arithmetic Operators with Date/Time</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#basic-arithmetic"><i class="fa fa-check"></i><b>7.8.1</b> Basic Arithmetic</a></li>
+<li class="chapter" data-level="7.8.2" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#account-for-leap-years-and-daylight-savings"><i class="fa fa-check"></i><b>7.8.2</b> Account for Leap Years and Daylight Savings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="date-time-data-with-lubridate.html"><a href="date-time-data-with-lubridate.html#summary-and-takeaways-6"><i class="fa fa-check"></i><b>7.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html"><i class="fa fa-check"></i><b>8</b> Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#instructions-7"><i class="fa fa-check"></i><b>8.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#set-up-4"><i class="fa fa-check"></i><b>8.3</b> Set Up</a></li>
+<li class="chapter" data-level="8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#what-is-tableone"><i class="fa fa-check"></i><b>8.4</b> What is tableone?</a></li>
+<li class="chapter" data-level="8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#creating-a-tableone"><i class="fa fa-check"></i><b>8.5</b> Creating a tableone</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#createtableone"><i class="fa fa-check"></i><b>8.5.1</b> CreateTableOne</a></li>
+<li class="chapter" data-level="8.5.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-1-nhanestranslate-createtableone"><i class="fa fa-check"></i><b>8.5.2</b> Solution 1: nhanesTranslate &amp; CreateTableOne</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.18.1"><span>Try it yourself 8.1</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#solution-2-identify-numerical-categorical-data"><i class="fa fa-check"></i><b>8.5.3</b> Solution 2: Identify Numerical Categorical Data</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.28.2"><span>Try it yourself 8.2</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#other-arguments-to-customize-tableone"><i class="fa fa-check"></i><b>8.6</b> Other Arguments to Customize tableone</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-all-levels"><i class="fa fa-check"></i><b>8.6.1</b> Show All Levels</a></li>
+<li class="chapter" data-level="8.6.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#nonnormal"><i class="fa fa-check"></i><b>8.6.2</b> Nonnormal</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.38.3"><span>Try it yourself 8.3</span></a></li>
+<li class="chapter" data-level="8.6.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#show-categorical-or-continuous-variables-only"><i class="fa fa-check"></i><b>8.6.3</b> Show Categorical or Continuous Variables Only</a></li>
+<li class="chapter" data-level="8.6.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#strata"><i class="fa fa-check"></i><b>8.6.4</b> Strata</a></li>
+<li><a href="data-summary-with-tableone.html#try-it-yourself-8.48.4"><span>Try it yourself 8.4</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#export-tableone"><i class="fa fa-check"></i><b>8.7</b> Export tableone</a></li>
+<li class="chapter" data-level="8.8" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#alternatives-to-tableone"><i class="fa fa-check"></i><b>8.8</b> Alternatives to tableone</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#base-r"><i class="fa fa-check"></i><b>8.8.1</b> base R</a></li>
+<li class="chapter" data-level="8.8.2" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#hmisc"><i class="fa fa-check"></i><b>8.8.2</b> Hmisc</a></li>
+<li class="chapter" data-level="8.8.3" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#psych"><i class="fa fa-check"></i><b>8.8.3</b> psych</a></li>
+<li class="chapter" data-level="8.8.4" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#desctable"><i class="fa fa-check"></i><b>8.8.4</b> desctable</a></li>
+<li class="chapter" data-level="8.8.5" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#skimr"><i class="fa fa-check"></i><b>8.8.5</b> skimr</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="data-summary-with-tableone.html"><a href="data-summary-with-tableone.html#summary-and-takeaways-7"><i class="fa fa-check"></i><b>8.9</b> Summary and Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html"><i class="fa fa-check"></i><b>9</b> Appendix: Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-2-introduction-to-r"><i class="fa fa-check"></i>Tutorial 2: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section"><i class="fa fa-check"></i>2.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-1"><i class="fa fa-check"></i>2.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-2"><i class="fa fa-check"></i>2.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-3"><i class="fa fa-check"></i>2.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-4"><i class="fa fa-check"></i>2.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-5"><i class="fa fa-check"></i>2.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-6"><i class="fa fa-check"></i>2.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-7"><i class="fa fa-check"></i>2.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-8"><i class="fa fa-check"></i>2.9</a></li>
+</ul></li>
+<li class="chapter" data-level="9.1" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-3-importing-data-into-r-with-readr"><i class="fa fa-check"></i><b>9.1</b> Tutorial 3: Importing Data into R with readr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-9"><i class="fa fa-check"></i>3.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-10"><i class="fa fa-check"></i>3.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-11"><i class="fa fa-check"></i>3.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-12"><i class="fa fa-check"></i>3.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-13"><i class="fa fa-check"></i>3.5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-4-introduction-to-nhanes"><i class="fa fa-check"></i><b>9.2</b> Tutorial 4: Introduction to NHANES</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-14"><i class="fa fa-check"></i>4.1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-5-data-analysis-with-dplyr"><i class="fa fa-check"></i><b>9.3</b> Tutorial 5: Data Analysis with dplyr</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-15"><i class="fa fa-check"></i>5.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-16"><i class="fa fa-check"></i>5.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-17"><i class="fa fa-check"></i>5.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-18"><i class="fa fa-check"></i>5.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-19"><i class="fa fa-check"></i>5.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-20"><i class="fa fa-check"></i>5.6</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-21"><i class="fa fa-check"></i>5.7</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-22"><i class="fa fa-check"></i>5.8</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-23"><i class="fa fa-check"></i>5.9</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-6-data-visualization-with-ggplot2"><i class="fa fa-check"></i>Tutorial 6: Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-24"><i class="fa fa-check"></i>6.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-25"><i class="fa fa-check"></i>6.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-26"><i class="fa fa-check"></i>6.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-27"><i class="fa fa-check"></i>6.4</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-7-date-and-time-data-with-lubridate"><i class="fa fa-check"></i>Tutorial 7: Date and Time Data with lubridate</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-28"><i class="fa fa-check"></i>7.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-29"><i class="fa fa-check"></i>7.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-30"><i class="fa fa-check"></i>7.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-31"><i class="fa fa-check"></i>7.4</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-32"><i class="fa fa-check"></i>7.5</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-33"><i class="fa fa-check"></i>7.6</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#tutorial-8-data-summary-with-tableone"><i class="fa fa-check"></i>Tutorial 8: Data Summary with tableone</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-34"><i class="fa fa-check"></i>8.1</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-35"><i class="fa fa-check"></i>8.2</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-36"><i class="fa fa-check"></i>8.3</a></li>
+<li class="chapter" data-level="" data-path="appendix-exercise-solutions.html"><a href="appendix-exercise-solutions.html#section-37"><i class="fa fa-check"></i>8.4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Ehsan Karim</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to R for health data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-nhanes" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Introduction to NHANES</h1>
+<div id="instructions-3" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Instructions</h2>
+<p>This tutorial is aiming to provide an introduction to NHANES dataset and a guide on how to access the NHANES. It will guide you to retrieve the dataset in two days: CDC website and nhanesA package. At the end of this tutorial, it will cover some basic functions in the nhanesA package.</p>
+<p>Accompanying this tutorial is <strong>a short <a href="https://forms.gle/zhMbsduL8xYjnmXg6">Google quiz</a></strong> for your own self-assessment. The instructions of this tutorial will clearly indicate when you should answer which question.</p>
+</div>
+<div id="learning-objectives-3" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Learning Objectives</h2>
+<ul>
+<li><p>Be familiar with the survey data in NHANES dataset</p></li>
+<li><p>Be able to import NHANES dataset from CDC website</p></li>
+<li><p>Be able to set up the nhanesA package and import NHANES dataset from the nhanesA package</p></li>
+<li><p>Be familiar with the basic functions in the nhanesA package</p></li>
+<li><p>Be able to understand the difference between NHANES dataset and nhanesA package</p></li>
+</ul>
+</div>
+<div id="introduction-to-nhanes-1" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Introduction to NHANES</h2>
+<p>The National Health and Nutrition Examination Survey (NHANES) is a program with a series of studies aimed at determining the health and nutritional status of Americans, including adults and children. The NHANES program started in the early 1960s and was transformed into a countinuous program in 1999.</p>
+<p>Started in the early 1960s, the NHANES programme has consisted of a seriess of surveys concentrating on various population groups or health themes. The survey was transformed into a continuous programme in 1999, with a shifting focus on a variety of health and nutrition measurements. For continuous NHANES,the survey is conducted in two-year cycles, i.e, 1999-2000,2001-2002,etc.</p>
+<p>There are 5 types of continues NHANES survey data available to the public:</p>
+<ul>
+<li><p>Demographics Data</p></li>
+<li><p>Dietary Data</p></li>
+<li><p>Examination Data</p></li>
+<li><p>Laboratory Data</p></li>
+<li><p>Questionnaire Data</p></li>
+</ul>
+<p>We will focus on the continuou NHANES dataset in this series of tutorials. On this <a href="https://wwwn.cdc.gov/nchs/nhanes/">CDC website</a>, you will see all the continous NHANES ordered by year.</p>
+<div class="figure">
+<img src="images/ContinuousNHANES.png" alt="" />
+<p class="caption">Figure 1. NHANES Datasets from 1999 to 2020</p>
+</div>
+<p>We will use NHANES 2013-2014 just for demostration in this tutorial. If you click on NHANES 2013-2014, you will be directed to the <a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2013">page</a> where you can access the data collected between 2013 and 2014:</p>
+<div class="figure">
+<img src="images/NHANES13-14.png" alt="" />
+<p class="caption">Figure 2. NHANES 2013-2014</p>
+</div>
+<p>We will introduce how to access the data in the following section.</p>
+<div id="do-question-1-of-the-quiz-now-2" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 1 OF THE QUIZ NOW</strong></h4>
+<ul>
+<li>How many categories (available to public) are there in NHANES dataset?</li>
+</ul>
+</div>
+</div>
+<div id="importing-nhanes-dataset-from-website" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Importing NHANES dataset from website</h2>
+<p>Now we will learn how to download the NHANES dataset from CDC website and import it to R. In the last section, we’re on this <a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2013">page</a> and we’ll continue from there.</p>
+<p>For example, we want to use the Demographics Data for further analysis. The first step is to download the dataset - click on “Demographics Data”:</p>
+<div class="figure">
+<img src="images/Demo.png" alt="" />
+<p class="caption">Figure 3. NHANES 2013-2014 Demographics Data</p>
+</div>
+<p>Then, you will see the following page:</p>
+<div class="figure">
+<img src="images/Demo1.png" alt="" />
+<p class="caption">Figure 4. NHANES 2013-2014 Demographics Data</p>
+</div>
+<p>To download the dataset, click on <em>DEMO_H Data [XPT - 3.7 MB]</em> under the <em>Data File</em>.</p>
+<p>To find the meanings of the variables, click on <em>NHANES 2013-2014 Demographics Variable List</em>.</p>
+<p>Last tutorial, we learned how to import <code>.csv</code> file into R. However, the file we downloaded from CDC website is not a <code>.csv</code> file - it is a <code>.xpt</code> file. Instead of using <code>read_csv()</code>, we need to use <code>read.xport()</code> function housed in <code>SASxport</code> package.</p>
+<p>First, we install (if needed) and load the<code>SASxport</code> package:</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="introduction-to-nhanes.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;SASxport&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="introduction-to-nhanes.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SASxport)</span></code></pre></div>
+<p>Then, we are ready to load the datatset into R:</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="introduction-to-nhanes.html#cb221-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">read.xport</span>(<span class="st">&quot;data/DEMO_H.XPT&quot;</span>)</span></code></pre></div>
+<p>We can use the <code>head()</code> function to quickly browse the dataset:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="introduction-to-nhanes.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+## 4 73560        8        2        1        9       NA        3        3        1
+## 5 73561        8        2        2       73       NA        3        3        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00</code></pre>
+<p>Now that we’ve successfully imported the dataset!</p>
+<div id="functions-debunked-6" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/SASxport/versions/1.7.0/topics/read.xport"><strong>read.xport()</strong></a> is the function we use to read and load SAS XPORT file in R - it is housed in the SASxport package. The arguments are as follows:</p>
+<p>read.xport(<strong>File Path</strong>)</p>
+<p><strong>For example:</strong> <code>read.xport("../input/demo-h/DEMO_H.XPT")</code></p>
+</div>
+<div id="do-question-2-of-the-quiz-now-1" class="section level4 unnumbered">
+<h4><strong>DO QUESTION 2 OF THE QUIZ NOW</strong></h4>
+<ul>
+<li>Which package is read.xport() in?</li>
+</ul>
+</div>
+</div>
+<div id="importing-nhanes-dataset-from-r-package-nhanesa" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Importing NHANES dataset from R package: nhanesA</h2>
+<p>Another way to access the NHANES dataset is to import it from R packages. One popular R package developed for retrieving NHANES dataset is the <a href="https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3"><strong>nhanesA</strong></a> package.</p>
+<p>As introduced before, we need to first install the <code>nhanesA</code> package from CRAN:</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="introduction-to-nhanes.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;nhanesA&quot;)</span></span></code></pre></div>
+<p>Second, we need to load the <code>nhanesA</code> package:</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="introduction-to-nhanes.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nhanesA)</span></code></pre></div>
+<p>Recall that we have 5 data categories available to the public in the NHANES dataset. How do we access the data from nhanesA package?</p>
+<p>There is a useful function called - <code>nhanesTables()</code> - list all the data files in each data category in each survey cycle as a table. For example, if we want to see all the Demographics Data in survey cycle 2013-2014:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="introduction-to-nhanes.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nhanesTables</span>(<span class="st">&#39;DEMO&#39;</span>, <span class="dv">2013</span>)</span></code></pre></div>
+<pre><code>## Warning: `xml_nodes()` was deprecated in rvest 1.0.0.
+## Please use `html_elements()` instead.</code></pre>
+<pre><code>##   Data.File.Name                    Data.File.Description
+## 1         DEMO_H Demographic Variables and Sample Weights</code></pre>
+<p>To see all the Examination Data in survey cycle 2015-2016:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="introduction-to-nhanes.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nhanesTables</span>(<span class="st">&#39;EXAM&#39;</span>, <span class="dv">2015</span>)</span></code></pre></div>
+<pre><code>##    Data.File.Name                         Data.File.Description
+## 1           BPX_I                                Blood Pressure
+## 2           BMX_I                                 Body Measures
+## 3        OHXDEN_I                       Oral Health - Dentition
+## 4        OHXREF_I          Oral Health - Recommendation of Care
+## 5        FLXCLN_I                          Fluorosis - Clinical
+## 6           AUX_I                                    Audiometry
+## 7           DXX_I Dual-Energy X-ray Absorptiometry - Whole Body
+## 8         AUXAR_I                  Audiometry - Acoustic Reflex
+## 9        AUXTYM_I                     Audiometry - Tympanometry
+## 10       AUXWBR_I             Audiometry – Wideband Reflectance</code></pre>
+<p>To see all the Dietary Data in survey cycle 2014-2015:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="introduction-to-nhanes.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nhanesTables</span>(<span class="st">&#39;DIETARY&#39;</span>, <span class="dv">2014</span>)</span></code></pre></div>
+<pre><code>##    Data.File.Name
+## 1        DR1TOT_H
+## 2        DR2TOT_H
+## 3        DR1IFF_H
+## 4        DR2IFF_H
+## 5        DRXFCD_H
+## 6        DS1IDS_H
+## 7        DSQIDS_H
+## 8        DS2IDS_H
+## 9        DS1TOT_H
+## 10       DS2TOT_H
+## 11       DSQTOT_H
+##                                                          Data.File.Description
+## 1                        Dietary Interview - Total Nutrient Intakes, First Day
+## 2                       Dietary Interview - Total Nutrient Intakes, Second Day
+## 3                              Dietary Interview - Individual Foods, First Day
+## 4                             Dietary Interview - Individual Foods, Second Day
+## 5                        Dietary Interview Technical Support File - Food Codes
+## 6   Dietary Supplement Use 24-Hour - Individual Dietary Supplements, First Day
+## 7               Dietary Supplement Use 30-Day - Individual Dietary Supplements
+## 8  Dietary Supplement Use 24-Hour - Individual Dietary Supplements, Second Day
+## 9        Dietary Supplement Use 24-Hour - Total Dietary Supplements, First Day
+## 10      Dietary Supplement Use 24-Hour - Total Dietary Supplements, Second Day
+## 11                   Dietary Supplement Use 30-Day - Total Dietary Supplements</code></pre>
+<div id="functions-debunked-7" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTables"><strong>nhanesTables()</strong></a> is the function we use to display the data in a table format - it is housed in the nhanesA package. The arguments are as follows:</p>
+<p>nhanesTables(<strong>‘Data Category’</strong>, <strong>Year</strong>)</p>
+<p><strong>Note</strong>:Abbreviation for the data category in the first argument is listed below:</p>
+<ul>
+<li><p>Demographics Data = DEMO</p></li>
+<li><p>Dietary Data = DIETARY</p></li>
+<li><p>Examination Data = EXAM</p></li>
+<li><p>Labortary Data = LAB</p></li>
+<li><p>Questionnaire Data = Q</p></li>
+</ul>
+<p><strong>For example:</strong> <code>nhanesTables('DEMO', 2013)</code></p>
+<p>For demostration purpose, we will focus on Demographics Data in survey cycle 2013-2014 in the rest of the tutorial.</p>
+<p>Now that we need to access and import the dataset from <code>nhanesA</code> package. The <code>nhanes()</code> function (exactly the same as the package name) is used for importing NHANES datasets:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="introduction-to-nhanes.html#cb233-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">nhanes</span>(<span class="st">&#39;DEMO_H&#39;</span>)</span></code></pre></div>
+<pre><code>## Processing SAS dataset DEMO_H     ..</code></pre>
+<p>Browse the top 5 rows in the demo dataframe:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="introduction-to-nhanes.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+## 4 73560        8        2        1        9       NA        3        3        1
+## 5 73561        8        2        2       73       NA        3        3        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00</code></pre>
+<p>You may get confused why we put <code>DEMO_H</code> instead of <code>DEMO</code> in the argument - recall that <em>DEMO</em> is the abbreviation for <em>Demographcis data</em>. But we also want to tell the function which survey cycle we are particularly interested in.</p>
+<p>Go back to the output from <em>nhanesTables(‘DEMO,’ 2013)</em> above, now we have the data file name - <code>DEMO_H</code> and <code>H</code> specifies the survey cycle 2013-2014.</p>
+<p>As you are getting familiar with the dataset, you may notice that different letter represents different survey cycle year. For example, <code>H</code> represents survey cycle 2013-2014 and <code>I</code> represents survey cycle 2015-2016.</p>
+</div>
+<div id="functions-debunked-8" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanes"><strong>nhanes()</strong></a> is the function we use to retrieve the dataset and return a dataframe - it is housed in the nhanesA package. The arguments are as follows:</p>
+<p>nhanesTranslate(<strong>‘Name of Table’</strong>)</p>
+<p><strong>For example:</strong> <code>nhanes('DEMO_H')</code></p>
+<p>If you run demo alone, you will see that <em>RIAGENDR</em> (gender) is coded as 1 and 2. For ease of future use, we want to translate this 1 and 2 into male and female.</p>
+<p>To translate the categorical variables in NHANES, use nhanesTranslate():</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="introduction-to-nhanes.html#cb237-1" aria-hidden="true" tabindex="-1"></a>demo_translate <span class="ot">&lt;-</span> <span class="fu">nhanesTranslate</span>(<span class="st">&#39;DEMO_H&#39;</span>,</span>
+<span id="cb237-2"><a href="introduction-to-nhanes.html#cb237-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&#39;SEQN&#39;</span>, <span class="co"># Respondent sequence number</span></span>
+<span id="cb237-3"><a href="introduction-to-nhanes.html#cb237-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;RIAGENDR&#39;</span>), </span>
+<span id="cb237-4"><a href="introduction-to-nhanes.html#cb237-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">data =</span> demo)</span></code></pre></div>
+<pre><code>## Warning in FUN(X[[i]], ...): No translation table is available for SEQN</code></pre>
+<pre><code>## Translated columns: RIAGENDR</code></pre>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="introduction-to-nhanes.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_translate,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2     Male       69       NA        4        4        1
+## 2 73558        8        2     Male       54       NA        3        3        1
+## 3 73559        8        2     Male       72       NA        3        3        2
+## 4 73560        8        2     Male        9       NA        3        3        1
+## 5 73561        8        2   Female       73       NA        3        3        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00</code></pre>
+</div>
+<div id="functions-debunked-9" class="section level4 unnumbered">
+<h4>Functions debunked</h4>
+<p><a href="https://www.rdocumentation.org/packages/nhanesA/versions/0.6.5.3/topics/nhanesTranslate"><strong>nhanesTranslate()</strong></a> is the function we use to translate variables in a dataset - it is housed in the nhanesA package. The arguments are as follows:</p>
+<p>nhanesTranslate(<strong>‘Name of Dataset’</strong>, <strong>Columns you want to be translated (can be written as a vector)</strong>, data = <strong>Source Data Frame</strong>)</p>
+<p><strong>For example:</strong> <code>nhanesTranslate('DEMO_H', RIAGENDR, data = demo)</code></p>
+</div>
+<div id="try-it-yourself-4.14.1" class="section level3 unnumbered">
+<h3>Try it yourself 4.1]<a href="appendix-exercise-solutions.html#section-14">4.1</a></h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Find all the Examination Data in survey cycle 2013-2014.</p></li>
+<li><p>Import the blood pressure dataset in the Examination Data in survey cycle 2013-2014</p></li>
+<li><p>Translate the following variables in the BPX dataset</p>
+<ul>
+<li><p>BPXPULS - Pulse regular or irregular?</p></li>
+<li><p>BPAARM - Arm selected</p></li>
+</ul></li>
+</ol>
+<div id="do-questions-3-5-of-the-quiz-now" class="section level4 unnumbered">
+<h4><strong>DO QUESTIONS 3-5 OF THE QUIZ NOW</strong></h4>
+<p>Fill in the blank to answer the ‘Try it yourself’ sections:</p>
+<ul>
+<li><p>nhanesTables(<code>___</code>,<code>___</code>)</p></li>
+<li><p>bpx &lt;- nhanes(<code>___</code>)</p></li>
+<li><p>bpx_translate &lt;- nhanesTranslate(<code>___</code>, c(‘BPXPULS,’ ‘BPAARM’), data = <code>___</code>)</p></li>
+</ul>
+</div>
+</div>
+<div id="other-packages-in-r" class="section level3" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Other packages in R</h3>
+<p>There are other packages that are developed as a tool to retrieve and analyze the NHANES dataset, such as <code>RNHANES</code> package. You are encouraged to explore packages beside <code>nhanesA</code> and play with the data. However, we will be using <code>nhanesA</code> for this series of tutorials, so it is important that you’re familiar with it before we move on.</p>
+</div>
+<div id="alternative-ways-to-download-nhanes" class="section level3" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Alternative ways to download NHANES</h3>
+<p>If you are wondering how the <code>nhanes()</code> function works, here is a glimpse at what it looks like backstage. First of all, we can create our own function that does the same action as <code>nhanes()</code>. The function we are creating together is not exactly how the <code>nhanes()</code> function works, but the principles are similar. <strong>The general gist is that we need a function that can download the .XPT file on the NHANES website and then import it into R as a data frame.</strong></p>
+<p>The first step that we need to create a new function is to have a function name and the function… <code>function()</code>! Let’s name our new function <code>downloadnhanes()</code>.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="introduction-to-nhanes.html#cb242-1" aria-hidden="true" tabindex="-1"></a>downloadnhanes <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb242-2"><a href="introduction-to-nhanes.html#cb242-2" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, our function needs arguments. Let’s give it 2 arguments: the years of the dataset (ex] 2013-2014 or 2014-2015) and the dataset name (ex] DEMO_H or BPX_H).</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="introduction-to-nhanes.html#cb243-1" aria-hidden="true" tabindex="-1"></a>downloadnhanes <span class="ot">&lt;-</span> <span class="cf">function</span>(years, prefix_suffix){</span>
+<span id="cb243-2"><a href="introduction-to-nhanes.html#cb243-2" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>For the purpose of creating this function step-by-step, let’s say that our years is 2013-2014 and our prefix_suffix is DEMO_H.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="introduction-to-nhanes.html#cb244-1" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="st">&#39;2013-2014&#39;</span></span>
+<span id="cb244-2"><a href="introduction-to-nhanes.html#cb244-2" aria-hidden="true" tabindex="-1"></a>prefix_suffix <span class="ot">&lt;-</span> <span class="st">&#39;DEMO_H&#39;</span></span></code></pre></div>
+<p>Next, our function needs to be able to download the .XPT file straight from the NHANES website. What this means is we need our function to
+1. Know where on the web our .XPT file is and
+2. Download that file</p>
+<p>To do this, we need to create a variable that contains the .XPT’s URL. If we look at the URL of an NHANES dataset’s .XPT file, it should look something along this line: <strong><a href="https://wwwn.cdc.gov/nchs/nhanes/2013-2014/DEMO_H.XPT" class="uri">https://wwwn.cdc.gov/nchs/nhanes/2013-2014/DEMO_H.XPT</a></strong>. To lead R to this specific website first before we download the file, we need to use the <code>paste()</code> function like so. Note that “years” and “prefix_suffix” are written as variables because they are two arguments that we would need to define when we use this new function.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="introduction-to-nhanes.html#cb245-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;https://wwwn.cdc.gov/nchs/nhanes/&#39;</span>, years,<span class="st">&#39;/&#39;</span>, prefix_suffix, <span class="st">&#39;.XPT&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div id="function-debunked" class="section level4 unnumbered">
+<h4>Function debunked</h4>
+<p><strong><a href="https://www.journaldev.com/40396/paste-in-r">paste()</a></strong> is a function we use to combine multiple elements from multiple vectors into one single element. In this case, we are combining hard-wired characters and open variables together into one single url. Some of the main arguments are as follows:</p>
+<p>paste(<strong>‘Text string that we want to include (note the quotation marks)’</strong>, <strong>A Defined Variable</strong>, sep = <strong>’’</strong> OR <strong>‘/’</strong> OR **’_‘** OR <strong>’&amp;’</strong> etc (this argument tells R how you want each element to be separated, in our case, we don’t want any separator, that’s why there is nothing between the’’ quotation marks))</p>
+<p><strong>For example:</strong> <code>paste('https://wwwn.cdc.gov/nchs/nhanes/', years,'/', prefix_suffix, '.XPT', sep = '')</code></p>
+<p>After we have our URL, we are ready to download the file! To do this, we use <code>download.file()</code> like so:</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="introduction-to-nhanes.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url, tf <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(), <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code></pre></div>
+<p>There are a number of things that you can do with <code>download.file()</code>. We will not go over this function in detail, but <a href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/download.file">here</a> is a helpful website that explains the function really well.</p>
+<p>In the function above, we first need the URL of the file that we are downloading - in our case it is just <code>url</code> because we already defined it in the previous <code>paste()</code> function. Next, we want a place to store our downloaded file. In this case, we want it to be <code>tf &lt;- tempfile()</code> because we want to generate a temporary storage space for our downloaded file (you can find more about <code>tempfile()</code> <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/tempfile">here</a>). After that, we need to use <code>mode = "wb"</code> because our .XPT file is binary. <code>wb</code> is also the most common mode type to use when we use <code>download.file()</code>.</p>
+<p>Next, we want to import the temporary file <code>tf</code> that we create into R. To do this, we need to use <code>read.xport()</code>. We have already been introduced to the SASxport package, but an alternative to SASxport is foreign. This is another package that deals with importing different data types into R, not just .XPT.</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="introduction-to-nhanes.html#cb247-1" aria-hidden="true" tabindex="-1"></a>outdf <span class="ot">&lt;-</span> foreign<span class="sc">::</span><span class="fu">read.xport</span>(tf)</span></code></pre></div>
+<p>Finally, we want to make sure that the file we are importing is a data frame, so we need to use <code>data.frame()</code> for this.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="introduction-to-nhanes.html#cb248-1" aria-hidden="true" tabindex="-1"></a>outdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(outdf)</span></code></pre></div>
+<p>Now if we combine everything that we have talked about earlier, our function should look like this:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="introduction-to-nhanes.html#cb249-1" aria-hidden="true" tabindex="-1"></a>downloadnhanes <span class="ot">&lt;-</span> <span class="cf">function</span>(prefix_suffix, years){</span>
+<span id="cb249-2"><a href="introduction-to-nhanes.html#cb249-2" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;https://wwwn.cdc.gov/nchs/nhanes/&#39;</span>, years,<span class="st">&#39;/&#39;</span>, prefix_suffix, <span class="st">&#39;.XPT&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb249-3"><a href="introduction-to-nhanes.html#cb249-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(url, tf <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(), <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb249-4"><a href="introduction-to-nhanes.html#cb249-4" aria-hidden="true" tabindex="-1"></a>    outdf <span class="ot">&lt;-</span> foreign<span class="sc">::</span><span class="fu">read.xport</span>(tf)</span>
+<span id="cb249-5"><a href="introduction-to-nhanes.html#cb249-5" aria-hidden="true" tabindex="-1"></a>    outdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(outdf)</span>
+<span id="cb249-6"><a href="introduction-to-nhanes.html#cb249-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(outdf)</span>
+<span id="cb249-7"><a href="introduction-to-nhanes.html#cb249-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Let’s see if it works!</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="introduction-to-nhanes.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
+<span id="cb250-2"><a href="introduction-to-nhanes.html#cb250-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">downloadnhanes</span>(<span class="st">&#39;DEMO_H&#39;</span>, <span class="st">&#39;2013-2014&#39;</span>)</span>
+<span id="cb250-3"><a href="introduction-to-nhanes.html#cb250-3" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+## 4 73560        8        2        1        9       NA        3        3        1
+## 5 73561        8        2        2       73       NA        3        3        1
+## 6 73562        8        2        1       56       NA        1        1        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+## 6       NA        1       2        1        1       NA       NA        4
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+## 6        3       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+## 6        2        2        1        1        1        0        0        0
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+## 6        1       56        1        4        3       NA 24978.14 25344.99
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00
+## 6       1      111        9        9     4.79</code></pre>
+<p>It works! But does it match with the output of our usual <code>nhanes()</code> function? Let’s test it out.</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="introduction-to-nhanes.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
+<span id="cb252-2"><a href="introduction-to-nhanes.html#cb252-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nhanes</span>(<span class="st">&#39;DEMO_H&#39;</span>)</span>
+<span id="cb252-3"><a href="introduction-to-nhanes.html#cb252-3" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<pre><code>## Processing SAS dataset DEMO_H     ..</code></pre>
+<pre><code>##    SEQN SDDSRVYR RIDSTATR RIAGENDR RIDAGEYR RIDAGEMN RIDRETH1 RIDRETH3 RIDEXMON
+## 1 73557        8        2        1       69       NA        4        4        1
+## 2 73558        8        2        1       54       NA        3        3        1
+## 3 73559        8        2        1       72       NA        3        3        2
+## 4 73560        8        2        1        9       NA        3        3        1
+## 5 73561        8        2        2       73       NA        3        3        1
+## 6 73562        8        2        1       56       NA        1        1        1
+##   RIDEXAGM DMQMILIZ DMQADFC DMDBORN4 DMDCITZN DMDYRSUS DMDEDUC3 DMDEDUC2
+## 1       NA        1       1        1        1       NA       NA        3
+## 2       NA        2      NA        1        1       NA       NA        3
+## 3       NA        1       1        1        1       NA       NA        4
+## 4      119       NA      NA        1        1       NA        3       NA
+## 5       NA        2      NA        1        1       NA       NA        5
+## 6       NA        1       2        1        1       NA       NA        4
+##   DMDMARTL RIDEXPRG SIALANG SIAPROXY SIAINTRP FIALANG FIAPROXY FIAINTRP MIALANG
+## 1        4       NA       1        2        2       1        2        2       1
+## 2        1       NA       1        2        2       1        2        2       1
+## 3        1       NA       1        2        2       1        2        2       1
+## 4       NA       NA       1        1        2       1        2        2       1
+## 5        1       NA       1        2        2       1        2        2       1
+## 6        3       NA       1        2        2       1        2        2       1
+##   MIAPROXY MIAINTRP AIALANGA DMDHHSIZ DMDFMSIZ DMDHHSZA DMDHHSZB DMDHHSZE
+## 1        2        2        1        3        3        0        0        2
+## 2        2        2        1        4        4        0        2        0
+## 3        2        2       NA        2        2        0        0        2
+## 4        2        2        1        4        4        0        2        0
+## 5        2        2       NA        2        2        0        0        2
+## 6        2        2        1        1        1        0        0        0
+##   DMDHRGND DMDHRAGE DMDHRBR4 DMDHREDU DMDHRMAR DMDHSEDU WTINT2YR WTMEC2YR
+## 1        1       69        1        3        4       NA 13281.24 13481.04
+## 2        1       54        1        3        1        1 23682.06 24471.77
+## 3        1       72        1        4        1        3 57214.80 57193.29
+## 4        1       33        1        3        1        4 55201.18 55766.51
+## 5        1       78        1        5        1        5 63709.67 65541.87
+## 6        1       56        1        4        3       NA 24978.14 25344.99
+##   SDMVPSU SDMVSTRA INDHHIN2 INDFMIN2 INDFMPIR
+## 1       1      112        4        4     0.84
+## 2       1      108        7        7     1.78
+## 3       1      109       10       10     4.51
+## 4       2      109        9        9     2.52
+## 5       2      116       15       15     5.00
+## 6       1      111        9        9     4.79</code></pre>
+<p>The two imported datasets are identical! Fantastic, our new function works! And that’s just a sneak peak of what goes behind our <code>nhanes()</code> function.</p>
+<p>The function that we went over in this tutorial is originally found on the CDC website. For simplification and educational purposes, the function has been simplified. You can find the original function <a href="https://wwwn.cdc.gov/nchs/data/tutorials/module3_examples_R.r">here</a>.</p>
+</div>
+</div>
+</div>
+<div id="summary-and-takeaways-3" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Summary and Takeaways</h2>
+<p>By the end of this tutorial, you should be able to know what is NHANES and how to retrieve the NHANES dataset. You should also be familiar with the functions housed in nhanesA mentioned in this tutorial.</p>
+<p>For the next two tutorials, we will introduce two new packages - dplyr for data analysis and ggplot for data visulization. We will continusely use NHANES dataset for illustration and you’ll likely be using NHANES dataset for your own research in the future. Make sure you’re familiar with NHANES dataset before we move on.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="importing-data-into-r-with-readr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-analysis-with-dplyr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/intro2R/edit/master/3-introduction-to-nhanes.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro2R.pdf", "intro2R.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
