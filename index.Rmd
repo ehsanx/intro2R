@@ -38,6 +38,10 @@ Currently under development. The conception of this online textbook is loosely b
 - An Hoang (forestry, UBC)
 - Yang Qu (statistics, UBC)
 
+## Video tutorials {-}
+
+- [Playlist](https://www.youtube.com/playlist?list=PL2yD6frXhFoYvyO6DFnO3UBcBCh7K_jnz)
+
 ## License {-}
 
 ```{r, echo=FALSE, out.width="25%"}
