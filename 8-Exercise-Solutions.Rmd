@@ -10,7 +10,7 @@ require(dplyr)
 ```
 
 
-## Tutorial 2: Introduction to R {-}
+## Tutorial 2: Introduction to R
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 1: Introduction to R**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
@@ -357,7 +357,7 @@ Re-write the following code using pipe operator
 ```
 
 
-## Tutorial 6: Data Visualization with ggplot2 {-}
+## Tutorial 6: Data Visualization with ggplot2
 
 This notebook contains the solutions for all of the **Try it yourself** sections of tutorial 5: Data Visualization with ggplot. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
@@ -408,7 +408,7 @@ Then, we can graph our facets normally:
 ##   facet_grid(Race ~ Gender)
 ```
 
-## Tutorial 7: Date and Time Data with lubridate {-}
+## Tutorial 7: Date and Time Data with lubridate
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 6: Date & Time Data with lubridate**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 
@@ -484,7 +484,7 @@ Recreate the frequency polygon above but change the binwidth so that all flights
 ```
 
 
-## Tutorial 8: Data Summary with tableone {-}
+## Tutorial 8: Data Summary with tableone
 
 This notebook contains the solutions for all of the **Try it yourself** sections of **tutorial 7: Data Summary with tableone**. Make sure that you have at least tried to solve these sections first before viewing this notebook.
 

@@ -163,6 +163,10 @@ desctable
 skimr
 summary-and-takeaways-7
 appendix-exercise-solutions
+tutorial-2-introduction-to-r
 tutorial-3-importing-data-into-r-with-readr
 tutorial-4-introduction-to-nhanes
 tutorial-5-data-analysis-with-dplyr
+tutorial-6-data-visualization-with-ggplot2
+tutorial-7-date-and-time-data-with-lubridate
+tutorial-8-data-summary-with-tableone
