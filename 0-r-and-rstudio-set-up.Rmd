@@ -1,5 +1,7 @@
 # R and RStudio set up
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9AsAybAOKEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Instructions
 This tutorial is aiming to introduce you to R and RStudio. It will guide you to download and install R and RStudio and walk you through the main components in RStudio. Follow this tutorial step-by-step and finish setting up R and RStudio before the next tutorial.

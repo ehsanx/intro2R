@@ -1,5 +1,9 @@
 # Data Analysis with dplyr
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gr1Refk2kyE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-Y1sINe5D3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 
 This tutorial is aiming to introduce you to how to manipulate data and transfer the raw data into ready-to-analysis form in R. It will guide you to learn and practice the basic and useful functions in the dplyr package. In this tutorial, follow the step-by-step instruction as well as the  examples which demonstrating how the functions work. 

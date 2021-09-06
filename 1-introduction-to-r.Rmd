@@ -1,5 +1,12 @@
 # Introduction to R
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4nsW4Q3S6FE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/g7yZB7yi4bw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kmYB62yyTKk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Instructions
 This tutorial will introduce you to the basics of the language of R. We will cover how to set up our working environment, mathematical and logical operators, the most common data types in R, explore a simple dataset, write an R function as well as how to seek for help within and outside of R.
 

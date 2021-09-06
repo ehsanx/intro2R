@@ -1,5 +1,7 @@
 # Data Summary with tableone
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NvRjjMxTUyU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 
 In this tutorial, we will be exploring how to summarize all variables of our datasets in one single table. We will familiarize ourselves with the R package tableone and its associated functions. This tutorial will show you how to be more efficient in analyzing data on R.

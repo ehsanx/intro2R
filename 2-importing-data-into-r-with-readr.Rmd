@@ -1,5 +1,7 @@
 # Importing Data into R with readr
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oruk2xEFqFk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 This tutorial will teach you the basics of importing data from your hard drive into R. We will cover how to import a Comma-Separated Values (csv) file into R using the `read_csv()` function in the readr package. We will also be covering the different data types that R can recognize from a csv file, how to manipulate how data show up on R, as well as how to export the manipulated file back into a csv file.
 

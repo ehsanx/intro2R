@@ -1,5 +1,9 @@
 # Date & Time Data with lubridate
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CD0u69DZ0Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/g81T4hXego4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 
 In this tutorial, we will be exploring how to deal with date/time data in R using the lubridate package. This incudes creating new, retrieving information from existing, modifying, and conduct different arithmetic calculations on date/time data. We will also be plotting date/time data to visualize our dataset.

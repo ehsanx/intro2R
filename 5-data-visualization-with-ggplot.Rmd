@@ -1,5 +1,11 @@
 # Data Visualization with ggplot2
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n754ZoswQ4s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bJEOrAJKONw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yx_FK8ylTUg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 This tutorial will introduce us to data visualization on R, specially using the ggplot R package. For this purpose, we will focus on the basic and most commonly used functions of the ggplot package. We will be able to read through the step-by-step instructions on how to use each function as well as its different arguments.
 
